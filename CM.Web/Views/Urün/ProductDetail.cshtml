@@ -1,0 +1,106 @@
+﻿@model CM.Core.Dto.ProductDetailDto
+@inject IViewLocalizer Localizer
+@{
+
+    var currentCulture = Thread.CurrentThread.CurrentUICulture.Name;
+}
+<!--Page Title-->
+<section class="page-title centred">
+    <div class="overlay-bg"></div>
+    <div class="pattern-layer"></div>
+    <div class="auto-container">
+        <div class="content-box">
+            <div class="title">
+                <h1>@Localizer["Ürün Detay"]</h1>
+            </div>
+            <ul class="bread-crumb clearfix">
+                <li><a href="./">@Localizer["Anasayfa"]</a></li>
+                <li><a href="urunler.html">@Localizer["Ürünler"]</a></li>
+                <li>@Localizer["Ürün Detay"]</li>
+            </ul>
+        </div>
+    </div>
+</section>
+<!--End Page Title-->
+<!-- service-details -->
+<section class="service-details">
+    <div class="auto-container">
+        <div class="row clearfix">
+            <div class="col-lg-4 col-md-12 col-sm-12 sidebar-side">
+                <div class="service-sidebar default-sidebar">
+                    <div class="sidebar-widget categori-widget">
+                        <div class="widget-title">
+                            <h4>@Localizer["Diğer Ürünler"]</h4>
+                        </div>
+                        @foreach (var item in Model.UrünKategoris)
+                        {
+                            <div class="widget-content">
+                                <ul class="categori-list clearfix">
+                                    <li>
+                                        <a asp-action="ProductDetail" asp-route-Id="@item.UrünKategorId">
+                                            @{
+                                                if (currentCulture.Equals("tr-TR"))
+                                                {
+                                                    @item.Baslık
+                                                }
+                                                else
+                                                {
+                                                    @item.BaslıkEn
+                                                }
+                                            }
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        }
+
+                    </div>
+                    <div class="sidebar-widget advise-widget">
+                        <div class="inner-box centred" style="background-image: url(https://picsum.photos/370/388);">
+                            <div class="icon-box"><i class="fas fa-user-cog"></i></div>
+                            <h2>Rcv Valve </h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-8 col-md-12 col-sm-12 content-side">
+                <div class="service-details-content">
+                    <div class="inner-box">
+                        <figure class="image-box"><img src="data:@Model?.UrünlerModel?.ImageContentType;base64,@Convert.ToBase64String(Model?.UrünlerModel?.ImageData)" alt="@Model?.UrünlerModel?.ImageName" /></figure>
+                        <div class="text">
+                            <h2>
+                                @{
+                                    if (currentCulture.Equals("tr-TR"))
+                                    {
+                                        @Model?.UrünlerModel?.Baslik
+                                    }
+                                    else
+                                    {
+                                        @Model?.UrünlerModel?.BaslikEn
+                                    }
+                                }
+                            </h2>
+                            <p>
+                                @{
+                                    if (currentCulture.Equals("tr-TR"))
+                                    {
+                                        @Model?.UrünlerModel?.Içerik
+                                    }
+                                    else
+                                    {
+                                        @Model?.UrünlerModel?.IçerikEn
+                                    }
+                                }
+                            </p>
+                            <p></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</section>
+<!-- service-details end -->

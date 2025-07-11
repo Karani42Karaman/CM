@@ -1,0 +1,115 @@
+﻿@model CM.Core.Dto.MissionModelDto
+@{
+    ViewData["Title"] = "Mission";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<!-- Table Start -->
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+
+<div class="container-fluid pt-4 px-4" style="height: 100vh;">
+    <div class="row g-4">
+        <div class="col-12 d-flex justify-content-center align-items-center" style="flex-direction: column; height: 100%;">
+
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+
+                    <div class="col-12">
+                        <div style="text-align:center" class="bg-secondary rounded h-100 p-4">
+                            <h1>Mission</h1>
+
+                            <h4>Mission</h4>
+                            <hr />
+                            <div class="row justify-content-center">
+                                <div class="col-md-4">
+                                    <form asp-area="Admin" asp-controller="Dashboard" asp-action="UpdateMission" method="post" enctype="multipart/form-data">
+                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                                        <div class="form-group">
+                                            <label asp-for="Icerik" class="control-label">IcerikTr</label>
+                                            <input asp-for="Icerik" class="form-control" required="" />
+                                            <span asp-validation-for="Icerik" class="text-danger"></span>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label asp-for="IcerikEn" class="control-label">IcerikEn</label>
+                                            <input asp-for="IcerikEn" name="IcerikEn" class="form-control" required="" />
+                                            <span asp-validation-for="IcerikEn" class="text-danger"></span>
+                                        </div>
+
+
+                                        <div class="row">
+                                            <div class="col-md-8 col-sm-8 col-12">
+                                                <div class="form-group">
+                                                    <label asp-for="ImageName" class="control-label">Sertifika Seç</label>
+                                                    <img src="data:@Model.ImageContentType;base64,@Convert.ToBase64String(Model.ImageData)" alt="@Model.ImageName" style="max-width: 100px; max-height: 100px; margin-top=500px;" />
+
+                                                    <div class="d-flex align-items-center">
+                                                        <input type="file" name="imageFile" accept=".jpg, .jpeg, .png" id="imageFileInput" class="form-control" />
+                                                        <span asp-validation-for="ImageName" class="text-danger ml-2"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <input type="hidden" name="CreateDate" value="@Model.CreateDate" class="btn btn-primary" />
+                                        <input type="hidden" name="VisionId" value="@Model.MissionId" class="btn btn-primary" />
+
+                                        <div class="form-group">
+                                            <input type="submit" value="Create" class="btn btn-primary" />
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div>
+                                <a asp-area="admin" asp-controller="Dashboard" asp-action="MissionIndex">Back to List</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+
+<script>
+    var quill = new Quill('#editor', {
+        theme: 'snow'
+    });
+
+    var quill = new Quill('#editorEn', {
+        theme: 'snow'
+    });
+</script>
+
+<script>
+    const imageFileInput = document.getElementById('imageFileInput');
+
+    imageFileInput.addEventListener('change', function () {
+        const selectedFile = this.files[0];
+
+        if (selectedFile) {
+            const fileSize = selectedFile.size; // Dosya boyutu (byte cinsinden)
+
+            // İstenilen boyutu belirleyin (örneğin, 1MB)
+            const maxFileSize = 300 * 1024; // 1MB
+
+            if (fileSize > maxFileSize) {
+                alert('Resim boyutu çok büyük. Lütfen 300kb daha küçük bir resim seçin.');
+                this.value = ''; // Dosya seçimini temizle
+            }
+
+            // Resim boyutunu kontrol ederek gerekli işlemleri gerçekleştirin
+        }
+    });
+</script>

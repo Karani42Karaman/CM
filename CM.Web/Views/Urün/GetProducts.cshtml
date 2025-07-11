@@ -1,0 +1,91 @@
+﻿
+@{
+    ViewData["Title"] = "Products";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+@inject IViewLocalizer Localizer
+@model List<CM.Core.Model.UrünlerModel>
+@{
+
+    var currentCulture = Thread.CurrentThread.CurrentUICulture.Name;
+}
+<!--Page Title-->
+<section class="page-title centred">
+    <div class="overlay-bg"></div>
+    <div class="pattern-layer"></div>
+    <div class="auto-container">
+        <div class="content-box">
+            <div class="title">
+                <h1>@Localizer["Ürünler"]</h1>
+            </div>
+            <ul class="bread-crumb clearfix">
+                <li><a href="./">@Localizer["Anasayfa"]</a></li>
+                <li>@Localizer["Ürünler"]</li>
+            </ul>
+        </div>
+    </div>
+</section>
+<!--End Page Title-->
+<!-- service-section -->
+<section class="service-page-section centred">
+    <div class="auto-container">
+        <div class="row clearfix">
+
+
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-4 col-md-6 col-sm-12 service-block">
+                    <div class="service-block-one wow fadeInUp animated animated" data-wow-delay="00ms"
+                         data-wow-duration="500ms">
+                        <div class="inner-box">
+                            <figure class="image-box"><img src="data:@item.ImageContentType;base64,@Convert.ToBase64String(item.ImageData)" alt="@item.ImageName" /></figure>
+                            <div class="text">
+                                <h2>
+                                    @{
+                                        if (currentCulture.Equals("tr-TR"))
+                                        {
+                                            @item.Baslik
+                                        }
+                                        else
+                                        {
+                                            @item.BaslikEn
+                                        }
+                                    }
+                                </h2>
+                            </div>
+                            <div class="overlay-content">
+                                <div class="inner">
+                                    <h3>
+                                        <a href="service-details.html">
+                                            @{
+                                                if (currentCulture.Equals("tr-TR"))
+                                                {
+                                                    @item.Baslik
+                                                }
+                                                else
+                                                {
+                                                    @item.BaslikEn
+                                                }
+                                            }
+                                        </a>
+                                    </h3>
+                                    <p></p>
+                                    <div class="link"><a asp-action="ProductDetail" asp-route-id="@item.UrünId">@Localizer["İncele"]</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            }
+
+
+        </div>
+    </div>
+    </div>
+</section>
+<!-- service-section end -->

@@ -1,0 +1,134 @@
+﻿@model CM.Core.Dto.SliderDto
+
+@{
+    ViewData["Title"] = "UpdateSlider";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+
+<div class="container-fluid pt-4 px-4" style="height: 100vh;">
+    <div class="row" style="text-align:center">
+
+        <div class="col-12">
+            <div class="row" style="text-align:center">
+
+
+                <div style="text-align:center" class="bg-secondary rounded h-100 p-4">
+                    <h1>Update Slider</h1>
+
+                    <h4>Slider</h4>
+                    <hr />
+                    <div class="row">
+
+                        <form asp-area="Admin" asp-controller="Dashboard" asp-action="UpdateSlider" method="post" enctype="multipart/form-data">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="col-24 col-sm-24">
+
+                                <div class="row">
+                                    <div class="col-lg-8 col-sm-8 col-12">
+                                        <div class="form-group">
+                                            <label asp-for="SliderBaslik" class="control-label"></label>
+                                            <input asp-for="SliderBaslik" class="form-control" value="@Model.SliderBaslik" required="" />
+                                            <span asp-validation-for="SliderBaslik" class="text-danger"></span>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-8 col-sm-8 col-12">
+                                        <div class="form-group">
+                                            <label asp-for="SliderBaslikEn " class="control-label"></label>
+                                            <input asp-for="SliderBaslikEn" class="form-control" value="@Model.SliderBaslikEn" required="" />
+                                            <span asp-validation-for="SliderBaslikEn" class="text-danger"></span>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-lg-8 col-sm-8 col-12">
+                                        <div class="form-group">
+                                            <label asp-for="SliderAltBaslik" class="control-label"></label>
+                                            <input asp-for="SliderAltBaslik" class="form-control" value="@Model.SliderAltBaslik" required="" />
+                                            <span asp-validation-for="SliderAltBaslik" class="text-danger"></span>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-8 col-sm-8 col-12">
+                                        <div class="form-group">
+                                            <label asp-for="SliderAltBaslikEn" class="control-label"></label>
+                                            <input asp-for="SliderAltBaslikEn" class="form-control" value="@Model.SliderAltBaslikEn" required="" />
+                                            <span asp-validation-for="SliderAltBaslikEn" class="text-danger"></span>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-md-8 col-sm-8 col-12">
+                                        <div class="form-group">
+                                            <label asp-for="ImageName" class="control-label">Sertifika Seç</label>
+                                            <img src="data:@Model.ImageContentType;base64,@Convert.ToBase64String(Model.ImageData)" alt="@Model.ImageName" style="max-width: 100px; max-height: 100px; margin-top=500px;" />
+
+                                            <div class="d-flex align-items-center">
+                                                <input type="file" name="imageFile" accept=".jpg, .jpeg, .png" id="imageFileInput" class="form-control" />
+                                                <span asp-validation-for="ImageName" class="text-danger ml-2"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <input type="hidden" name="CreateDate" value="@Model.CreateDate" class="btn btn-primary" />
+                                <input type="hidden" name="SliderId" value="@Model.SliderId" class="btn btn-primary" />
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Create" class="btn btn-primary" />
+                            </div>
+                        </form>
+                    </div>
+
+                    <div>
+                        <a asp-area="admin" asp-controller="Dashboard" asp-action="SliderIndex">Back to List</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+<script>
+    const imageFileInput = document.getElementById('imageFileInput');
+
+    imageFileInput.addEventListener('change', function () {
+        const selectedFile = this.files[0];
+
+        if (selectedFile) {
+            const fileSize = selectedFile.size; // Dosya boyutu (byte cinsinden)
+
+            // İstenilen boyutu belirleyin (örneğin, 1MB)
+            const maxFileSize = 300 * 1024; // 1MB
+
+            if (fileSize > maxFileSize) {
+                alert('Resim boyutu çok büyük. Lütfen 300kb daha küçük bir resim seçin.');
+                this.value = ''; // Dosya seçimini temizle
+            }
+
+            // Resim boyutunu kontrol ederek gerekli işlemleri gerçekleştirin
+        }
+    });
+</script>

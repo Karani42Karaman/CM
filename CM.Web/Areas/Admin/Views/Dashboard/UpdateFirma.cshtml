@@ -1,0 +1,124 @@
+﻿@model CM.Core.Dto.FirmaDto
+
+@{
+    ViewData["Title"] = "Update Firma";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<!-- Table Start -->
+
+<div class="container-fluid pt-4 px-4" style="height: 100vh;">
+    <div class="row g-4">
+        <div class="col-12 d-flex justify-content-center align-items-center" style="flex-direction: column; height: 100%;">
+
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+
+                    <div class="col-12">
+                        <div style="text-align:center" class="bg-secondary rounded h-100 p-4">
+                            <h1>Firma Bilgileri</h1>
+
+                            <h4>Firma</h4>
+                            <hr />
+                            <div class="row justify-content-center">
+                                <div class="col-md-4">
+                                    <form asp-area="Admin" asp-controller="Dashboard" asp-action="UpdateFirma" method="post" enctype="multipart/form-data">
+                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                                        <div class="form-group">
+                                            <label asp-for=" FirmaAdi" class="control-label"></label>
+                                            <input asp-for=" FirmaAdi" class="form-control" required="" />
+                                            <span asp-validation-for=" FirmaAdi" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label asp-for=" SiteAdresi" class="control-label"></label>
+                                            <input asp-for=" SiteAdresi" class="form-control" required="" />
+                                            <span asp-validation-for=" SiteAdresi" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label asp-for=" Slogan" class="control-label">Slogan TR</label>
+                                            <input asp-for=" Slogan" class="form-control" required="" />
+                                            <span asp-validation-for=" Slogan" class="text-danger"></span>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label asp-for="SloganEn" class="control-label">Slogan EN</label>
+                                            <input asp-for="SloganEn" name="SloganEn" class="form-control" required="" />
+                                            <span asp-validation-for="SloganEn" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label asp-for=" Email" class="control-label"></label>
+                                            <input asp-for=" Email" type="email" class="form-control" required="" />
+                                            <span asp-validation-for=" Email" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label asp-for=" PhoneNumber" class="control-label"></label>
+                                            <input asp-for=" PhoneNumber" type="tel" class="form-control" required="" />
+                                            <span asp-validation-for=" PhoneNumber" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label asp-for=" FacebookLink" class="control-label"></label>
+                                            <input asp-for=" FacebookLink" type="url" class="form-control" required="" />
+                                            <span asp-validation-for=" FacebookLink" class="text-danger"></span>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label asp-for=" InstagramLink" class="control-label"></label>
+                                            <input asp-for=" InstagramLink" type="url" class="form-control" required="" />
+                                            <span asp-validation-for=" InstagramLink" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label asp-for=" YoutubeUrl" class="control-label"></label>
+                                            <input asp-for=" YoutubeUrl" type="url" class="form-control" required="" />
+                                            <span asp-validation-for=" YoutubeUrl" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label asp-for=" WhatsappNumber" class="control-label"></label>
+                                            <input asp-for=" WhatsappNumber" type="tel" class="form-control" required="" />
+                                            <span asp-validation-for=" WhatsappNumber" class="text-danger"></span>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            
+                                            <input asp-for=" Adres" type="tel" class="form-control" required="" />
+                                            <span asp-validation-for=" Adres" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                             
+                                            <input asp-for=" FirmaId" type="hidden" class="form-control" required="" />
+                                            <span asp-validation-for=" FirmaId" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <input type="submit" value="Create" class="btn btn-primary" />
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div>
+                                <a asp-area="admin" asp-controller="Dashboard" asp-action="FirmaIndex">Back to List</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

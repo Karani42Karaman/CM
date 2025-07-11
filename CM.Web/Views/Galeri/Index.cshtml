@@ -1,0 +1,46 @@
+﻿@using CM.Core.Model;
+@model List<GaleriModel>
+@inject IViewLocalizer Localizer
+
+<!--Page Title-->
+<section class="page-title centred">
+    <div class="overlay-bg"></div>
+    <div class="pattern-layer"></div>
+    <div class="auto-container">
+        <div class="content-box">
+            <div class="title">
+                <h1>@Localizer["Galeri"]</h1>
+            </div>
+            <ul class="bread-crumb clearfix">
+                <li><a href="./">@Localizer["Anasayfa"]</a></li>
+                <li>@Localizer["Galeri"]</li>
+            </ul>
+        </div>
+    </div>
+</section>
+<!--End Page Title-->
+<!-- clients-section -->
+<!-- gallery-section -->
+<section class="gallery-page-section">
+    <div class="auto-container">
+        <div class="row clearfix">
+         
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-4 col-md-6 col-sm-12 gallery-block">
+                    <div class="gallery-block-one">
+                        <div class="inner-box">
+                            <figure class="image-box">
+                                <img src="data:@item.ImageContentType;base64,@Convert.ToBase64String(item.ImageData)" alt="">
+                                <a href="data:@item.ImageContentType;base64,@Convert.ToBase64String(item.ImageData)" class="view-btn lightbox-image"
+                                   data-fancybox="gallery">+</a>
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+            }
+     
+        </div>
+    </div>
+</section>
+<!-- clients-section end -->

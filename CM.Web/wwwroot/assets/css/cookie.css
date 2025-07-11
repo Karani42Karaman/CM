@@ -1,0 +1,212 @@
+.qookies {
+    box-sizing: border-box;
+    padding: 20px;
+    position: fixed;
+    width: 300px
+}
+
+.qookies--bottom-right {
+    bottom: 20px;
+    right: 20px
+}
+
+.qookies--bottom {
+    bottom: 0;
+    left: 0;
+    width: 100%
+}
+
+.qookies--bottom-left {
+    bottom: 20px;
+    left: 20px
+}
+
+.qookies--top-right {
+    right: 20px;
+    top: 20px
+}
+
+.qookies--top-left {
+    left: 20px;
+    top: 20px
+}
+
+.qookies--centered {
+    height: 350px;
+    margin-left: -250px;
+    margin-top: -175px;
+    top: 50%;
+    width: 500px
+}
+
+.qookies-theme-default {
+    color: black;
+    border: 2px solid #fff;
+    border-radius: 0;
+    background-color: white;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, .2);
+    font-size: 11px;
+    line-height: 1.4
+}
+
+
+
+.qookies-theme-default .qookies__header {
+    color: #333
+}
+
+.qookies-theme-default .qookies__header h1 {
+    margin: 0;
+    margin-bottom: 10px
+}
+
+.qookies-theme-default .qookies__description {
+    color: #333
+}
+
+.qookies-theme-default .qookies__description p {
+    margin: 0
+}
+
+.qookies-theme-default .qookies__description p + p {
+    margin-top: 10px
+}
+
+.qookies-theme-default .qookies__btn {
+    display: inline-block;
+    margin: 5px 0;
+    padding: 10px;
+    cursor: pointer;
+    -webkit-transition: all .3s ease-in;
+    transition: all .3s ease-in;
+    text-decoration: none;
+    color: #333;
+    border: 2px solid #333;
+    border-radius: 3px
+}
+
+.qookies-theme-default .qookies__btn:hover {
+    -webkit-transition: all .3s ease-in;
+    transition: all .3s ease-in;
+    color: black;
+    background-color: white!important;
+}
+
+.qookies-theme-default .qookies__link a {
+    display: inline-block;
+    padding: 9px 0;
+    text-decoration: none;
+    color: #333;
+    font-weight: 700
+}
+
+.qookies--bottom .qookies__content {
+    float: left;
+    width: 65%
+}
+
+.qookies--bottom .qookies__footer {
+    float: right;
+    width: 30%;
+    padding-top: 20px;
+    padding-right: 2.5%;
+    text-align: right
+}
+
+.qookies--bottom .qookies__description p + p {
+    margin-top: 0
+}
+
+.qookies--bottom .qookies__link {
+    display: inline
+}
+
+.qookies--bottom .qookies__link a {
+    display: inline-block;
+    font-weight: 400;
+    margin: 5px;
+    padding: 10px;
+    cursor: pointer;
+    -webkit-transition: all .3s ease-in;
+    transition: all .3s ease-in;
+    text-decoration: none;
+    color: #333;
+    border: 2px solid #333;
+    border-radius: 3px
+}
+
+.qookies--bottom .qookies__link a:hover {
+    -webkit-transition: all .3s ease-in;
+    transition: all .3s ease-in;
+    color: #fff;
+    background-color: #333
+}
+
+/* COOKIE AYARLARI */
+.qookies-theme-default .qookies__header {
+    display: none;
+}
+
+.qookies-theme-default .qookies__description p {
+    color: #334756;
+    text-align: justify;
+    line-height: 1.5;
+}
+
+.qookies-theme-default .qookies__link a {
+    color: #e67201;
+    font-weight: normal;
+}
+
+
+
+.qookies-theme-default .qookies__btn:hover {
+    -webkit-transition: all .3s ease-in;
+    transition: all .3s ease-in;
+    background: var(--primary);
+    color: #000;
+}
+
+.qookies {
+    width: 95%;
+    z-index: 999;
+}
+
+.qookies--bottom-right {
+    left: 50%;
+    transform: translateX(-50%);
+    right: auto;
+}
+
+.qookies-theme-default .qookies__btn {
+    color: white;
+    background: #f06c25;
+    border: 1px solid #f06c25;
+    border-radius: 0;
+    width: auto;
+    text-align: center;
+    padding: 8px 15px;
+}
+
+.qookies__footer {
+    text-align: center;
+}
+
+@media (min-width: 992px) {
+    .qookies__footer {
+        text-align: left;
+    }
+
+    .qookies-theme-default .qookies__btn {
+        width: 100%;
+    }
+
+    .qookies--bottom-right {
+        left: 20px;
+        transform: translateX(0);
+    }
+
+    .qookies {
+        width: 350px;
+    }
+}

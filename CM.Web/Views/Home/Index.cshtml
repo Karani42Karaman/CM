@@ -1,0 +1,302 @@
+﻿@model CM.Core.Dto.HomePageDto
+@inject IViewLocalizer Localizer
+@{
+
+    var currentCulture = Thread.CurrentThread.CurrentUICulture.Name;
+}
+
+<!-- banner-section -->
+<section class="banner-section style-one">
+    <div class="pattern-layer"></div>
+    <div class="banner-carousel owl-theme owl-carousel owl-nav-none">
+        @foreach (var item in Model.SliderModel)
+        {
+            <div class="slide-item">
+                <div class="image-layer">
+                    <img src="data:@item.ImageContentType;base64,@Convert.ToBase64String(item.ImageData)" alt="@item.ImageName" />
+                </div>
+                <div class="auto-container">
+                    <div class="content-box">
+                        <h1>
+                            @{
+                                if (currentCulture.Equals("tr-TR"))
+                                {
+                                    @item.SliderBaslik
+                                }
+                                else
+                                {
+                                    @item.SliderBaslikEn
+                                }
+                            }
+                        </h1>
+                        <p>
+                            @{
+                                if (currentCulture.Equals("tr-TR"))
+                                {
+                                    @item.SliderAltBaslik
+                                }
+                                else
+                                {
+                                    @item.SliderAltBaslikEn
+                                }
+                            }
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+<!-- banner-section end -->
+<!-- about-section -->
+<section class="about-section">
+    <div class="auto-container">
+        <div class="row clearfix">
+            <div class="col-lg-6 col-md-12 col-sm-12 image-column">
+                <div class="image_block_1">
+                    <div class="image-box">
+                        <figure class="image"><img src="data:@Model?.VisionModel?.ImageContentType;base64,@((Model?.VisionModel?.ImageData) !=null?   Convert.ToBase64String(Model?.VisionModel?.ImageData) : null)" alt="@Model?.VisionModel?.ImageName"></figure>
+                        <div class="image-content">
+
+                            <h2>
+                                <div class="count-outer count-box">
+                                    <span class="count-text" data-speed="1500" data-stop="@Model?.RakamlarModel?.TecrübeSayi">0</span>
+                                </div>
+                            </h2>
+                            <h5>@Localizer["Yıllık Tecrübe"]</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-12 col-sm-12 content-column">
+                <div class="content_block_1">
+                    <div class="content-box">
+                        <div class="sec-title">
+                            <p>@Localizer["Hakkımızda"]</p>
+                            <h2>@Localizer["Rcv Valve Hakkında"]</h2>
+                        </div>
+                        <div class="text">
+                            <p>
+                                @{
+                                    if (currentCulture.Equals("tr-TR"))
+                                    {
+                                        @Model?.VisionModel?.Icerik
+                                    }
+                                    else
+                                    {
+                                        @Model?.VisionModel?.IcerikEn
+                                    }
+                                }
+                            </p>
+                        </div>
+                        @*                         <div class="btn-box"><a asp-controller="Corporate" asp-action="Vision" class="theme-btn-one">Devamını Oku</a></div>
+                        *@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- about-section end -->
+<!-- service-section -->
+<section class="service-section centred bg-color-1">
+    <div class="bg-layer"></div>
+    <div class="auto-container">
+        <div class="sec-title">
+            <p>@Localizer["Ürünler"]</p>
+            <h2>@Localizer["Rcv Valve Hizmetleri"]</h2>
+        </div>
+        <div class="row clearfix">
+            @foreach (var item in Model?.KategoriModels)
+            {
+                <div class="col-lg-4 col-md-6 col-sm-12 service-block">
+                    <div class="service-block-one wow fadeInUp animated animated" data-wow-delay="00ms"
+                         data-wow-duration="1500ms">
+                        <div class="inner-box">
+                            <figure class="image-box"> <img src="data:@item.ImageContentType;base64,@Convert.ToBase64String(item.ImageData)" alt="@item.ImageName" /></figure>
+                            <div class="text">
+                                <h2>
+                                    @{
+                                        if (currentCulture.Equals("tr-TR"))
+                                        {
+                                            @item.Baslık
+                                        }
+                                        else
+                                        {
+                                            @item.BaslıkEn
+                                        }
+                                    }
+                                </h2>
+                            </div>
+                            <div class="overlay-content">
+                                <div class="inner">
+                                    <h3>
+                                        <a href="service-details.html">
+                                            @{
+                                                if (currentCulture.Equals("tr-TR"))
+                                                {
+                                                    @item.Baslık
+                                                }
+                                                else
+                                                {
+                                                    @item.BaslıkEn
+                                                }
+                                            }
+                                        </a>
+                                    </h3>
+                                    @*   <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p> *@
+                                    <div class="link"><a asp-controller="Urün" asp-action="ProductDetail" asp-route-Id="@item.UrünKategorId">@Localizer["İncele"]</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            }
+
+        </div>
+        <div class="row">
+            <div class="col-12 mt-5">
+                <a class="theme-btn-one px-3  py-3" asp-controller="Urün" asp-action="ProductCategorys">@Localizer["Tüm Ürünler"]</a>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- service-section end -->
+<!-- cta-section -->
+<section class="cta-section bg-color-3">
+    <div class="pattern-layer"></div>
+    <div class="auto-container">
+        <div class="inner-box clearfix">
+            <div class="text text-center">
+                @if (Model?.FirmaModel?.Slogan != null)
+                {
+                    <h2>
+                        @{
+                            if (currentCulture.Equals("tr-TR"))
+                            {
+                                @Model.FirmaModel.Slogan
+                            }
+                            else
+                            {
+                                @Model.FirmaModel.SloganEn
+                            }
+                        }
+                    </h2>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+<!-- cta-section end -->
+<!-- gallery-section -->
+<section class="gallery-section pt-6">
+    <div class="outer-container">
+        <div class="gallery-carousel owl-carousel owl-theme owl-dots-none owl-nav-none">
+
+            @foreach (var item in Model?.GaleriModels)
+            {
+                <div class="gallery-block-one">
+                    <div class="inner-box">
+                        <figure class="image-box">
+                            <img src="data:@item.ImageContentType;base64,@Convert.ToBase64String(item.ImageData)" alt="@item.ImageName" />
+                            <a href="data:@item.ImageContentType;base64,@Convert.ToBase64String(item.ImageData)" class="view-btn lightbox-image"
+                               data-fancybox="gallery">+</a>
+                        </figure>
+                    </div>
+                </div>
+            }
+
+
+
+
+        </div>
+    </div>
+</section>
+<!-- gallery-section end -->
+<!-- funfact-section -->
+<section class="funfact-section">
+    <div class="auto-container">
+        <div class="row clearfix">
+            <div class="col-lg-6 col-md-12 col-sm-12 content-column">
+                <div class="content_block_3">
+                    <div class="content-box">
+                        <div class="sec-title">
+                            <p>
+                                @{
+                                    if (currentCulture.Equals("tr-TR"))
+                                    {
+                                        @Model?.RakamYaniModel?.Baslik
+                                    }
+                                    else
+                                    {
+                                        @Model?.RakamYaniModel?.BaslikEn
+                                    }
+                                }
+                            </p>
+                            <h2>
+                                @{
+                                    if (currentCulture.Equals("tr-TR"))
+                                    {
+                                        @Model?.RakamYaniModel?.AltBaslik
+                                    }
+                                    else
+                                    {
+                                        @Model?.RakamYaniModel?.AltBaslikEn
+                                    }
+                                }
+                            </h2>
+                        </div>
+                        <div class="text">
+                            <p>
+                                @{
+                                    if (currentCulture.Equals("tr-TR"))
+                                    {
+                                        @Model?.RakamYaniModel?.Icerik
+                                    }
+                                    else
+                                    {
+                                        @Model?.RakamYaniModel?.IcerikEn
+                                    }
+                                }
+                            </p>
+                        </div>
+                        <figure class="image-box"><img src="data:@Model?.RakamYaniModel?.ImageContentType;base64,@((Model?.RakamYaniModel?.ImageData) !=null?   Convert.ToBase64String(Model?.RakamYaniModel?.ImageData) : null)" alt="@Model?.RakamYaniModel?.ImageName"></figure>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-12 col-sm-12 inner-column">
+                <div class="content_block_4">
+                    <div class="counter-block">
+
+                        <div class="counter-block-one">
+                            <div class="icon-box"><i class="@Model?.RakamlarModel?.MusteriIcon"></i></div>
+                            <div class="count-outer count-box">
+                                <span class="count-text" data-speed="1500" data-stop="@Model?.RakamlarModel?.MusteriSayi">0</span>
+                            </div>
+                            <p>@Localizer["Mutlu Müşteri"]</p>
+                        </div>
+                        <div class="counter-block-one">
+                            <div class="icon-box"><i class="@Model?.RakamlarModel?.EkipIcon"></i></div>
+                            <div class="count-outer count-box">
+                                <span class="count-text" data-speed="1500" data-stop="@Model?.RakamlarModel?.EkipSayi">0</span>
+                            </div>
+                            <p>@Localizer["Kişilik Ekip"]</p>
+                        </div>
+                        <div class="counter-block-one">
+                            <div class="icon-box"><i class="@Model?.RakamlarModel?.TecrübeIcon"></i></div>
+                            <div class="count-outer count-box">
+                                <span class="count-text" data-speed="1500" data-stop="@Model?.RakamlarModel?.TecrübeSayi">0</span>
+                            </div>
+                            <p>@Localizer["Yıllık Tecrübe"]</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- funfact-section end -->

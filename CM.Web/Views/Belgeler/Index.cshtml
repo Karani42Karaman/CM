@@ -1,0 +1,52 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization;
+@using CM.Core.Model;
+@inject IViewLocalizer Localizer
+@model List<BelgelerModel>
+<!--Page Title-->
+<section class="page-title centred">
+    <div class="overlay-bg"></div>
+    <div class="pattern-layer"></div>
+    <div class="auto-container">
+        <div class="content-box">
+            <div class="title">
+                <h1>@Localizer["Sertifikalar"]</h1>
+            </div>
+            <ul class="bread-crumb clearfix">
+                <li><a href="./">@Localizer["Anasayfa"]</a></li>
+                <li>@Localizer["Sertifikalar"]</li>
+            </ul>
+        </div>
+    </div>
+</section>
+<!--End Page Title-->
+<!-- clients-section -->
+<section class="clients-section">
+    <div class="auto-container">
+        <div class="row">
+
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-3 col-md-6 col-6 mb-5">
+                    <figure class="galeri_link">
+                        <a href="data:@item.ImageContentType;base64,@Convert.ToBase64String(item.ImageData)"
+                           data-fancybox="group"
+                           data-caption="@item.ImageName">
+                            <img class="belge-img" src="data:@item.ImageContentType;base64,@Convert.ToBase64String(item.ImageData)" alt="@item.ImageName">
+                            <i class="fa fa-search"></i>
+                        </a>
+                    </figure>
+                    <div class="d-flex justify-content-center align-items-center py-2">
+                        <a href="data:@item.ImageContentType;base64,@Convert.ToBase64String(item.ImageData)"
+                           class="belge_dowload"
+                           download="@item.ImageName">
+                            <i class="fa fa-file-download"></i>
+                        </a>
+                    </div>
+                </div>
+            }
+
+            
+        </div>
+    </div>
+</section>
+<!-- clients-section end -->

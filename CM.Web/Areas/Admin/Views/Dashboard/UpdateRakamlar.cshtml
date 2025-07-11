@@ -1,0 +1,87 @@
+﻿@model CM.Core.Model.RakamlarModel
+@{
+    ViewData["Title"] = "UpdateRakamlar";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+
+<div class="container-fluid pt-4 px-4" style="height: 100vh;">
+    <div class="row" style="text-align:center">
+
+        <div class="col-12">
+            <div class="row" style="text-align:center">
+
+
+                <div style="text-align:center" class="bg-secondary rounded h-100 p-4">
+                    <h1>Update Rakamlar</h1>
+
+                    <h4>Rakamlar</h4>
+                    <hr />
+                    <div class="row">
+
+                        <form asp-area="Admin" asp-controller="Dashboard" asp-action="UpdateRakamlar" method="post" enctype="multipart/form-data">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+
+
+                            <div class="form-group">
+                                <label asp-for="EkipSayi" class="control-label">Ekip Sayısı</label>
+                                <input asp-for="EkipSayi" name="EkipSayi" type="number" class="form-control" required="" />
+                                <span asp-validation-for="EkipSayi" class="text-danger"></span>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label asp-for="MusteriSayi" class="control-label">Musteri Sayisi</label>
+                                <input asp-for="MusteriSayi" name="MusteriSayi" type="number" class="form-control" required="" />
+                                <span asp-validation-for="MusteriSayi" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="TecrübeSayi" class="control-label">Tecrübe Sayi</label>
+                                <input asp-for="TecrübeSayi" name="TecrübeSayi" type="number" class="form-control" required="" />
+                                <span asp-validation-for="TecrübeSayi" class="text-danger"></span>
+                            </div>
+
+                            <input asp-for="TecrübeIcon" name="TecrübeIcon" value="fas fa-calendar-alt" type="hidden" class="form-control" required="" />
+                            <input asp-for="MusteriIcon" name="MusteriIcon" value="fas fa-heart-circle" type="hidden" class="form-control" required="" />
+                            <input asp-for="EkipIcon" name="EkipIcon" value="fas fa-users" type="hidden" class="form-control" required="" />
+
+                            <div class="form-group">
+                                
+                                <input asp-for=" RakamId" type="hidden" class="form-control" required="" />
+                                <span asp-validation-for=" RakamId" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                
+                                <input asp-for=" CreateDate" type="hidden" class="form-control" required="" />
+                                <span asp-validation-for=" CreateDate" class="text-danger"></span>
+                            </div>
+
+
+
+                            <div class="form-group">
+                                <input type="submit" value="Create" class="btn btn-primary" />
+                            </div>
+                        </form>
+                    </div>
+
+                    <div>
+                        <a asp-area="admin" asp-controller="Dashboard" asp-action="RakamlarIndex">Back to List</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+} 

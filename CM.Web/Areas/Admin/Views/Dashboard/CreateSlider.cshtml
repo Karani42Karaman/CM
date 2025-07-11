@@ -1,0 +1,102 @@
+﻿@model CM.Core.Model.SliderModel
+
+@{
+    ViewData["Title"] = "CreateSlider";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<!-- Table Start -->
+
+<div class="container-fluid pt-4 px-4" style="height: 100vh;">
+    <div class="row g-4">
+        <div class="col-12 d-flex justify-content-center align-items-center" style="flex-direction: column; height: 100%;">
+
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+
+                    <div class="col-12">
+                        <div style="text-align:center" class="bg-secondary rounded h-100 p-4">
+                            <h1>CreateSlider</h1>
+
+                            <h4>Slider</h4>
+                            <hr />
+                            <div class="row justify-content-center">
+                                <div class="col-md-4">
+                                    <form asp-area="Admin" asp-controller="Dashboard" asp-action="CreateSlider" method="post" enctype="multipart/form-data">
+                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                                        <div class="form-group">
+                                            <label asp-for="SliderBaslik" class="control-label"></label>
+                                            <input asp-for="SliderBaslik" class="form-control" required="" />
+                                            <span asp-validation-for="SliderBaslik" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label asp-for="SliderBaslik" class="control-label">SliderBaslik - EN</label>
+                                            <input asp-for="SliderBaslik" name="SliderBaslikEn" class="form-control" required="" />
+                                            <span asp-validation-for="SliderBaslik" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label asp-for="SliderAltBaslik" class="control-label"></label>
+                                            <input asp-for="SliderAltBaslik" class="form-control" required="" />
+                                            <span asp-validation-for="SliderAltBaslik" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label asp-for="SliderAltBaslik" class="control-label">SliderAltBaslik - EN</label>
+                                            <input asp-for="SliderAltBaslik" name="SliderAltBaslikEn" class="form-control" required="" />
+                                            <span asp-validation-for="SliderAltBaslik" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label asp-for="ImageData" class="control-label">Resim Seç</label>
+                                            <div class="d-flex align-items-center">
+                                                <input type="file" name="imageFile" accept=".jpg, .jpeg, .png" id="imageFileInput" class="form-control" required="" />
+                                                <span asp-validation-for="ImageData" class="text-danger ml-2"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="submit" value="Create" class="btn btn-primary" />
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div>
+                                <a asp-area="admin" asp-controller="Dashboard" asp-action="GaleriIndex">Back to List</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+<script>
+    const imageFileInput = document.getElementById('imageFileInput');
+
+    imageFileInput.addEventListener('change', function () {
+        const selectedFile = this.files[0];
+
+        if (selectedFile) {
+            const fileSize = selectedFile.size; // Dosya boyutu (byte cinsinden)
+
+            // İstenilen boyutu belirleyin (örneğin, 1MB)
+            const maxFileSize = 300 * 1024; // 1MB
+
+            if (fileSize > maxFileSize) {
+                alert('Resim boyutu çok büyük. Lütfen 300kb daha küçük bir resim seçin.');
+                this.value = ''; // Dosya seçimini temizle
+            }
+
+            // Resim boyutunu kontrol ederek gerekli işlemleri gerçekleştirin
+        }
+    });
+</script>

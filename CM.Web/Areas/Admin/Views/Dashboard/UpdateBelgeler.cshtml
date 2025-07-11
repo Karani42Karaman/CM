@@ -1,0 +1,111 @@
+﻿@model CM.Core.Model.BelgelerModel
+
+@{
+    ViewData["Title"] = "UpdateBelgeler";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+
+<div class="container-fluid pt-4 px-4" style="height: 100vh;">
+    <div class="row" style="text-align:center">
+
+        <div class="col-12">
+            <div class="row" style="text-align:center">
+
+
+                <div style="text-align:center" class="bg-secondary rounded h-100 p-4">
+                    <h1>Update Belgeler</h1>
+
+                    <h4>Belgeler</h4>
+                    <hr />
+                    <div class="row" >
+                        <form asp-area="Admin" asp-controller="Dashboard" asp-action="UpdateBelgeler" method="post" enctype="multipart/form-data">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="col-24 col-sm-24">
+                                <div class="row">
+                                    <div class="col-lg-8 col-sm-8 col-12">
+                                        <div class="form-group">
+                                            <label asp-for="Baslik" class="control-label">Baslik</label>
+                                            <input asp-for="Baslik" class="form-control" value="@Model.Baslik" required="" />
+                                            <span asp-validation-for="Baslik" class="text-danger"></span>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-8 col-sm-8 col-12">
+                                        <div class="form-group">
+                                            <label asp-for="BaslikEn" class="control-label">BaslikEn</label>
+                                            <input asp-for="BaslikEn" class="form-control" value="@Model.BaslikEn" required="" />
+                                            <span asp-validation-for="Baslik" class="text-danger"></span>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-8 col-sm-8 col-12">
+                                        <div class="form-group">
+                                            <label asp-for="Baslik" class="control-label">Resim Seç</label>
+                                            <img src="data:@Model.ImageContentType;base64,@Convert.ToBase64String(Model.ImageData)" alt="@Model.ImageName" style="max-width: 100px; max-height: 100px; margin-top=500px;" />
+                                            
+                                            <div class="d-flex align-items-center">
+                                                <input type="file" name="imageFile" accept=".jpg, .jpeg, .png" id="imageFileInput" class="form-control"/>
+                                                <span asp-validation-for="Baslik" class="text-danger ml-2"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <input type="hidden" name="CreateDate" value="@Model.CreateDate" class="btn btn-primary" />
+                                <input type="hidden" name="BelgelerId" value="@Model.BelgelerId" class="btn btn-primary" />
+                                
+
+
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Create" class="btn btn-primary" />
+                            </div>
+                        </form>
+                    </div>
+
+                    <div >
+                        <a  asp-area="admin"  asp-controller="Dashboard" asp-action="Index">Back to List</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+<script>
+    const imageFileInput = document.getElementById('imageFileInput');
+
+    imageFileInput.addEventListener('change', function () {
+        const selectedFile = this.files[0];
+
+        if (selectedFile) {
+            const fileSize = selectedFile.size; // Dosya boyutu (byte cinsinden)
+
+            // İstenilen boyutu belirleyin (örneğin, 1MB)
+            const maxFileSize = 300 * 1024; // 1MB
+
+            if (fileSize > maxFileSize) {
+                alert('Resim boyutu çok büyük. Lütfen 300 kb daha küçük bir resim seçin.');
+                this.value = ''; // Dosya seçimini temizle
+            }
+
+            // Resim boyutunu kontrol ederek gerekli işlemleri gerçekleştirin
+        }
+    });
+</script>

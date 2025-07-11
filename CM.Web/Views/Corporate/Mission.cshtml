@@ -1,0 +1,61 @@
+﻿@model CM.Core.Model.MissionModel
+@inject IViewLocalizer Localizer
+@{
+
+    var currentCulture = Thread.CurrentThread.CurrentUICulture.Name;
+}
+<!--Page Title-->
+<section class="page-title centred">
+    <div class="overlay-bg"></div>
+    <div class="pattern-layer"></div>
+    <div class="auto-container">
+        <div class="content-box">
+            <div class="title">
+                <h1>@Localizer["Misyon"]</h1>
+            </div>
+            <ul class="bread-crumb clearfix">
+                <li><a href="./">@Localizer["Anasayfa"]</a></li>
+                <li>@Localizer["Misyon"]</li>
+            </ul>
+        </div>
+    </div>
+</section>
+<!--End Page Title-->
+<!-- about-section -->
+<section class="about-section border-bottom">
+    <div class="auto-container">
+        <div class="row clearfix">
+            <div class="col-lg-6 col-md-12 col-sm-12 image-column">
+                <div class="image-box mr-70">
+                    <figure class="image"><img src="data:@Model?.ImageContentType;base64,@((Model?.ImageData) !=null?   Convert.ToBase64String(Model?.ImageData) : null)" alt="@Model?.ImageName"></figure>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-12 col-sm-12 content-column">
+                <div class="content_block_1">
+                    <div class="content-box mr-0">
+                        <div class="sec-title">
+                            <p>@Localizer["Misyon"]</p>
+                            <h2>Rcv Valve</h2>
+                        </div>
+                        <div class="text">
+                            <p>
+                                @{
+                                    if (currentCulture.Equals("tr-TR"))
+                                    {
+                                        @Model?.Icerik
+                                    }
+                                    else
+                                    {
+                                        @Model?.IcerikEn
+                                    }
+                                }
+                            </p>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- about-section end -->

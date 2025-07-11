@@ -1,0 +1,78 @@
+﻿@model List<DilModelDto>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- Table Start -->
+
+<div class="container-fluid pt-4 px-4" style="height: 100vh;">
+    <div class="row g-4">
+        <div class="col-12 d-flex justify-content-center align-items-center" style="flex-direction: column; height: 100%;">
+
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+
+                    <div class="col-12" style="">
+                        <div class="bg-secondary rounded h-100 p-4">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <h6 class="mb-0">Dil    </h6>
+                                <form asp-area="Admin" asp-controller="Dashboard" asp-action="CreateDil" method="get">
+                                    <button type="submit" class="btn btn-success" style="margin-right: 25px;">Create</button>
+                                </form>
+
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    @if (Model != null && Model.Count > 0)
+                                    {
+                                        <thead>
+                                            <tr>
+ 
+                                                <th scope="col">Anahtar Kelime</th>
+                                                <th scope="col">Data</th>
+                                                <th scope="col">Anahtar</th>
+                                                <th scope="col">veri</th>
+                                                
+
+
+                                            </tr>
+                                        </thead>
+                                        @foreach (var item in Model)
+                                        {
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row">1</th>
+                                                    
+                                                    <td>@item.Key</td>
+                                                    <td>@item.Data</td>
+                                                    <td>@item.Anahatar</td>
+                                                    <td>@item.Veri</td>
+
+                                                    <td>
+                                                        <a class="btn btn-sm btn-primary" href="/Dashboard/UpdateBelgeler?Id=@item.Key">Update</a>
+                                                        @*  <button class="btn btn-sm btn-primary">Update</button> *@
+                                                        <a class="btn btn-sm btn-danger" href="/Dashboard/DeleteBelgeler?Id=@item.Key">Delete</a>
+
+                                                    </td>
+                                                </tr>
+
+                                            </tbody>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <td colspan="5">Veri bulunamadı.</td>
+                                        </tr>
+                                    }
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
