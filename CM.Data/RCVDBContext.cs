@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using CM.Core.Model;
-using System.Reflection.Emit;
+
 
 namespace CM.Data
 {
@@ -37,6 +37,8 @@ namespace CM.Data
             builder.Entity<MissionModel>().UseTpcMappingStrategy().HasKey(x => x.MissionId);
             builder.Entity<VisionModel>().UseTpcMappingStrategy().HasKey(x => x.VisionId);
 
+            builder.Entity<PriceModel>().HasKey(x => x.PriceId);
+
             builder.Entity<UrünlerModel>()
         .HasOne(b => b.UrünKategoriModel)
         .WithMany(a => a.UrünlerModel).HasForeignKey(x=>x.UrünKategoriModelUrünKategorId).OnDelete(DeleteBehavior.Cascade);
@@ -64,6 +66,8 @@ namespace CM.Data
 
 
         public DbSet<VisionModel> VisionModels { get; set; }
+
+        public DbSet<PriceModel> PriceModels { get; set; }
 
 
 

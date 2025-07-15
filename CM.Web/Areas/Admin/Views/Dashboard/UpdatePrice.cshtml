@@ -1,0 +1,167 @@
+﻿@model CM.Core.Dto.PriceDtoModel
+
+@{
+    ViewData["Title"] = "PriceFirma";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<!-- Table Start -->
+
+<div class="container-fluid pt-4 px-4" style="height: 100vh;">
+    <div class="row g-4">
+        <div class="col-12 d-flex justify-content-center align-items-center" style="flex-direction: column; height: 100%;">
+
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+
+                    <div class="col-12">
+                        <div style="text-align:center" class="bg-secondary rounded h-100 p-4">
+                            <h1>Fiyat Bilgileri</h1>
+
+                            
+                            <hr />
+                            <div class="row justify-content-center">
+                                <div class="col-md-4">
+                                    <form asp-area="Admin" asp-controller="Dashboard" asp-action="UpdatePrice" method="post" enctype="multipart/form-data">
+                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                                        <div class="form-group">
+                                            <label asp-for="PackageName" class="control-label">Paket Adı TR</label>
+                                            <input asp-for="PackageName" class="form-control" required="" />
+                                            <span asp-validation-for="PackageName" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label asp-for="PackageNameEn" class="control-label">Paket Adı En</label>
+                                            <input asp-for="PackageNameEn" class="form-control" required="" />
+                                            <span asp-validation-for="PackageNameEn" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label asp-for="PackagePrice" class="control-label">Paket Fiyatı</label>
+                                            <input asp-for="PackagePrice" class="form-control" required="" />
+                                            <span asp-validation-for="PackagePrice" class="text-danger"></span>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label class="control-label">Paket İçeriği Tr</label>
+                                            <div id="ContentTr-container">
+                                                @for (int i = 0; i < Model.PackageContent.Count; i++)
+                                                {
+                                                    <div class="d-flex mb-2 align-items-center gap-2">
+                                                        <input name="PackageContent[@i]" value="@Model.PackageContent[i]" class="form-control" required />
+                                                        <button type="button" class="btn btn-danger btn-sm" onclick="this.parentElement.remove()">Sil</button>
+                                                    </div>
+                                                }
+                                                @if (!Model.PackageContent.Any())
+                                                {
+                                                    <input name="PackageContent[0]" class="form-control mb-2" required />
+                                                }
+                                            </div>
+                                            <button type="button" class="btn btn-sm btn-secondary mt-2" onclick="addPackageContentTrInput()">+ Yeni İçerik Ekle</button>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label class="control-label">Paket İçeriği En</label>
+                                            <div id="ContentEn-container">
+                                                @for (int i = 0; i < Model.PackageContentEn.Count; i++)
+                                                {
+                                                    <div class="d-flex mb-2 align-items-center gap-2">
+                                                        <input name="PackageContentEn[@i]" value="@Model.PackageContentEn[i]" class="form-control" required />
+                                                        <button type="button" class="btn btn-danger btn-sm" onclick="this.parentElement.remove()">Sil</button>
+                                                    </div>
+                                                }
+                                                @if (!Model.PackageContentEn.Any())
+                                                {
+                                                    <input name="PackageContentEn[0]" class="form-control mb-2" required />
+                                                }
+                                            </div>
+                                            <button type="button" class="btn btn-sm btn-secondary mt-2" onclick="addPackageContentEnInput()">+ Yeni İçerik Ekle</button>
+                                        </div>
+
+                                        <input type="hidden" name="PriceId" value="@Model.PriceId" class="btn btn-primary" />
+                                        <input type="hidden" name="CreateDate" value="@Model.CreateDate" class="btn btn-primary" />
+                                        <input type="hidden" name="UpdateDate" value="@Model.UpdateDate" class="btn btn-primary" />
+
+
+                                        <br />
+
+                                        <div class="form-group">
+                                            <input type="submit" value="Update" class="btn btn-primary" />
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <br />
+                            <div>
+                                <a asp-area="admin" asp-controller="Dashboard" asp-action="PriceIndex">Back to List</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        let contentTrIndex = @(Model.PackageContent?.Count ?? 1);
+        let contentEnIndex = @(Model.PackageContentEn?.Count ?? 1);
+
+        function addPackageContentTrInput() {
+            const container = document.getElementById("ContentTr-container");
+            const wrapper = document.createElement("div");
+            wrapper.className = "d-flex mb-2 align-items-center gap-2";
+
+            const input = document.createElement("input");
+            input.name = `PackageContent[${contentTrIndex}]`;
+            input.className = "form-control";
+            input.required = true;
+
+            const button = document.createElement("button");
+            button.type = "button";
+            button.className = "btn btn-danger btn-sm";
+            button.innerText = "Sil";
+            button.onclick = function () {
+                container.removeChild(wrapper);
+            };
+
+            wrapper.appendChild(input);
+            wrapper.appendChild(button);
+            container.appendChild(wrapper);
+
+            contentTrIndex++;
+        }
+
+        function addPackageContentEnInput() {
+            const container = document.getElementById("ContentEn-container");
+            const wrapper = document.createElement("div");
+            wrapper.className = "d-flex mb-2 align-items-center gap-2";
+
+            const input = document.createElement("input");
+            input.name = `PackageContentEn[${contentEnIndex}]`;
+            input.className = "form-control";
+            input.required = true;
+
+            const button = document.createElement("button");
+            button.type = "button";
+            button.className = "btn btn-danger btn-sm";
+            button.innerText = "Sil";
+            button.onclick = function () {
+                container.removeChild(wrapper);
+            };
+
+            wrapper.appendChild(input);
+            wrapper.appendChild(button);
+            container.appendChild(wrapper);
+
+            contentEnIndex++;
+        }
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

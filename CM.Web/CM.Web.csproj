@@ -9,6 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\userFiles\katalogs\**" />
+    <Content Remove="wwwroot\userFiles\katalogs\**" />
+    <EmbeddedResource Remove="wwwroot\userFiles\katalogs\**" />
+    <None Remove="wwwroot\userFiles\katalogs\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <EmbeddedResource Remove="Resources\Home.Index.en-US.resx" />
     <EmbeddedResource Remove="Resources\Shared.Layout.tr_TR.resx" />
     <EmbeddedResource Remove="Resources\Views\Corporate.Mission.tr-TR.resx" />
@@ -114,11 +121,6 @@
     <Content Include="Resources\Views\Belgeler.Index.en-US.resx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="wwwroot\userFiles\katalogs\PRODUCT SUNTEKNİKVALVE.pdf" />
-    <None Include="wwwroot\userFiles\katalogs\ÜRÜN KATALOGU SUN TEKNİK.pdf" />
   </ItemGroup>
 
 </Project>

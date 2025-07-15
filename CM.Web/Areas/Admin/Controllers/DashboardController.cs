@@ -6,6 +6,7 @@ using CM.Core.Service;
 using RVC.Web.Areas.Admin.Helper;
 using System.Xml;
 using System.Xml.Linq;
+using System.Text;
 
 namespace RVC.Web.Areas.Admin.Controllers
 {
@@ -21,8 +22,9 @@ namespace RVC.Web.Areas.Admin.Controllers
         private readonly IVisionService _visionService;
         private readonly IMissionService _missionService;
         private readonly IUrünServices _urünServices;
+        private readonly IPriceService _priceServices;
 
-        public DashboardController(IUrünServices urünServices, IMissionService missionService, IVisionService visionService, IRakamServices rakamServices, ISliderServices sliderServices, IWebHostEnvironment webHostEnvironment, IBelgelerServices belgelerService, IGaleriServices galeriServices, IFirmaServices firmaServices)
+        public DashboardController(IUrünServices urünServices, IMissionService missionService, IVisionService visionService, IRakamServices rakamServices, ISliderServices sliderServices, IWebHostEnvironment webHostEnvironment, IBelgelerServices belgelerService, IGaleriServices galeriServices, IFirmaServices firmaServices,IPriceService priceService)
         {
             _urünServices = urünServices;
             _visionService = visionService;
@@ -33,6 +35,7 @@ namespace RVC.Web.Areas.Admin.Controllers
             _firmaServices = firmaServices;
             _webHostEnvironment = webHostEnvironment;
             _sliderServices = sliderServices;
+            _priceServices = priceService;
         }
 
         #region Belgeler
@@ -1504,7 +1507,133 @@ namespace RVC.Web.Areas.Admin.Controllers
 
         #endregion
 
+        #region Price
+        [HttpGet]
+        public IActionResult PriceIndex(Guid Id)
+        {
+            var urünList = new List<PriceModel>();
+            var model = _priceServices.GetAllAsync().Result.ToList();
+            
+            return View("~/Areas/Admin/Views/Dashboard/PriceIndex.cshtml", model);
+        }
+        [HttpGet]
+        public IActionResult CreatePrice()
+        {
+            var model = new PriceDtoModel();
+            return View("~/Areas/Admin/Views/Dashboard/CreatePrice.cshtml",model);
+        }
+        [HttpPost]
+        public IActionResult CreatePrice(PriceDtoModel model)
+        {
+            if (model != null)
+            {
+                var builder = new  StringBuilder();
+                if (model.PackageContent != null)
+                {
+                    foreach (var item in model.PackageContent)
+                    {
+                        builder.Append(item + ",");
+                    }
+                }
+               
 
+                var builderEn = new StringBuilder();
+                if (model.PackageContentEn != null)
+                {
+                    foreach (var item in model.PackageContentEn)
+                    {
+                        builderEn.Append(item + ",");
+                    }
+                }
+             
+
+                
+                var priceModel = new PriceModel()
+                {
+                    PackageName = model.PackageName,
+                    PackageNameEn = model.PackageNameEn,
+                    PackageContentEn = builder.ToString().TrimEnd(','),
+                    PackageContent = builderEn.ToString().TrimEnd(','),
+                    PackagePrice = model.PackagePrice,
+                    UpdateDate = DateTime.Now,
+                    CreateDate = DateTime.Now
+                };
+                _priceServices.Create(priceModel);
+            }
+            return RedirectToAction("PriceIndex", "Dashboard");
+        }
+        [HttpGet]
+        public IActionResult UpdatePrice(Guid id)
+        {
+
+            var model = _priceServices.GetAsync(id);
+
+            var returnModel = new PriceDtoModel()
+            {
+                PriceId = model.Result.PriceId,
+                PackageName = model.Result.PackageName,
+                PackageNameEn = model.Result.PackageNameEn,
+                PackageContent = model.Result.PackageContent?.Split(',').ToList(),
+                PackageContentEn = model.Result.PackageContentEn?.Split(',').ToList(),
+                PackagePrice = model.Result.PackagePrice,
+                CreateDate = model.Result.CreateDate,
+                UpdateDate = model.Result.UpdateDate
+            };
+
+
+
+            return View("~/Areas/Admin/Views/Dashboard/UpdatePrice.cshtml", returnModel);
+        }
+
+        [HttpPost]
+        public IActionResult UpdatePrice(PriceDtoModel model)
+        {
+            if (model != null)
+            {
+               
+
+                var builder = new StringBuilder();
+                if (model.PackageContent != null)
+                {
+                    foreach (var item in model.PackageContent)
+                    {
+                        builder.Append(item + ",");
+                    }
+                }
+               
+
+                var builderEn = new StringBuilder();
+                if (model.PackageContentEn != null)
+                {
+                    foreach (var item in model.PackageContentEn)
+                    {
+                        builderEn.Append(item + ",");
+                    }
+                }
+
+                var price = _priceServices.GetAsync(model.PriceId).Result;
+                price.PriceId = model.PriceId;
+                price.PackageName = model.PackageName;
+                price.PackageNameEn = model.PackageNameEn;
+                price.PackageContentEn = builderEn.ToString().TrimEnd(',');
+                price.PackageContent = builder.ToString().TrimEnd(',');
+                price.PackagePrice = model.PackagePrice;
+                price.UpdateDate = DateTime.Now;
+                price.CreateDate = DateTime.Now;
+                
+
+                _priceServices.Update(price);
+            }
+            return RedirectToAction("PriceIndex", "Dashboard");
+        }
+
+        public IActionResult DeletePrice(Guid id)
+        {
+            _priceServices.Remove(id);
+            return RedirectToAction("PriceIndex", "Dashboard");
+        }
+
+        #endregion
         [HttpGet]
         public IActionResult Dil()
         {

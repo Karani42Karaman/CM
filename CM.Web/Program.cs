@@ -29,6 +29,7 @@ builder.Services.AddTransient<ISliderServices, SliderServices>();
 builder.Services.AddTransient<IVisionService, VisionService>();
 builder.Services.AddTransient<IMissionService, MissionService>();
 builder.Services.AddTransient<IUrünServices, UrünKategoriServices>();
+builder.Services.AddTransient<IPriceService, PriceService>();
 
 
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");

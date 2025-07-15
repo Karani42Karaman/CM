@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using CM.Core;
+﻿using CM.Core;
 using CM.Core.Repositories;
 using CM.Data.Repositories;
 
