@@ -129,11 +129,11 @@
   <data name="Mutlu Müşteri" xml:space="preserve">
     <value>Happy Customer</value>
   </data>
-  <data name="Rcv Valve Hakkında" xml:space="preserve">
-    <value>About Rcv Valve</value>
+  <data name="Cephe Modelleme Hakkında" xml:space="preserve">
+    <value>About Cephe Modelleme</value>
   </data>
-  <data name="Rcv Valve Hizmetleri" xml:space="preserve">
-    <value>Rcv Valve Services</value>
+  <data name="Cephe Modelleme Hizmetleri" xml:space="preserve">
+    <value>Cephe Modelleme Services</value>
   </data>
   <data name="Tüm Ürünler" xml:space="preserve">
     <value>All Products</value>
@@ -153,12 +153,7 @@
   <data name="Ürünlerde Önceliklerimiz" xml:space="preserve">
     <value>Our Priorities in Products</value>
   </data>
-  <data name="Değerli müşterilerimizin ihtiyaçlarına önem veriyoruz. Markamızın dediği gibi ‘‘KALİTE SAYGIDIR’’ sloganını benimsiyor ve daima en kalitelisini üretmeye özen gösteriyoruz. Ülkemiz’in yanı sıra Dünya’nın her bölgesine teslimatlarımız da bulunuyor. Yeni markamız ‘‘CM VALVE’’ ile üretimlerimize yenilerini eklemeye devam edeceğiz" xml:space="preserve">
-    <value>We care about the needs of our valued customers. As our brand says, we adopt the slogan "QUALITY IS RESPECT" and we always take care to produce the best quality. In addition to our country, we also deliver to every region of the world. We will continue to add new products to our production with our new brand "CM VALVE"</value>
-  </data>
-  <data name="Kalite Saygıdır" xml:space="preserve">
-    <value>Quality is Respect</value>
-  </data>
+  
   <data name="türkçe">
     <value>ingilizce</value>
   </data>

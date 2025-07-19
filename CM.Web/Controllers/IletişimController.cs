@@ -45,20 +45,33 @@ namespace RVC.Web.Controllers
             IletişimDto ıletişimDto = new IletişimDto();
 
             MailMessage mailMessage = new MailMessage();
-            mailMessage.From = new MailAddress(ıletişimModel.Email);
-            mailMessage.To.Add("info@rcvvalve.com");
-            mailMessage.Subject = $"RCVVALVE - Müşteri-Ileti {ıletişimModel.PhoneNumber}";
+            mailMessage.From = new MailAddress("info@cephemodelleme.com");
+            mailMessage.To.Add("info@cephemodelleme.com");
+            
+            mailMessage.Subject = $"Cephe Modelleme - Müşteri-Ileti {ıletişimModel.PhoneNumber}";
             mailMessage.Body = ıletişimModel.Message;
 
             SmtpClient smtpClient = new SmtpClient();
-            smtpClient.Host = "mt-odin-win.guzelhosting.com";
+            smtpClient.Host = "mt-chocolate-win.guzelhosting.com";
             smtpClient.Port = 587;
-            smtpClient.UseDefaultCredentials = false;
-            smtpClient.Credentials = new NetworkCredential("info@rcvvalve.com", "xbG3pFSQg4sgXA5");
-            smtpClient.EnableSsl = false;
+            ///smtpClient.UseDefaultCredentials = true;
+            smtpClient.Credentials = new NetworkCredential("info@cephemodelleme.com", "87f@6ogG7");
+            smtpClient.EnableSsl = true;
             IletişimModel model = new IletişimModel();
             try
             {
+                //using (var smtp = new SmtpClient("mt-chocolate-win.guzelhosting.com", 587))
+                //{
+                //    smtp.EnableSsl = true;  // STARTTLS aktif
+                //    smtp.Credentials = new NetworkCredential("info@cephemodelleme.com", "87f@6ogG7");
+                //    smtp.Send(new MailMessage(
+                //        "info@cephemodelleme.com",
+                //        "info@cephemodelleme.com",
+                //        "Test başlığı",
+                //        "Merhaba, bu bir testtir."
+                //    ));
+                //}
+
 
                 smtpClient.Send(mailMessage);
                 model.Durum = true;

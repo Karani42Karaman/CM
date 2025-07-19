@@ -1,134 +1,157 @@
-﻿@inject IViewLocalizer Localizer
+﻿@model List<CM.Core.Dto.PriceDtoModel>
+@inject IViewLocalizer Localizer
+@{
 
-
+	var currentCulture = Thread.CurrentThread.CurrentUICulture.Name;
+}
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Fiyatlandırma</title>
-    <style>
-       
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Fiyatlandırma</title>
+	<style>
 
-        h1 {
-            margin-bottom: 20px;
-            color: #333;
-        }
 
-        .pricing-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
+		h1 {
+			margin-bottom: 20px;
+			color: #333;
+		}
 
-        .pricing-box {
-            background: white;
-            border-radius: 10px;
-            padding: 30px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-            width: 300px;
-            transition: transform 0.3s ease;
-        }
+		.pricing-container {
+			display: flex;
+			justify-content: center;
+			gap: 20px;
+			flex-wrap: wrap;
+		}
 
-            .pricing-box:hover {
-                transform: scale(1.05);
-            }
+		.pricing-box {
+			background: white;
+			border-radius: 10px;
+			padding: 30px;
+			box-shadow: 0 0 20px rgba(0,0,0,0.1);
+			width: 300px;
+			transition: transform 0.3s ease;
+		}
 
-        .pricing-title {
-            font-size: 24px;
-            margin-bottom: 15px;
-            color: #0077cc;
-        }
+			.pricing-box:hover {
+				transform: scale(1.05);
+			}
 
-        .price {
-            font-size: 36px;
-            margin-bottom: 20px;
-            color: #333;
-        }
+		.pricing-title {
+			font-size: 24px;
+			margin-bottom: 15px;
+			color: #0077cc;
+		}
 
-        .features {
-            list-style: none;
-            padding: 0;
-            margin-bottom: 20px;
-        }
+		.price {
+			font-size: 36px;
+			margin-bottom: 20px;
+			color: #333;
+		}
 
-            .features li {
-                padding: 8px 0;
-                border-bottom: 1px solid #eee;
-            }
+		.features {
+			list-style: none;
+			padding: 0;
+			margin-bottom: 20px;
+		}
 
-        .buy-button {
-            background: #0077cc;
-            color: white;
-            padding: 12px 25px;
-            text-decoration: none;
-            border-radius: 6px;
-            display: inline-block;
-            transition: background 0.3s;
-        }
+			.features li {
+				padding: 8px 0;
+				border-bottom: 1px solid #eee;
+			}
 
-            .buy-button:hover {
-                background: #005fa3;
-            }
-    </style>
+		.buy-button {
+			background: #0077cc;
+			color: white;
+			padding: 12px 25px;
+			text-decoration: none;
+			border-radius: 6px;
+			display: inline-block;
+			transition: background 0.3s;
+		}
+
+			.buy-button:hover {
+				background: #005fa3;
+			}
+	</style>
 </head>
 <body>
-    <section class="page-title centred">
-        <div class="overlay-bg"></div>
-        <div class="pattern-layer"></div>
-        <div class="auto-container">
-            <div class="content-box">
-                <div class="title">
-                    <h1>@Localizer["Fiyat"]</h1>
-                </div>
-                <ul class="bread-crumb clearfix">
-                    <li><a href="./">@Localizer["Anasayfa"]</a></li>
-                    <li>Fiyatlandırma Planlarımız</li>
-                </ul>
-            </div>
-        </div>
-    </section>
+	<section class="page-title centred">
+		<div class="overlay-bg"></div>
+		<div class="pattern-layer"></div>
+		<div class="auto-container">
+			<div class="content-box">
+				<div class="title">
+					<h1>@Localizer["Fiyat"]</h1>
+				</div>
+				<ul class="bread-crumb clearfix">
+					<li><a href="./">@Localizer["Anasayfa"]</a></li>
+					<li>Fiyatlandırma Planlarımız</li>
+				</ul>
+			</div>
+		</div>
+	</section>
 
-    <div class="pricing-container">
+	<div class="pricing-container">
 
-        <div class="pricing-box">
-            <div class="pricing-title">Temel Paket</div>
-            <div class="price">₺500</div>
-            <ul class="features">
-                <li>1 Cephe Modelleme</li>
-                <li>2D Görsel Çıktı</li>
-                <li>3 Gün Teslim</li>
-                <li>E-posta Destek</li>
-            </ul>
-            <a class="theme-btn-one px-3  py-3" href="#siparis" class="buy-button">Sipariş Ver</a>
-        </div>
+		@foreach (var item in Model)
+		{
+			<div class="pricing-box">
+				@{
+					if (currentCulture.Equals("tr-TR"))
+					{
+						<div class="pricing-title">@item.PackageName</div>
+						<div class="price">₺@item.PackagePrice</div>
+						<ul class="features">
+							@if (currentCulture.Equals("tr-TR"))
+							{
+								@foreach (var item2 in item.PackageContent)
+								{
+									<li>@item2</li>
+								}
 
-        <div class="pricing-box">
-            <div class="pricing-title">Profesyonel Paket</div>
-            <div class="price">₺1000</div>
-            <ul class="features">
-                <li>1-2 Cephe + 3D Modelleme</li>
-                <li>Renk & Malzeme Seçimi</li>
-                <li>2 Gün Teslim</li>
-                <li>WhatsApp Destek</li>
-            </ul>
-            <a class="theme-btn-one px-3  py-3" href="#siparis" class="buy-button">Sipariş Ver</a>
-        </div>
+							}
+							else
+							{
+								@foreach (var item2 in item.PackageContentEn)
+								{
+									<li>@item2</li>
+								}
+							}
+						</ul>
+					}
+					else
+					{
+						<div class="pricing-title">@item.PackageNameEn</div>
+						<div class="pricing-title">@item.PackageName</div>
+						<div class="price">₺@item.PackagePrice</div>
+						<ul class="features">
+							@if (currentCulture.Equals("tr-TR"))
+							{
+								@foreach (var item2 in item.PackageContent)
+								{
+									<li>@item2</li>
+								}
 
-        <div class="pricing-box">
-            <div class="pricing-title">Premium Paket</div>
-            <div class="price">₺2000</div>
-            <ul class="features">
-                <li>Tüm Bina 3D Modelleme</li>
-                <li>Render + Video</li>
-                <li>1 Gün İçinde Teslim</li>
-                <li>Öncelikli Destek</li>
-            </ul>
-            <a class="theme-btn-one px-3  py-3" href="#siparis" class="buy-button">Sipariş Ver</a>
-        </div>
+							}
+							else
+							{
+								@foreach (var item2 in item.PackageContentEn)
+								{
+									<li>@item2</li>
+								}
+							}
+						</ul>
+					}
 
-    </div>
 
+					<a class="theme-btn-one px-3  py-3 whatsappLinks" target="_blank"> Sipariş Ver</a>
+
+
+				}
+			</div>
+		}
+	</div>
 </body>
 </html>

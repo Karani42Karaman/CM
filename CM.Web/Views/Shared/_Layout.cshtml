@@ -9,7 +9,7 @@
 	<link rel="icon" href="assets/images/logo.png" type="image/x-icon">
 	<link rel="shortcut icon" href="assets/images/logo.png" type="image/x-icon">
 
-	<title>Rcv Valve</title>
+	<title>Cehpe Modelleme</title>
 
 	<!-- Fav Icon -->
 	<link rel="icon" href="assets/images/logo.png" type="image/x-icon">
@@ -50,46 +50,46 @@
                 *@                <div class="animation-preloader">
 					<div class="spinner"></div>
 					<div class="txt-loading">
-						<span data-text-preloader="R" class="letters-loading">
+						<span data-text-preloader="C" class="letters-loading">
 							C
 						</span>
-						<span data-text-preloader="C" class="letters-loading">
+						<span data-text-preloader="E" class="letters-loading">
 							E
 						</span>
-						<span data-text-preloader="V" class="letters-loading">
+						<span data-text-preloader="p" class="letters-loading">
 							P
 						</span>
-						<span data-text-preloader="" class="letters-loading">
+						<span data-text-preloader="H" class="letters-loading">
 							H
 						</span>
-						<span data-text-preloader="V" class="letters-loading">
+						<span data-text-preloader="E" class="letters-loading">
 							E
 						</span>
-						<span data-text-preloader="A" class="letters-loading">
+						<span data-text-preloader=" " class="letters-loading">
 
 						</span>
-						<span data-text-preloader="L" class="letters-loading">
+						<span data-text-preloader="M" class="letters-loading">
 							M
 						</span>
-						<span data-text-preloader="V" class="letters-loading">
+						<span data-text-preloader="O" class="letters-loading">
 							O
 						</span>
-						<span data-text-preloader="E" class="letters-loading">
+						<span data-text-preloader="D" class="letters-loading">
 							D
 						</span>
 						<span data-text-preloader="E" class="letters-loading">
 							E
 						</span>
-						<span data-text-preloader="E" class="letters-loading">
+						<span data-text-preloader="L" class="letters-loading">
 							L
 						</span>
-						<span data-text-preloader="E" class="letters-loading">
+						<span data-text-preloader="L" class="letters-loading">
 							L
 						</span>
 						<span data-text-preloader="E" class="letters-loading">
 							E
 						</span>
-						<span data-text-preloader="E" class="letters-loading">
+						<span data-text-preloader="M" class="letters-loading">
 							M
 						</span>
 						<span data-text-preloader="E" class="letters-loading">
@@ -145,7 +145,7 @@
 							<i class="icon-bar"></i>
 							<i class="icon-bar"></i>
 						</div>
-						<nav class="main-menu navbar-expand-md navbar-light">
+						<nav class="main-menu navbar-expand-md navbar-light" style="margin-top=150px">
 							<div class="collapse navbar-collapse show clearfix" id="navbarSupportedContent">
 								<ul class="navigation clearfix">
 									<li class="current">
@@ -336,32 +336,40 @@
 </body>
 
 <script>
-	window.onload = function () {
-		// AJAX isteği oluşturma
+		 window.onload = function () {
 		$.ajax({
-			url: '/Home/Firma', // İstek yapmak istediğiniz Action'ın URL'si
-			type: 'GET', // veya 'POST' olarak ayarlayın
-			dataType: 'json', // Yanıt veri türü
+			url: '/Home/Firma',
+			type: 'GET',
+			dataType: 'json',
 			success: function (result) {
-				// İstek başarılıysa, dönen veriyi belirli bir alanın içine yerleştirin
 				$('#phoneNumber').text(result.phoneNumber);
 				$('#email').text(result.email);
 				$('#adres').text(result.adres);
 				$('#emails').text(result.email);
 				$('#adress').text(result.adres);
-				   const phoneNumber = result.phoneNumber ; // Başında ülke koduyla (örn. Türkiye için 90)
-	const link = `https://wa.me/${phoneNumber}`;
-	document.getElementById("whatsappLink").href = link;
-	document.getElementById("whatsappLinks").href = link;
-	document.getElementById("phoneNumberText").innerText = `+${phoneNumber}`;
-	document.getElementById("phoneNumberTexts").innerText = `+${phoneNumber}`;
+
+				const phoneNumber = result.phoneNumber;
+				const link = `https://wa.me/${phoneNumber}`;
+
+				// Tekil ID’ler
+				document.getElementById("whatsappLink").href = link;
+				document.getElementById("whatsappLinks").href = link;
+
+				// Çoklu class ile link güncelleme
+				const whatsappLinks = document.getElementsByClassName("whatsappLinks");
+				for (let i = 0; i < whatsappLinks.length; i++) {
+					whatsappLinks[i].href = link;
+				}
+
+				document.getElementById("phoneNumberText").innerText = `+${phoneNumber}`;
+				document.getElementById("phoneNumberTexts").innerText = `+${phoneNumber}`;
 			},
 			error: function (error) {
-				// İstek başarısızsa burada işlem yapabilirsiniz
 				console.log(error);
 			}
 		});
 	};
+
 
 
 	$(document).ready(function () {

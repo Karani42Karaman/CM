@@ -10,7 +10,7 @@ using RVC.Web.Infrastructure.Extensions;
 using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
- 
+
 
 builder.Services.AddRazorPages();
 
@@ -44,12 +44,12 @@ builder.Services.AddMvc()
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
     var supportedCultures = new[]
-    {
+    {   new CultureInfo("tr-TR"),
                     new CultureInfo("en-US"),
-                    new CultureInfo("tr-TR"),
+
                 };
 
-    options.DefaultRequestCulture = new RequestCulture(culture: "en-US", uiCulture: "en-US");
+    options.DefaultRequestCulture = new RequestCulture(culture: "tr-TR", uiCulture: "tr-TR");
 
     options.SupportedCultures = supportedCultures;
 
@@ -103,7 +103,7 @@ app.UseEndpoints(endpoints =>
     endpoints.MapControllers();
 });
 
- 
+
 
 app.ConfigureAndCheckMigration();
 app.ConfigureLocalization();
