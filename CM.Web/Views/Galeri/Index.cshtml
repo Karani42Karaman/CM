@@ -31,8 +31,8 @@
                     <div class="gallery-block-one">
                         <div class="inner-box">
                             <figure class="image-box">
-                                <img src="data:@item.ImageContentType;base64,@Convert.ToBase64String(item.ImageData)" alt="">
-                                <a href="data:@item.ImageContentType;base64,@Convert.ToBase64String(item.ImageData)" class="view-btn lightbox-image"
+                                <img src="@item.ImagePath" alt="">
+                                <a href="@item.ImagePath" class="view-btn lightbox-image"
                                    data-fancybox="gallery">+</a>
                             </figure>
                         </div>

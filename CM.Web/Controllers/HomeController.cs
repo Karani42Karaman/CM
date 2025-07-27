@@ -85,8 +85,7 @@ namespace RVC.Web.Controllers
                     {
                         slider.Add(new SliderDto()
                         {
-                            ImageContentType = item.ImageContentType,
-                            ImageData = item.ImageData,
+                            ImagePath = item.ImagePath,
                             ImageName = item.ImageName,
                             SliderAltBaslik = item.SliderAltBaslik,
                             SliderAltBaslikEn = item.SliderAltBaslikEn,
@@ -115,8 +114,7 @@ namespace RVC.Web.Controllers
                         AltBaslikEn=rakamlarYani.AltBaslikEn,
                         Icerik = rakamlarYani.Icerik,
                         IcerikEn=rakamlarYani.IcerikEn,
-                        ImageContentType = rakamlarYani.ImageContentType,
-                        ImageData = rakamlarYani.ImageData,
+                        ImagePath = rakamlarYani.ImagePath,
                         ImageName = rakamlarYani.ImageName,
                     };
                 }

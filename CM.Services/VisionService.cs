@@ -39,13 +39,13 @@ namespace CM.Services
             return _unitOfWork.IRepositoriy<VisionModel>().GetAsync(id);
         }
 
-        public bool Remove(Guid id)
+        public async Task<bool> Remove(Guid id)
         {
             _unitOfWork.IRepositoriy<VisionModel>().Remove(id);
             return _unitOfWork.SaveChanges() > 0 ? true:false;
         }
 
-        public bool Update(VisionModel model)
+        public async Task <bool> Update(VisionModel model)
         {
             try
             {

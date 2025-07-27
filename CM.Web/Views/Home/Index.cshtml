@@ -13,7 +13,7 @@
         {
             <div class="slide-item">
                 <div class="image-layer">
-                    <img src="data:@item.ImageContentType;base64,@Convert.ToBase64String(item.ImageData)" alt="@item.ImageName" />
+                    <img src="@item.ImagePath" alt="@item.ImageName" />
                 </div>
                 <div class="auto-container">
                     <div class="content-box">
@@ -56,7 +56,7 @@
             <div class="col-lg-6 col-md-12 col-sm-12 image-column">
                 <div class="image_block_1">
                     <div class="image-box">
-                        <figure class="image"><img src="data:@Model?.VisionModel?.ImageContentType;base64,@((Model?.VisionModel?.ImageData) !=null?   Convert.ToBase64String(Model?.VisionModel?.ImageData) : null)" alt="@Model?.VisionModel?.ImageName"></figure>
+                        <figure class="image"><img src="@Model?.VisionModel?.ImagePath" alt="@Model?.VisionModel?.ImageName"></figure>
                         <div class="image-content">
 
                             <h2>
@@ -114,7 +114,7 @@
                     <div class="service-block-one wow fadeInUp animated animated" data-wow-delay="00ms"
                          data-wow-duration="1500ms">
                         <div class="inner-box">
-                            <figure class="image-box"> <img src="data:@item.ImageContentType;base64,@Convert.ToBase64String(item.ImageData)" alt="@item.ImageName" /></figure>
+                            <figure class="image-box"> <img src="@item.ImagePath" alt="@item.ImageName" /></figure>
                             <div class="text">
                                 <h2>
                                     @{
@@ -200,8 +200,8 @@
                 <div class="gallery-block-one">
                     <div class="inner-box">
                         <figure class="image-box">
-                            <img src="data:@item.ImageContentType;base64,@Convert.ToBase64String(item.ImageData)" alt="@item.ImageName" />
-                            <a href="data:@item.ImageContentType;base64,@Convert.ToBase64String(item.ImageData)" class="view-btn lightbox-image"
+                            <img src="@item.ImagePath" alt="@item.ImageName" />
+                            <a href="@item.ImagePath" class="view-btn lightbox-image"
                                data-fancybox="gallery">+</a>
                         </figure>
                     </div>
@@ -262,7 +262,7 @@
                                 }
                             </p>
                         </div>
-                        <figure class="image-box"><img src="data:@Model?.RakamYaniModel?.ImageContentType;base64,@((Model?.RakamYaniModel?.ImageData) !=null?   Convert.ToBase64String(Model?.RakamYaniModel?.ImageData) : null)" alt="@Model?.RakamYaniModel?.ImageName"></figure>
+                        <figure class="image-box"><img src="@Model?.RakamYaniModel?.ImagePath" alt="@Model?.RakamYaniModel?.ImageName"></figure>
 
                     </div>
                 </div>

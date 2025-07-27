@@ -7,6 +7,7 @@ using RVC.Web.Areas.Admin.Helper;
 using System.Xml;
 using System.Xml.Linq;
 using System.Text;
+using CM.Web.Infrastructure.Extensions;
 
 namespace RVC.Web.Areas.Admin.Controllers
 {
@@ -23,8 +24,9 @@ namespace RVC.Web.Areas.Admin.Controllers
         private readonly IMissionService _missionService;
         private readonly IUrünServices _urünServices;
         private readonly IPriceService _priceServices;
+        private readonly ImageService _imageService;
 
-        public DashboardController(IUrünServices urünServices, IMissionService missionService, IVisionService visionService, IRakamServices rakamServices, ISliderServices sliderServices, IWebHostEnvironment webHostEnvironment, IBelgelerServices belgelerService, IGaleriServices galeriServices, IFirmaServices firmaServices,IPriceService priceService)
+        public DashboardController(IUrünServices urünServices, IMissionService missionService, IVisionService visionService, IRakamServices rakamServices, ISliderServices sliderServices, IWebHostEnvironment webHostEnvironment, IBelgelerServices belgelerService, IGaleriServices galeriServices, IFirmaServices firmaServices, IPriceService priceService)
         {
             _urünServices = urünServices;
             _visionService = visionService;
@@ -36,6 +38,7 @@ namespace RVC.Web.Areas.Admin.Controllers
             _webHostEnvironment = webHostEnvironment;
             _sliderServices = sliderServices;
             _priceServices = priceService;
+            _imageService = new ImageService(webHostEnvironment);
         }
 
         #region Belgeler
@@ -62,27 +65,16 @@ namespace RVC.Web.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult CreateBelgeler(IFormFile imageFile, BelgelerModel belgelerModel)
+        public async Task<IActionResult> CreateBelgeler(IFormFile imageFile, BelgelerModel belgelerModel)
         {
             if (imageFile != null && imageFile.Length > 0)
             {
-                using (var stream = imageFile.OpenReadStream())
-                {
-                    using (var memoryStream = new MemoryStream())
-                    {
-                        stream.CopyTo(memoryStream);
-
-
-                        belgelerModel.UpdateDate = DateTime.Now;
-                        belgelerModel.CreateDate = DateTime.Now;
-                        belgelerModel.ImageData = memoryStream.ToArray();
-                        belgelerModel.ImageContentType = imageFile.ContentType;
-                        belgelerModel.ImageName = imageFile.FileName;
-                        belgelerModel.Link = "sadas";
-
-                        _belgeservice.Create(belgelerModel);
-                    }
-                }
+                belgelerModel.ImageName = imageFile.FileName;
+                belgelerModel.ImagePath = await _imageService.SaveImageAsync(imageFile, "belgeler");
+                belgelerModel.UpdateDate = DateTime.Now;
+                belgelerModel.CreateDate = DateTime.Now;
+                belgelerModel.Link = "sadas";
+                _belgeservice.Create(belgelerModel);
             }
             return RedirectToAction("Index", "Dashboard");
         }
@@ -95,27 +87,16 @@ namespace RVC.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateBelgeler(IFormFile imageFile, BelgelerModel belgelerModel)
+        public async Task<IActionResult> UpdateBelgeler(IFormFile imageFile, BelgelerModel belgelerModel)
         {
-            var model = _belgeservice.GetAsync(belgelerModel.BelgelerId).Result;
+            var model = await _belgeservice.GetAsync(belgelerModel.BelgelerId);
+            model.Baslik = belgelerModel.Baslik;
+            model.BaslikEn = belgelerModel.BaslikEn;
             model.UpdateDate = DateTime.Now;
-            model.Baslik = belgelerModel.Baslik != null ? belgelerModel.Baslik : model.Baslik;
             if (imageFile != null && imageFile.Length > 0)
             {
-                using (var stream = imageFile.OpenReadStream())
-                {
-                    using (var memoryStream = new MemoryStream())
-                    {
-                        stream.CopyTo(memoryStream);
-                        if (imageFile != null)
-                        {
-                            model.ImageData = memoryStream.ToArray();
-                            model.ImageContentType = imageFile.ContentType;
-                            model.ImageName = imageFile.FileName;
-                        }
-                        belgelerModel.Link = "sadas";
-                    }
-                }
+                model.ImageName = imageFile.FileName;
+                model.ImagePath = await _imageService.SaveImageAsync(imageFile, "belgeler");
             }
             _belgeservice.Update(model);
             return RedirectToAction("Index", "Dashboard");
@@ -143,26 +124,15 @@ namespace RVC.Web.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult CreateGaleri(IFormFile imageFile, GaleriModel galeriModel)
+        public async Task<IActionResult> CreateGaleri(IFormFile imageFile, GaleriModel galeriModel)
         {
             if (imageFile != null && imageFile.Length > 0)
             {
-                using (var stream = imageFile.OpenReadStream())
-                {
-                    using (var memoryStream = new MemoryStream())
-                    {
-                        stream.CopyTo(memoryStream);
-
-                        galeriModel.UpdateDate = DateTime.Now;
-                        galeriModel.CreateDate = DateTime.Now;
-                        galeriModel.ImageData = memoryStream.ToArray();
-                        galeriModel.ImageContentType = imageFile.ContentType;
-                        galeriModel.ImageName = imageFile.FileName;
-                        galeriModel.Link = "sadas";
-
-                        _galeriServices.Create(galeriModel);
-                    }
-                }
+                galeriModel.ImageName = imageFile.FileName;
+                galeriModel.ImagePath = await _imageService.SaveImageAsync(imageFile, "galeri");
+                galeriModel.UpdateDate = DateTime.Now;
+                galeriModel.CreateDate = DateTime.Now;
+                _galeriServices.Create(galeriModel);
             }
             return RedirectToAction("GaleriIndex", "Dashboard");
         }
@@ -175,27 +145,16 @@ namespace RVC.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateGaleri(IFormFile imageFile, GaleriModel galeriModel)
+        public async Task<IActionResult> UpdateGaleri(IFormFile imageFile, GaleriModel galeriModel)
         {
-            var model = _galeriServices.GetAsync(galeriModel.GaleriId).Result;
+            var model = await _galeriServices.GetAsync(galeriModel.GaleriId);
+            model.BaşlıkEn = galeriModel.BaşlıkEn;
+            model.Başlık = galeriModel.Başlık;
             model.UpdateDate = DateTime.Now;
-            model.Başlık = galeriModel.Başlık != null ? galeriModel.Başlık : model.Başlık;
             if (imageFile != null && imageFile.Length > 0)
             {
-                using (var stream = imageFile.OpenReadStream())
-                {
-                    using (var memoryStream = new MemoryStream())
-                    {
-                        stream.CopyTo(memoryStream);
-                        if (imageFile != null)
-                        {
-                            model.ImageData = memoryStream.ToArray();
-                            model.ImageContentType = imageFile.ContentType;
-                            model.ImageName = imageFile.FileName;
-                        }
-                        galeriModel.Link = "sadas";
-                    }
-                }
+                model.ImageName = imageFile.FileName;
+                model.ImagePath = await _imageService.SaveImageAsync(imageFile, "galeri");
             }
             _galeriServices.Update(model);
             return RedirectToAction("GaleriIndex", "Dashboard");
@@ -352,75 +311,17 @@ namespace RVC.Web.Areas.Admin.Controllers
 
 
         [HttpPost]
-        public IActionResult CreateSlider(string SliderBaslikEn, string SliderAltBaslikEn, IFormFile imageFile, SliderModel sliderModel)
+        public async Task<IActionResult> CreateSlider(string SliderBaslikEn, string SliderAltBaslikEn, IFormFile imageFile, SliderModel sliderModel)
         {
-            try
+            if (imageFile != null && imageFile.Length > 0)
             {
-                if (imageFile != null && imageFile.Length > 0)
-                {
-
-
-                    using (var stream = imageFile.OpenReadStream())
-                    {
-                        using (var memoryStream = new MemoryStream())
-                        {
-                            stream.CopyTo(memoryStream);
-
-                            sliderModel.UpdateDate = DateTime.Now;
-                            sliderModel.CreateDate = DateTime.Now;
-                            sliderModel.ImageData = memoryStream.ToArray();
-                            sliderModel.ImageContentType = imageFile.ContentType;
-                            sliderModel.ImageName = imageFile.FileName;
-                            sliderModel.SliderAltBaslikEn = SliderAltBaslikEn;
-                            sliderModel.SliderBaslikEn = SliderBaslikEn;
-                            _sliderServices.Create(sliderModel);
-                        }
-                    }
-
-                    //string resxFilePathEn = Path.Combine(_webHostEnvironment.ContentRootPath, "Resources/Views/Home/Index.en-US.resx");
-                    //XDocument docEn = XDocument.Load(resxFilePathEn);
-                    //XElement dataElementEn = new XElement("data",
-                    //    new XAttribute("name", sliderModel.SliderBaslik),
-                    //    new XElement("value", SliderBaslikEn)
-                    //);
-                    //docEn.Root.Add(dataElementEn);
-                    //docEn.Save(resxFilePathEn);
-
-
-                    //string resxFilePathTr = Path.Combine(_webHostEnvironment.ContentRootPath, "Resources/Views/Home/Index.tr-TR.resx");
-                    //XDocument docTr = XDocument.Load(resxFilePathTr);
-                    //XElement dataElementTr = new XElement("data",
-                    //    new XAttribute("name", sliderModel.SliderBaslik),
-                    //    new XElement("value", sliderModel.SliderBaslik)
-                    //);
-                    //docTr.Root.Add(dataElementTr);
-                    //docTr.Save(resxFilePathTr);
-
-                    //string resxFilePathEn1 = Path.Combine(_webHostEnvironment.ContentRootPath, "Resources/Views/Home/Index.en-US.resx");
-                    //XDocument docEn1 = XDocument.Load(resxFilePathEn);
-                    //XElement dataElementEn1 = new XElement("data",
-                    //    new XAttribute("name", sliderModel.SliderAltBaslik),
-                    //    new XElement("value", SliderAltBaslikEn)
-                    //);
-                    //docEn1.Root.Add(dataElementEn1);
-                    //docEn1.Save(resxFilePathEn1);
-
-                    //string resxFilePathTr2 = Path.Combine(_webHostEnvironment.ContentRootPath, "Resources/Views/Home/Index.tr-TR.resx");
-                    //XDocument docTr2 = XDocument.Load(resxFilePathTr);
-                    //XElement dataElementTr2 = new XElement("data",
-                    //    new XAttribute("name", sliderModel.SliderAltBaslik),
-                    //    new XElement("value", sliderModel.SliderAltBaslik)
-                    //);
-                    //docTr2.Root.Add(dataElementTr2);
-                    //docTr2.Save(resxFilePathTr2);
-
-
-                }
-            }
-            catch (Exception ex)
-            {
-
-                throw;
+                sliderModel.ImageName = imageFile.FileName;
+                sliderModel.ImagePath = await _imageService.SaveImageAsync(imageFile, "slider");
+                sliderModel.SliderBaslikEn = SliderBaslikEn;
+                sliderModel.SliderAltBaslikEn = SliderAltBaslikEn;
+                sliderModel.UpdateDate = DateTime.Now;
+                sliderModel.CreateDate = DateTime.Now;
+                _sliderServices.Create(sliderModel);
             }
             return RedirectToAction("SliderIndex", "Dashboard");
         }
@@ -445,62 +346,28 @@ namespace RVC.Web.Areas.Admin.Controllers
                 SliderId = model.SliderId,
                 SliderAltBaslikEn = model.SliderAltBaslikEn,
                 SliderBaslikEn = model.SliderBaslikEn,
-                ImageContentType = model.ImageContentType,
-                ImageData = model.ImageData,
-                ImageName = model.ImageName
+                ImageName = model.ImageName,
+                ImagePath = model.ImagePath,
+
             };
             return View("~/Areas/Admin/Views/Dashboard/UpdateSlider.cshtml", sliderDto);
         }
 
         [HttpPost]
-        public IActionResult UpdateSlider([FromForm] IFormFile imageFile, SliderDto sliderDto)
+        public async Task<IActionResult> UpdateSlider([FromForm] IFormFile imageFile, SliderDto sliderDto)
         {
-            try
+            var model = await _sliderServices.GetAsync(sliderDto.SliderId);
+            model.SliderBaslik = sliderDto.SliderBaslik;
+            model.SliderAltBaslik = sliderDto.SliderAltBaslik;
+            model.SliderBaslikEn = sliderDto.SliderBaslikEn;
+            model.SliderAltBaslikEn = sliderDto.SliderAltBaslikEn;
+            model.UpdateDate = DateTime.Now;
+            if (imageFile != null && imageFile.Length > 0)
             {
-                //string resxFilePathEn = Path.Combine(_webHostEnvironment.ContentRootPath, "Resources/Views/Home/Index.en-US.resx");
-                //string resxFilePathTr = Path.Combine(_webHostEnvironment.ContentRootPath, "Resources/Views/Home/Index.tr-TR.resx");
-
-                var model = _sliderServices.GetAsync(sliderDto.SliderId);
-                sliderDto.UpdateDate = DateTime.Now;
-
-                //LanguageCrud languageCrud = new LanguageCrud();
-
-                //languageCrud.Update(model.Result.SliderBaslik, sliderDto.SliderBaslik, sliderDto.SliderBaslikEn, resxFilePathEn);
-                //languageCrud.Update(model.Result.SliderBaslik, sliderDto.SliderBaslik, sliderDto.SliderBaslik, resxFilePathTr);
-
-                //languageCrud.Update(model.Result.SliderAltBaslik, sliderDto.SliderAltBaslik, sliderDto.SliderAltBaslikEn, resxFilePathEn);
-                //languageCrud.Update(model.Result.SliderAltBaslik, sliderDto.SliderAltBaslik, sliderDto.SliderAltBaslik, resxFilePathTr);
-
-
-                model.Result.SliderAltBaslik = sliderDto.SliderAltBaslik;
-                model.Result.SliderBaslik = sliderDto.SliderBaslik;
-                model.Result.UpdateDate = DateTime.Now;
-                model.Result.SliderAltBaslikEn = sliderDto.SliderAltBaslikEn;
-                model.Result.SliderBaslikEn = sliderDto.SliderBaslikEn;
-                if (imageFile != null && imageFile.Length > 0)
-                {
-                    using (var stream = imageFile.OpenReadStream())
-                    {
-                        using (var memoryStream = new MemoryStream())
-                        {
-                            stream.CopyTo(memoryStream);
-                            if (imageFile != null)
-                            {
-
-                                model.Result.ImageContentType = imageFile.ContentType;
-                                model.Result.ImageData = memoryStream.ToArray();
-                                model.Result.ImageName = imageFile.FileName;
-                            }
-                        }
-                    }
-                }
-                var update = _sliderServices.Update(model.Result);
+                model.ImageName = imageFile.FileName;
+                model.ImagePath = await _imageService.SaveImageAsync(imageFile, "slider");
             }
-            catch (Exception)
-            {
-
-                throw;
-            }
+            _sliderServices.Update(model);
             return RedirectToAction("SliderIndex", "Dashboard");
         }
 
@@ -509,13 +376,13 @@ namespace RVC.Web.Areas.Admin.Controllers
         {
             //string resxFilePathEn = Path.Combine(_webHostEnvironment.ContentRootPath, "Resources/Views/Home/Index.en-US.resx");
             //string resxFilePathTr = Path.Combine(_webHostEnvironment.ContentRootPath, "Resources/Views/Home/Index.tr-TR.resx");
-           // var model = _sliderServices.GetAsync(Id);
+            // var model = _sliderServices.GetAsync(Id);
             //LanguageCrud languageCrud = new LanguageCrud();
             //languageCrud.DeleteByName(model.Result.SliderBaslik, resxFilePathTr);
             //languageCrud.DeleteByName(model.Result.SliderBaslik, resxFilePathEn);
             //languageCrud.DeleteByName(model.Result.SliderAltBaslik, resxFilePathTr);
             //languageCrud.DeleteByName(model.Result.SliderAltBaslik, resxFilePathEn);
-           var a = _sliderServices.Remove(Id);
+            var a = _sliderServices.Remove(Id);
             return RedirectToAction("SliderIndex", "Dashboard");
         }
         #endregion
@@ -582,110 +449,26 @@ namespace RVC.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateRakamlarYani(IFormFile imageFile, RakamYaniDto rakamYaniDto)
+        public async Task<IActionResult> CreateRakamlarYani(IFormFile imageFile, RakamYaniDto rakamYaniDto)
         {
-            try
+            if (imageFile != null && imageFile.Length > 0)
             {
-                if (imageFile != null && imageFile.Length > 0)
+                rakamYaniDto.ImageName = imageFile.FileName;
+                rakamYaniDto.ImagePath = await _imageService.SaveImageAsync(imageFile, "rakamlar");
+                var rakamYaniModel = new RakamYaniModel()
                 {
-
-
-                    using (var stream = imageFile.OpenReadStream())
-                    {
-                        using (var memoryStream = new MemoryStream())
-                        {
-                            stream.CopyTo(memoryStream);
-
-                            rakamYaniDto.UpdateDate = DateTime.Now;
-                            rakamYaniDto.CreateDate = DateTime.Now;
-                            rakamYaniDto.ImageData = memoryStream.ToArray();
-                            rakamYaniDto.ImageContentType = imageFile.ContentType;
-                            rakamYaniDto.ImageName = imageFile.FileName;
-
-                            var rakamYaniModel = new RakamYaniModel()
-                            {
-                                AltBaslik = rakamYaniDto.AltBaslik,
-                                Baslik = rakamYaniDto.Baslik,
-                                CreateDate = DateTime.Now,
-                                Icerik = rakamYaniDto.Icerik,
-                                ImageContentType = rakamYaniDto.ImageContentType,
-                                ImageData = rakamYaniDto.ImageData,
-                                ImageName = rakamYaniDto.ImageName,
-                                UpdateDate = DateTime.Now,
-                                AltBaslikEn = rakamYaniDto.AltBaslikEn,
-                                BaslikEn = rakamYaniDto.BaslikEn,
-                                IcerikEn = rakamYaniDto.IcerikEn
-                            };
-                            _rakamServices.CreateRakamYani(rakamYaniModel);
-                        }
-                    }
-                    ////[Baslik]
-                    //string resxFilePathEn = Path.Combine(_webHostEnvironment.ContentRootPath, "Resources/Views/Home/Index.en-US.resx");
-                    //XDocument docEn = XDocument.Load(resxFilePathEn);
-                    //XElement dataElementEn = new XElement("data",
-                    //    new XAttribute("name", rakamYaniDto.Baslik),
-                    //    new XElement("value", rakamYaniDto.BaslikEn)
-                    //);
-                    //docEn.Root.Add(dataElementEn);
-                    //docEn.Save(resxFilePathEn);
-
-                    //string resxFilePathTr = Path.Combine(_webHostEnvironment.ContentRootPath, "Resources/Views/Home/Index.tr-TR.resx");
-                    //XDocument docTr = XDocument.Load(resxFilePathTr);
-                    //XElement dataElementTr = new XElement("data",
-                    //    new XAttribute("name", rakamYaniDto.Baslik),
-                    //    new XElement("value", rakamYaniDto.Baslik)
-                    //);
-                    //docTr.Root.Add(dataElementTr);
-                    //docTr.Save(resxFilePathTr);
-
-
-                    ////[AltBaslik]
-                    //string resxFilePathEn1 = Path.Combine(_webHostEnvironment.ContentRootPath, "Resources/Views/Home/Index.en-US.resx");
-                    //XDocument docEn1 = XDocument.Load(resxFilePathEn);
-                    //XElement dataElementEn1 = new XElement("data",
-                    //    new XAttribute("name", rakamYaniDto.AltBaslik),
-                    //    new XElement("value", rakamYaniDto.AltBaslikEn)
-                    //);
-                    //docEn1.Root.Add(dataElementEn1);
-                    //docEn1.Save(resxFilePathEn1);
-
-                    //string resxFilePathTr2 = Path.Combine(_webHostEnvironment.ContentRootPath, "Resources/Views/Home/Index.tr-TR.resx");
-                    //XDocument docTr2 = XDocument.Load(resxFilePathTr);
-                    //XElement dataElementTr2 = new XElement("data",
-                    //    new XAttribute("name", rakamYaniDto.AltBaslik),
-                    //    new XElement("value", rakamYaniDto.AltBaslik)
-                    //);
-                    //docTr2.Root.Add(dataElementTr2);
-                    //docTr2.Save(resxFilePathTr2);
-
-
-                    ////[Icerik]
-                    //string resxFilePathEn12 = Path.Combine(_webHostEnvironment.ContentRootPath, "Resources/Views/Home/Index.en-US.resx");
-                    //XDocument docEn12 = XDocument.Load(resxFilePathEn12);
-                    //XElement dataElementEn12 = new XElement("data",
-                    //    new XAttribute("name", rakamYaniDto.Icerik),
-                    //    new XElement("value", rakamYaniDto.IcerikEn)
-                    //);
-                    //docEn12.Root.Add(dataElementEn12);
-                    //docEn12.Save(resxFilePathEn12);
-
-                    //string resxFilePathTr21 = Path.Combine(_webHostEnvironment.ContentRootPath, "Resources/Views/Home/Index.tr-TR.resx");
-                    //XDocument docTr21 = XDocument.Load(resxFilePathTr21);
-                    //XElement dataElementTr21 = new XElement("data",
-                    //    new XAttribute("name", rakamYaniDto.Icerik),
-                    //    new XElement("value", rakamYaniDto.Icerik)
-                    //);
-                    //docTr21.Root.Add(dataElementTr21);
-                    //docTr21.Save(resxFilePathTr21);
-
-
-
-                }
-            }
-            catch (Exception ex)
-            {
-
-                throw;
+                    Baslik = rakamYaniDto.Baslik,
+                    AltBaslik = rakamYaniDto.AltBaslik,
+                    Icerik = rakamYaniDto.Icerik,
+                    BaslikEn = rakamYaniDto.BaslikEn,
+                    AltBaslikEn = rakamYaniDto.AltBaslikEn,
+                    IcerikEn = rakamYaniDto.IcerikEn,
+                    ImageName = rakamYaniDto.ImageName,
+                    ImagePath = rakamYaniDto.ImagePath,
+                    UpdateDate = DateTime.Now,
+                    CreateDate = DateTime.Now
+                };
+                _rakamServices.CreateRakamYani(rakamYaniModel);
             }
             return RedirectToAction("RakamlarYaniIndex", "Dashboard");
         }
@@ -711,8 +494,7 @@ namespace RVC.Web.Areas.Admin.Controllers
                 IcerikEn = model.IcerikEn,
                 CreateDate = model.CreateDate,
                 UpdateDate = model.UpdateDate,
-                ImageContentType = model.ImageContentType,
-                ImageData = model.ImageData,
+                ImagePath = model.ImagePath,
                 ImageName = model.ImageName,
                 RakamYaniId = model.RakamYaniId
             };
@@ -721,57 +503,22 @@ namespace RVC.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateRakamlarYani([FromForm] IFormFile imageFile, RakamYaniDto rakamYaniDto)
+        public async Task<IActionResult> UpdateRakamlarYani([FromForm] IFormFile imageFile, RakamYaniDto rakamYaniDto)
         {
-            try
+            var model = await _rakamServices.GetRakamYaniAsync(rakamYaniDto.RakamYaniId);
+            model.Baslik = rakamYaniDto.Baslik;
+            model.AltBaslik = rakamYaniDto.AltBaslik;
+            model.Icerik = rakamYaniDto.Icerik;
+            model.BaslikEn = rakamYaniDto.BaslikEn;
+            model.AltBaslikEn = rakamYaniDto.AltBaslikEn;
+            model.IcerikEn = rakamYaniDto.IcerikEn;
+            model.UpdateDate = DateTime.Now;
+            if (imageFile != null && imageFile.Length > 0)
             {
-                //string resxFilePathEn = Path.Combine(_webHostEnvironment.ContentRootPath, "Resources/Views/Home/Index.en-US.resx");
-                //string resxFilePathTr = Path.Combine(_webHostEnvironment.ContentRootPath, "Resources/Views/Home/Index.tr-TR.resx");
-
-                var model = _rakamServices.GetRakamYaniAsync(rakamYaniDto.RakamYaniId);
-
-                //LanguageCrud languageCrud = new LanguageCrud();
-
-                //languageCrud.Update(model.Result.Baslik, rakamYaniDto.Baslik, rakamYaniDto.BaslikEn, resxFilePathEn);
-                //languageCrud.Update(model.Result.Baslik, model.Result.Baslik, model.Result.Baslik, resxFilePathTr);
-
-                //languageCrud.Update(model.Result.AltBaslik, rakamYaniDto.AltBaslik, rakamYaniDto.AltBaslikEn, resxFilePathEn);
-                //languageCrud.Update(model.Result.AltBaslik, rakamYaniDto.AltBaslik, rakamYaniDto.AltBaslik, resxFilePathTr);
-
-                //languageCrud.Update(model.Result.Icerik, rakamYaniDto.Icerik, rakamYaniDto.IcerikEn, resxFilePathEn);
-                //languageCrud.Update(model.Result.Icerik, rakamYaniDto.Icerik, rakamYaniDto.Icerik, resxFilePathTr);
-
-                model.Result.AltBaslik = rakamYaniDto.AltBaslik;
-                model.Result.Baslik = rakamYaniDto.Baslik;
-                model.Result.UpdateDate = DateTime.Now;
-                model.Result.Icerik = rakamYaniDto.Icerik;
-                model.Result.AltBaslikEn = rakamYaniDto.AltBaslikEn;
-                model.Result.BaslikEn = rakamYaniDto.BaslikEn;
-                model.Result.IcerikEn = rakamYaniDto.IcerikEn;
-
-                if (imageFile != null && imageFile.Length > 0)
-                {
-                    using (var stream = imageFile.OpenReadStream())
-                    {
-                        using (var memoryStream = new MemoryStream())
-                        {
-                            stream.CopyTo(memoryStream);
-                            if (imageFile != null)
-                            {
-                                model.Result.ImageContentType = imageFile.ContentType;
-                                model.Result.ImageData = memoryStream.ToArray();
-                                model.Result.ImageName = imageFile.FileName;
-                            }
-                        }
-                    }
-                }
-
-                var update = _rakamServices.UpdateRakamYani(model.Result);
+                model.ImageName = imageFile.FileName;
+                model.ImagePath = await _imageService.SaveImageAsync(imageFile, "rakamlar");
             }
-            catch (Exception)
-            {
-                throw;
-            }
+            _rakamServices.UpdateRakamYani(model);
             return RedirectToAction("RakamlarYaniIndex", "Dashboard");
         }
 
@@ -811,80 +558,16 @@ namespace RVC.Web.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult CreateVision(IFormFile imageFile, string IcerikEn, VisionModel visionModel)
+        public async Task<IActionResult> CreateVision(IFormFile imageFile, string IcerikEn, VisionModel visionModel)
         {
-            try
+            if (imageFile != null && imageFile.Length > 0)
             {
-                if (imageFile != null && imageFile.Length > 0)
-                {
-
-
-                    using (var stream = imageFile.OpenReadStream())
-                    {
-                        using (var memoryStream = new MemoryStream())
-                        {
-                            stream.CopyTo(memoryStream);
-
-                            visionModel.UpdateDate = DateTime.Now;
-                            visionModel.CreateDate = DateTime.Now;
-                            visionModel.ImageData = memoryStream.ToArray();
-                            visionModel.ImageContentType = imageFile.ContentType;
-                            visionModel.ImageName = imageFile.FileName;
-                            visionModel.IcerikEn = IcerikEn;
-                            _visionService.Create(visionModel);
-                        }
-                    }
-
-                    //string resxFilePathEn = Path.Combine(_webHostEnvironment.ContentRootPath, "Resources/Views/Corporate.Vision.en-US.resx");
-                    //XDocument docEn = XDocument.Load(resxFilePathEn);
-                    //XElement dataElementEn = new XElement("data",
-                    //    new XAttribute("name", visionModel.Icerik),
-                    //    new XElement("value", IcerikEn)
-                    //);
-                    //docEn.Root.Add(dataElementEn);
-                    //docEn.Save(resxFilePathEn);
-
-
-                    //string resxFilePathTr = Path.Combine(_webHostEnvironment.ContentRootPath, "Resources/Views/Corporate.Vision.tr-TR.resx");
-                    //XDocument docTr = XDocument.Load(resxFilePathTr);
-                    //XElement dataElementTr = new XElement("data",
-                    //    new XAttribute("name", visionModel.Icerik),
-                    //    new XElement("value", visionModel.Icerik)
-                    //);
-                    //docTr.Root.Add(dataElementTr);
-                    //docTr.Save(resxFilePathTr);
-
-                    //string resxFilePathEnHome = Path.Combine(_webHostEnvironment.ContentRootPath, "Resources/Views/Home/Index.en-US.resx");
-                    //XDocument docEnHome = XDocument.Load(resxFilePathEnHome);
-                    //XElement dataElementEnHome = new XElement("data",
-                    //    new XAttribute("name", visionModel.Icerik),
-                    //    new XElement("value", IcerikEn)
-                    //);
-                    //docEnHome.Root.Add(dataElementEnHome);
-                    //docEnHome.Save(resxFilePathEnHome);
-
-
-
-                    //string resxFilePathTrHome = Path.Combine(_webHostEnvironment.ContentRootPath, "Resources/Views/Home/Index.tr-TR.resx");
-
-                    //XDocument doctrHome = XDocument.Load(resxFilePathTrHome);
-                    //XElement dataElementtrHome = new XElement("data",
-                    //    new XAttribute("name", visionModel.Icerik),
-                    //    new XElement("value", IcerikEn)
-                    //);
-                    //doctrHome.Root.Add(dataElementtrHome);
-                    //doctrHome.Save(resxFilePathTrHome);
-
-
-
-
-
-                }
-            }
-            catch (Exception ex)
-            {
-
-                throw;
+                visionModel.ImageName = imageFile.FileName;
+                visionModel.ImagePath = await _imageService.SaveImageAsync(imageFile, "vision");
+                visionModel.IcerikEn = IcerikEn;
+                visionModel.UpdateDate = DateTime.Now;
+                visionModel.CreateDate = DateTime.Now;
+                _visionService.Create(visionModel);
             }
             return RedirectToAction("VisionIndex", "Dashboard");
         }
@@ -905,8 +588,7 @@ namespace RVC.Web.Areas.Admin.Controllers
                 CreateDate = model.CreateDate,
                 UpdateDate = model.UpdateDate,
                 VisionId = model.VisionId,
-                ImageContentType = model.ImageContentType,
-                ImageData = model.ImageData,
+                ImagePath = model.ImagePath,
                 ImageName = model.ImageName,
                 Icerik = model.Icerik,
                 IcerikEn = model.IcerikEn,
@@ -916,57 +598,18 @@ namespace RVC.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateVision(IFormFile imageFile, VisionModelDto visionModelDto)
+        public async Task<IActionResult> UpdateVision(IFormFile imageFile, VisionModelDto visionModelDto)
         {
-
-            try
+            var model = await _visionService.GetAsync(visionModelDto.VisionId);
+            model.Icerik = visionModelDto.Icerik;
+            model.IcerikEn = visionModelDto.IcerikEn;
+            model.UpdateDate = DateTime.Now;
+            if (imageFile != null && imageFile.Length > 0)
             {
-                //string resxFilePathEn = Path.Combine(_webHostEnvironment.ContentRootPath, "Resources/Views/Corporate.Vision.en-US.resx");
-                //string resxFilePathTr = Path.Combine(_webHostEnvironment.ContentRootPath, "Resources/Views/Corporate.Vision.tr-TR.resx");
-
-                //string resxFilePathEnHome = Path.Combine(_webHostEnvironment.ContentRootPath, "Resources/Views/Home/Index.en-US.resx");
-                //string resxFilePathTrHome = Path.Combine(_webHostEnvironment.ContentRootPath, "Resources/Views/Home/Index.tr-TR.resx");
-
-                var model = _visionService.GetAsync(visionModelDto.VisionId);
-
-                //LanguageCrud languageCrud = new LanguageCrud();
-
-                //languageCrud.Update(model.Result.Icerik, visionModelDto.Icerik, visionModelDto.IcerikEn, resxFilePathEn);
-                //languageCrud.Update(model.Result.Icerik, visionModelDto.Icerik, visionModelDto.IcerikEn, resxFilePathTr);
-
-
-                //languageCrud.Update(model.Result.Icerik, visionModelDto.Icerik, visionModelDto.IcerikEn, resxFilePathEnHome);
-                //languageCrud.Update(model.Result.Icerik, visionModelDto.Icerik, visionModelDto.IcerikEn, resxFilePathTrHome);
-
-                model.Result.IcerikEn = visionModelDto.IcerikEn;
-                model.Result.Icerik = visionModelDto.Icerik;
-                model.Result.UpdateDate = DateTime.Now;
-
-
-                if (imageFile != null && imageFile.Length > 0)
-                {
-                    using (var stream = imageFile.OpenReadStream())
-                    {
-                        using (var memoryStream = new MemoryStream())
-                        {
-                            stream.CopyTo(memoryStream);
-                            if (imageFile != null)
-                            {
-                                model.Result.ImageContentType = imageFile.ContentType;
-                                model.Result.ImageData = memoryStream.ToArray();
-                                model.Result.ImageName = imageFile.FileName;
-                            }
-                        }
-                    }
-                }
-
-                var update = _visionService.Update(model.Result);
+                model.ImageName = imageFile.FileName;
+                model.ImagePath = await _imageService.SaveImageAsync(imageFile, "vision");
             }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
+            _visionService.Update(model);
             return RedirectToAction("VisionIndex", "Dashboard");
         }
 
@@ -998,54 +641,16 @@ namespace RVC.Web.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult CreateMission(IFormFile imageFile, string IcerikEn, MissionModel missionModel)
+        public async Task<IActionResult> CreateMission(IFormFile imageFile, string IcerikEn, MissionModel missionModel)
         {
-            try
+            if (imageFile != null && imageFile.Length > 0)
             {
-                if (imageFile != null && imageFile.Length > 0)
-                {
-
-
-                    using (var stream = imageFile.OpenReadStream())
-                    {
-                        using (var memoryStream = new MemoryStream())
-                        {
-                            stream.CopyTo(memoryStream);
-
-                            missionModel.UpdateDate = DateTime.Now;
-                            missionModel.CreateDate = DateTime.Now;
-                            missionModel.ImageData = memoryStream.ToArray();
-                            missionModel.ImageContentType = imageFile.ContentType;
-                            missionModel.ImageName = imageFile.FileName;
-                            missionModel.IcerikEn = IcerikEn;
-                            _missionService.Create(missionModel);
-                        }
-                    }
-
-                    //string resxFilePathEn = Path.Combine(_webHostEnvironment.ContentRootPath, "Resources/Views/Corporate.Mission.en-US.resx");
-                    //XDocument docEn = XDocument.Load(resxFilePathEn);
-                    //XElement dataElementEn = new XElement("data",
-                    //    new XAttribute("name", missionModel.Icerik),
-                    //    new XElement("value", IcerikEn)
-                    //);
-                    //docEn.Root.Add(dataElementEn);
-                    //docEn.Save(resxFilePathEn);
-
-
-                    //string resxFilePathTr = Path.Combine(_webHostEnvironment.ContentRootPath, "Resources/Views/Corporate.Mission.tr-TR.resx");
-                    //XDocument docTr = XDocument.Load(resxFilePathTr);
-                    //XElement dataElementTr = new XElement("data",
-                    //    new XAttribute("name", missionModel.Icerik),
-                    //    new XElement("value", missionModel.Icerik)
-                    //);
-                    //docTr.Root.Add(dataElementTr);
-                    //docTr.Save(resxFilePathTr);
-                }
-            }
-            catch (Exception ex)
-            {
-
-                throw;
+                missionModel.ImageName = imageFile.FileName;
+                missionModel.ImagePath = await _imageService.SaveImageAsync(imageFile, "mission");
+                missionModel.IcerikEn = IcerikEn;
+                missionModel.UpdateDate = DateTime.Now;
+                missionModel.CreateDate = DateTime.Now;
+                _missionService.Create(missionModel);
             }
             return RedirectToAction("MissionIndex", "Dashboard");
         }
@@ -1066,8 +671,7 @@ namespace RVC.Web.Areas.Admin.Controllers
                 CreateDate = model.CreateDate,
                 UpdateDate = model.UpdateDate,
                 MissionId = model.MissionId,
-                ImageContentType = model.ImageContentType,
-                ImageData = model.ImageData,
+                ImagePath = model.ImagePath,
                 ImageName = model.ImageName,
                 Icerik = model.Icerik,
                 IcerikEn = model.IcerikEn
@@ -1077,51 +681,18 @@ namespace RVC.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateMission(IFormFile imageFile, VisionModelDto visionModelDto)
+        public async Task<IActionResult> UpdateMission(IFormFile imageFile, VisionModelDto visionModelDto)
         {
-
-            try
+            var model = await _missionService.GetAsync(visionModelDto.VisionId);
+            model.Icerik = visionModelDto.Icerik;
+            model.IcerikEn = visionModelDto.IcerikEn;
+            model.UpdateDate = DateTime.Now;
+            if (imageFile != null && imageFile.Length > 0)
             {
-                //string resxFilePathEn = Path.Combine(_webHostEnvironment.ContentRootPath, "Resources/Views/Corporate.Mission.en-US.resx");
-                //string resxFilePathTr = Path.Combine(_webHostEnvironment.ContentRootPath, "Resources/Views/Corporate.Mission.tr-TR.resx");
-
-                var model = _missionService.GetAsync(visionModelDto.VisionId);
-
-                //LanguageCrud languageCrud = new LanguageCrud();
-
-                //languageCrud.Update(model.Result.Icerik, visionModelDto.Icerik, visionModelDto.IcerikEn, resxFilePathEn);
-                //languageCrud.Update(model.Result.Icerik, visionModelDto.Icerik, visionModelDto.Icerik, resxFilePathTr);
-
-
-                model.Result.Icerik = visionModelDto.Icerik;
-                model.Result.UpdateDate = DateTime.Now;
-                model.Result.IcerikEn = visionModelDto.IcerikEn;
-
-
-                if (imageFile != null && imageFile.Length > 0)
-                {
-                    using (var stream = imageFile.OpenReadStream())
-                    {
-                        using (var memoryStream = new MemoryStream())
-                        {
-                            stream.CopyTo(memoryStream);
-                            if (imageFile != null)
-                            {
-                                model.Result.ImageContentType = imageFile.ContentType;
-                                model.Result.ImageData = memoryStream.ToArray();
-                                model.Result.ImageName = imageFile.FileName;
-                            }
-                        }
-                    }
-                }
-
-                var update = _missionService.Update(model.Result);
+                model.ImageName = imageFile.FileName;
+                model.ImagePath = await _imageService.SaveImageAsync(imageFile, "mission");
             }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
+            _missionService.Update(model);
             return RedirectToAction("MissionIndex", "Dashboard");
         }
 
@@ -1156,54 +727,16 @@ namespace RVC.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateUrünKategori(IFormFile imageFile, string BaslıkEn, UrünKategoriModel urünKategoriModel)
+        public async Task<IActionResult> CreateUrünKategori(IFormFile imageFile, string BaslıkEn, UrünKategoriModel urünKategoriModel)
         {
-            try
+            if (imageFile != null && imageFile.Length > 0)
             {
-                if (imageFile != null && imageFile.Length > 0)
-                {
-
-
-                    using (var stream = imageFile.OpenReadStream())
-                    {
-                        using (var memoryStream = new MemoryStream())
-                        {
-                            stream.CopyTo(memoryStream);
-
-                            urünKategoriModel.UpdateDate = DateTime.Now;
-                            urünKategoriModel.CreateDate = DateTime.Now;
-                            urünKategoriModel.ImageData = memoryStream.ToArray();
-                            urünKategoriModel.ImageContentType = imageFile.ContentType;
-                            urünKategoriModel.ImageName = imageFile.FileName;
-                            urünKategoriModel.BaslıkEn = BaslıkEn;
-                            _urünServices.UrünKategoriCreate(urünKategoriModel);
-                        }
-                    }
-
-                    //string resxFilePathEn = Path.Combine(_webHostEnvironment.ContentRootPath, "Resources/Views/Urün.ProductCategorys.en-US.resx");
-                    //XDocument docEn = XDocument.Load(resxFilePathEn);
-                    //XElement dataElementEn = new XElement("data",
-                    //    new XAttribute("name", urünKategoriModel.Baslık),
-                    //    new XElement("value", BaslıkEn)
-                    //);
-                    //docEn.Root.Add(dataElementEn);
-                    //docEn.Save(resxFilePathEn);
-
-
-                    //string resxFilePathTr = Path.Combine(_webHostEnvironment.ContentRootPath, "Resources/Views/Urün.ProductCategorys.tr-TR.resx");
-                    //XDocument docTr = XDocument.Load(resxFilePathTr);
-                    //XElement dataElementTr = new XElement("data",
-                    //    new XAttribute("name", urünKategoriModel.Baslık),
-                    //    new XElement("value", urünKategoriModel.Baslık)
-                    //);
-                    //docTr.Root.Add(dataElementTr);
-                    //docTr.Save(resxFilePathTr);
-                }
-            }
-            catch (Exception ex)
-            {
-
-                throw;
+                urünKategoriModel.ImageName = imageFile.FileName;
+                urünKategoriModel.ImagePath = await _imageService.SaveImageAsync(imageFile, "kategoriler");
+                urünKategoriModel.BaslıkEn = BaslıkEn;
+                urünKategoriModel.UpdateDate = DateTime.Now;
+                urünKategoriModel.CreateDate = DateTime.Now;
+                _urünServices.UrünKategoriCreate(urünKategoriModel);
             }
             return RedirectToAction("UrünKategoriIndex", "Dashboard");
         }
@@ -1222,8 +755,7 @@ namespace RVC.Web.Areas.Admin.Controllers
                 CreateDate = model.CreateDate,
                 UpdateDate = model.UpdateDate,
                 UrünKategorId = model.UrünKategorId,
-                ImageContentType = model.ImageContentType,
-                ImageData = model.ImageData,
+                ImagePath = model.ImagePath,
                 ImageName = model.ImageName,
                 Baslık = model.Baslık,
                 BaslıkEn = model.BaslıkEn,
@@ -1234,46 +766,18 @@ namespace RVC.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateUrünKategori(IFormFile imageFile, UrünKategoriDto urünKategoriDto)
+        public async Task<IActionResult> UpdateUrünKategori(IFormFile imageFile, UrünKategoriDto urünKategoriDto)
         {
-            try
+            var model = _urünServices.UrünKategoriGetIncludeUrün(urünKategoriDto.UrünKategorId);
+            model.Baslık = urünKategoriDto.Baslık;
+            model.BaslıkEn = urünKategoriDto.BaslıkEn;
+            model.UpdateDate = DateTime.Now;
+            if (imageFile != null && imageFile.Length > 0)
             {
-                //string resxFilePathEn = Path.Combine(_webHostEnvironment.ContentRootPath, "Resources/Views/Urün.ProductCategorys.en-US.resx");
-                //string resxFilePathTr = Path.Combine(_webHostEnvironment.ContentRootPath, "Resources/Views/Urün.ProductCategorys.tr-TR.resx");
-                var model = _urünServices.UrünKategoriGetIncludeUrün(urünKategoriDto.UrünKategorId);
-
-                //LanguageCrud languageCrud = new LanguageCrud();
-
-                //languageCrud.Update(model.Baslık, urünKategoriDto.Baslık, urünKategoriDto.BaslıkEn, resxFilePathEn);
-                //languageCrud.Update(model.Baslık, urünKategoriDto.Baslık, urünKategoriDto.Baslık, resxFilePathTr);
-
-                model.BaslıkEn = urünKategoriDto.BaslıkEn;
-                model.Baslık = urünKategoriDto.Baslık;
-                model.UpdateDate = DateTime.Now;
-
-                if (imageFile != null && imageFile.Length > 0)
-                {
-                    using (var stream = imageFile.OpenReadStream())
-                    {
-                        using (var memoryStream = new MemoryStream())
-                        {
-                            stream.CopyTo(memoryStream);
-                            if (imageFile != null)
-                            {
-                                model.ImageContentType = imageFile.ContentType;
-                                model.ImageData = memoryStream.ToArray();
-                                model.ImageName = imageFile.FileName;
-                            }
-                        }
-                    }
-                }
-                var update = _urünServices.UrünKategoriUpdate(model);
+                model.ImageName = imageFile.FileName;
+                model.ImagePath = await _imageService.SaveImageAsync(imageFile, "kategoriler");
             }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
+            var update = _urünServices.UrünKategoriUpdate(model);
             return RedirectToAction("UrünKategoriIndex", "Dashboard");
         }
 
@@ -1286,7 +790,7 @@ namespace RVC.Web.Areas.Admin.Controllers
             //string resxFilePathEnProductDetail = Path.Combine(_webHostEnvironment.ContentRootPath, "Resources/Views/Urün.ProductDetail.en-US.resx");
             //string resxFilePathTrProductDetail = Path.Combine(_webHostEnvironment.ContentRootPath, "Resources/Views/Urün.ProductDetail.tr-TR.resx");
 
-           // var model = _urünServices.UrünKategoriGetIncludeUrün(Id);
+            // var model = _urünServices.UrünKategoriGetIncludeUrün(Id);
             //LanguageCrud languageCrud = new LanguageCrud();
 
             //languageCrud.DeleteByName(model.Baslık, resxFilePathTr);
@@ -1348,76 +852,27 @@ namespace RVC.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateUrün(IFormFile imageFile, UrünDto urünDto)
+        public async Task<IActionResult> CreateUrün(IFormFile imageFile, UrünDto urünDto)
         {
             try
             {
                 var urünlerModel = new UrünlerModel();
-
                 if (imageFile != null && imageFile.Length > 0)
                 {
-                    using (var stream = imageFile.OpenReadStream())
-                    {
-                        using (var memoryStream = new MemoryStream())
-                        {
-                            stream.CopyTo(memoryStream);
-
-                            urünlerModel.UpdateDate = DateTime.Now;
-                            urünlerModel.CreateDate = DateTime.Now;
-                            urünlerModel.ImageData = memoryStream.ToArray();
-                            urünlerModel.ImageContentType = imageFile.ContentType;
-                            urünlerModel.ImageName = imageFile.FileName;
-                            urünlerModel.Içerik = urünDto.Içerik;
-                            urünlerModel.Baslik = urünDto.Baslik;
-                            urünlerModel.IçerikEn = urünDto.IçerikEn;
-                            urünlerModel.BaslikEn = urünDto.BaslikEn;
-                            urünlerModel.UrünKategoriModel = _urünServices.UrünKategoriGetAsync(urünDto.UrünKategoriId).Result;
-                            _urünServices.UrünCreate(urünlerModel);
-                        }
-                    }
-
-
-                    //string resxFilePathEn = Path.Combine(_webHostEnvironment.ContentRootPath, "Resources/Views/Urün.ProductDetail.en-US.resx");
-                    //string resxFilePathTr = Path.Combine(_webHostEnvironment.ContentRootPath, "Resources/Views/Urün.ProductDetail.tr-TR.resx");
-
-                    //XDocument docEn = XDocument.Load(resxFilePathEn);
-                    //XElement dataElementEn = new XElement("data",
-                    //    new XAttribute("name", urünlerModel.Baslik),
-                    //    new XElement("value", urünDto.BaslikEn)
-                    //);
-                    //docEn.Root.Add(dataElementEn);
-                    //docEn.Save(resxFilePathEn);
-
-
-                    //XDocument docTr = XDocument.Load(resxFilePathTr);
-                    //XElement dataElementTr = new XElement("data",
-                    //    new XAttribute("name", urünlerModel.Baslik),
-                    //    new XElement("value", urünlerModel.Baslik)
-                    //);
-                    //docTr.Root.Add(dataElementTr);
-                    //docTr.Save(resxFilePathTr);
-
-                    //XDocument docEn1 = XDocument.Load(resxFilePathEn);
-                    //XElement dataElementEn1 = new XElement("data",
-                    //    new XAttribute("name", urünlerModel.Içerik),
-                    //    new XElement("value", urünDto.IçerikEn)
-                    //);
-                    //docEn1.Root.Add(dataElementEn1);
-                    //docEn1.Save(resxFilePathEn);
-
-
-                    //XDocument docTr2 = XDocument.Load(resxFilePathTr);
-                    //XElement dataElementTr2 = new XElement("data",
-                    //    new XAttribute("name", urünlerModel.Içerik),
-                    //    new XElement("value", urünlerModel.Içerik)
-                    //);
-                    //docTr2.Root.Add(dataElementTr2);
-                    //docTr2.Save(resxFilePathTr);
+                    urünlerModel.ImageName = imageFile.FileName;
+                    urünlerModel.ImagePath = await _imageService.SaveImageAsync(imageFile, "urunler");
                 }
+                urünlerModel.UpdateDate = DateTime.Now;
+                urünlerModel.CreateDate = DateTime.Now;
+                urünlerModel.Içerik = urünDto.Içerik;
+                urünlerModel.Baslik = urünDto.Baslik;
+                urünlerModel.IçerikEn = urünDto.IçerikEn;
+                urünlerModel.BaslikEn = urünDto.BaslikEn;
+                urünlerModel.UrünKategoriModel = await _urünServices.UrünKategoriGetAsync(urünDto.UrünKategoriId);
+                _urünServices.UrünCreate(urünlerModel);
             }
             catch (Exception ex)
             {
-
                 throw;
             }
             return RedirectToAction("UrünKategoriIndex", "Dashboard");
@@ -1439,69 +894,55 @@ namespace RVC.Web.Areas.Admin.Controllers
                 UrünKategoriId = Id,
                 BaslikEn = model.BaslikEn,
                 CreateDate = model.CreateDate,
-                ImageContentType = model.ImageContentType,
-                ImageData = model.ImageData,
+                ImagePath = model.ImagePath,
                 ImageName = model.ImageName,
                 Içerik = model.Içerik,
                 IçerikEn = model.IçerikEn,
                 UpdateDate = model.UpdateDate,
                 UrünId = model.UrünId
-
             };
             return View("~/Areas/Admin/Views/Dashboard/UpdateUrün.cshtml", urünDto);
         }
 
 
         [HttpPost]
-        public IActionResult UpdateUrün(IFormFile imageFile, UrünDto urünDto)
+        public async Task<IActionResult> UpdateUrün(IFormFile imageFile, UrünDto urünDto)
         {
             try
             {
-                //string resxFilePathEn = Path.Combine(_webHostEnvironment.ContentRootPath, "Resources/Views/Urün.ProductDetail.en-US.resx");
-                //string resxFilePathTr = Path.Combine(_webHostEnvironment.ContentRootPath, "Resources/Views/Urün.ProductDetail.tr-TR.resx");
-
-                var model = _urünServices.UrünGetAsync(urünDto.UrünId);
-
-                //LanguageCrud languageCrud = new LanguageCrud();
-
-                //languageCrud.Update(model.Result.Baslik, urünDto.Baslik, urünDto.BaslikEn, resxFilePathEn);
-                //languageCrud.Update(model.Result.Baslik, urünDto.Baslik, urünDto.Baslik, resxFilePathTr);
-
-                //languageCrud.Update(model.Result.Içerik, urünDto.Içerik, urünDto.IçerikEn, resxFilePathEn);
-                //languageCrud.Update(model.Result.Içerik, urünDto.Içerik, urünDto.Içerik, resxFilePathTr);
-
-                model.Result.Baslik = urünDto.Baslik;
-                model.Result.Içerik = urünDto.Içerik;
-                model.Result.BaslikEn = urünDto.BaslikEn;
-                model.Result.IçerikEn = urünDto.IçerikEn;
-                model.Result.UpdateDate = DateTime.Now;
-
-
+                var model = await _urünServices.UrünGetAsync(urünDto.UrünId);
+                model.Baslik = urünDto.Baslik;
+                model.Içerik = urünDto.Içerik;
+                model.BaslikEn = urünDto.BaslikEn;
+                model.IçerikEn = urünDto.IçerikEn;
+                model.UpdateDate = DateTime.Now;
                 if (imageFile != null && imageFile.Length > 0)
                 {
-                    using (var stream = imageFile.OpenReadStream())
-                    {
-                        using (var memoryStream = new MemoryStream())
-                        {
-                            stream.CopyTo(memoryStream);
-                            if (imageFile != null)
-                            {
-                                model.Result.ImageContentType = imageFile.ContentType;
-                                model.Result.ImageData = memoryStream.ToArray();
-                                model.Result.ImageName = imageFile.FileName;
-                            }
-                        }
-                    }
+                    model.ImageName = imageFile.FileName;
+                    model.ImagePath = await _imageService.SaveImageAsync(imageFile, "urunler");
                 }
-
-                var update = _urünServices.UrünUpdate(model.Result);
+                var update =   _urünServices.UrünUpdate(model);
             }
             catch (Exception ex)
             {
-
                 throw;
             }
+            return RedirectToAction("UrünKategoriIndex", "Dashboard");
+        }
 
+        [HttpGet]
+        public async Task<IActionResult> DeleteUrün(Guid Id)
+        {
+            var urun = await _urünServices.UrünGetAsync(Id);
+            if (urun != null)
+            {
+                if (!string.IsNullOrEmpty(urun.ImagePath))
+                {
+                    _imageService.DeleteImage(urun.ImagePath);
+                }
+                // Burada ürün silme işlemini servis katmanında yapmalısınız. Örn:
+                // await _urünServices.UrünRemove(Id);
+            }
             return RedirectToAction("UrünKategoriIndex", "Dashboard");
         }
 
@@ -1513,21 +954,21 @@ namespace RVC.Web.Areas.Admin.Controllers
         {
             var urünList = new List<PriceModel>();
             var model = _priceServices.GetAllAsync().Result.ToList();
-            
+
             return View("~/Areas/Admin/Views/Dashboard/PriceIndex.cshtml", model);
         }
         [HttpGet]
         public IActionResult CreatePrice()
         {
             var model = new PriceDtoModel();
-            return View("~/Areas/Admin/Views/Dashboard/CreatePrice.cshtml",model);
+            return View("~/Areas/Admin/Views/Dashboard/CreatePrice.cshtml", model);
         }
         [HttpPost]
         public IActionResult CreatePrice(PriceDtoModel model)
         {
             if (model != null)
             {
-                var builder = new  StringBuilder();
+                var builder = new StringBuilder();
                 if (model.PackageContent != null)
                 {
                     foreach (var item in model.PackageContent)
@@ -1535,7 +976,7 @@ namespace RVC.Web.Areas.Admin.Controllers
                         builder.Append(item + ",");
                     }
                 }
-               
+
 
                 var builderEn = new StringBuilder();
                 if (model.PackageContentEn != null)
@@ -1545,9 +986,9 @@ namespace RVC.Web.Areas.Admin.Controllers
                         builderEn.Append(item + ",");
                     }
                 }
-             
 
-                
+
+
                 var priceModel = new PriceModel()
                 {
                     PackageName = model.PackageName,
@@ -1590,7 +1031,7 @@ namespace RVC.Web.Areas.Admin.Controllers
         {
             if (model != null)
             {
-               
+
 
                 var builder = new StringBuilder();
                 if (model.PackageContent != null)
@@ -1600,7 +1041,7 @@ namespace RVC.Web.Areas.Admin.Controllers
                         builder.Append(item + ",");
                     }
                 }
-               
+
 
                 var builderEn = new StringBuilder();
                 if (model.PackageContentEn != null)
@@ -1620,7 +1061,7 @@ namespace RVC.Web.Areas.Admin.Controllers
                 price.PackagePrice = model.PackagePrice;
                 price.UpdateDate = DateTime.Now;
                 price.CreateDate = DateTime.Now;
-                
+
 
                 _priceServices.Update(price);
             }

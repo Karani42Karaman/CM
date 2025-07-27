@@ -28,15 +28,15 @@
             {
                 <div class="col-lg-3 col-md-6 col-6 mb-5">
                     <figure class="galeri_link">
-                        <a href="data:@item.ImageContentType;base64,@Convert.ToBase64String(item.ImageData)"
+                        <a href="@item.ImagePath"
                            data-fancybox="group"
                            data-caption="@item.ImageName">
-                            <img class="belge-img" src="data:@item.ImageContentType;base64,@Convert.ToBase64String(item.ImageData)" alt="@item.ImageName">
+                            <img class="belge-img" src="@item.ImagePath" alt="@item.ImageName">
                             <i class="fa fa-search"></i>
                         </a>
                     </figure>
                     <div class="d-flex justify-content-center align-items-center py-2">
-                        <a href="data:@item.ImageContentType;base64,@Convert.ToBase64String(item.ImageData)"
+                        <a href="@item.ImagePath"
                            class="belge_dowload"
                            download="@item.ImageName">
                             <i class="fa fa-file-download"></i>

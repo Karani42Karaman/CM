@@ -123,8 +123,16 @@
   <data name="Belgeler" xml:space="preserve">
     <value>Belgeler</value>
   </data>
+  <data name="Fiyat" xml:space="preserve">
+    <value>Fiyat</value>
+    <comment>Fiyat</comment>
+  </data>
   <data name="Galeri" xml:space="preserve">
     <value>Galeri</value>
+  </data>
+  <data name="Hizmetler" xml:space="preserve">
+    <value>Hizmetler</value>
+    <comment>Hizmetler</comment>
   </data>
   <data name="Katalog" xml:space="preserve">
     <value>Katalog</value>

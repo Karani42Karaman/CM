@@ -1,6 +1,5 @@
 
 /* Css For Firbrigs */
-
 /************ TABLE OF CONTENTS ***************
 1. Fonts
 2. Reset
@@ -41,9 +40,6 @@
 
 
 **********************************************/
-
-
-
 /*** 
 
 ====================================================================
@@ -68,7 +64,7 @@
 }
 
 ::selection {
-    background: #ffc107;
+    background: #1bbac0ba;
     color: white;
 }
 
@@ -307,7 +303,7 @@ h1, h2, h3, h4, h5, h6 {
     }
 
 .handle-preloader .animation-preloader .spinner {
-    border: 3px solid #ffc107;
+    border: 3px solid #1bbac0ba;
     border-top-color: rgba(204, 94, 40, 0.3);
 }
 
@@ -4902,7 +4898,7 @@ footer {
 }
 
 .icon-bg {
-    background-color: #ffc107;
+    background-color: #1bbac0ba;
     width: 35px;
     height: 35px;
     display: flex;
@@ -4925,7 +4921,7 @@ footer {
 
 
 .links-contact a:hover {
-    color: #ffc107;
+    color: #1bbac0ba;
 }
 
 .footer-top-bg {

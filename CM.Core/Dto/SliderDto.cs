@@ -15,7 +15,6 @@ namespace CM.Core.Dto
         public DateTime UpdateDate { get; set; }
 
         public string ImageName { get; set; }
-        public string ImageContentType { get; set; }
-        public byte[] ImageData { get; set; }
+        public string ImagePath { get; set; } // Dosya yolu
     }
 }

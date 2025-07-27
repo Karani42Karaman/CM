@@ -27,7 +27,7 @@
         <div class="row clearfix">
             <div class="col-lg-6 col-md-12 col-sm-12 image-column">
                 <div class="image-box mr-70">
-                    <figure class="image"><img src="data:@Model?.ImageContentType;base64,@((Model?.ImageData) !=null?   Convert.ToBase64String(Model?.ImageData) : null)" alt="@Model?.ImageName"></figure>
+                    <figure class="image"><img src="@Model?.ImagePath" alt="@Model?.ImageName"></figure>
                 </div>
             </div>
             <div class="col-lg-6 col-md-12 col-sm-12 content-column">

@@ -17,6 +17,8 @@
 	<link href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap"
 		  rel="stylesheet">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Moon+Dance">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 	<!-- Stylesheets -->
 	<link href="~/assets/css/style.css" rel="stylesheet">
 	<link href="~/assets/css/plugins.css" rel="stylesheet">
@@ -160,12 +162,12 @@
 											<li><a asp-controller="Corporate" asp-action="Mission">@Localizer["Misyon"]</a></li>
 										</ul>
 									</li>
-									<li class=""><a asp-controller="Urün" asp-action="ProductCategorys">@Localizer["Ürünler"]</a></li>
+									<li class=""><a asp-controller="Urün" asp-action="ProductCategorys">@Localizer["Hizmetler"]</a></li>
 
 
 									<li class=""><a asp-controller="Iletişim" asp-action="Index">@Localizer["İletişim"]</a></li>
 
-									<li class=""><a asp-controller="Price" asp-action="Index">Price</a></li>
+									<li class=""><a asp-controller="Price" asp-action="Index">@Localizer["Fiyat"]</a></li>
 								</ul>
 							</div>
 						</nav>
@@ -195,7 +197,7 @@
 					<li id="adres"></li>
 					<li>
 						<a href="#" id="whatsappLink" target="_blank">
-							<img src="https://cdn-icons-png.flaticon.com/24/733/733585.png" alt="WhatsApp Icon" style="vertical-align: middle; margin-right: 5px;">
+							<img src="https://cdn-icons-png.flaticon.com/24/733/733585.png" alt="cehpe modelleme" style="vertical-align: middle; margin-right: 5px;">
 							<span id="phoneNumberText">WhatsApp ile iletişime geç</span>
 						</a>
 					</li>
@@ -204,10 +206,19 @@
 			</div>
 			<div class="social-links">
 				<ul class="clearfix">
-					<li><a href="index.html"><span class="fab fa-twitter"></span></a></li>
-					<li><a href="index.html"><span class="fab fa-facebook-square"></span></a></li>
+					<li>
+						<a href="#" id="whatsappLink_üst" target="_blank">
+							<img src="https://cdn-icons-png.flaticon.com/24/733/733585.png" alt="cehpe modelleme" style="vertical-align: middle; margin-right: 5px;">
+							 
+						</a>
+					</li>
+					<li>
+						<a href="mailto:ornek@mail.com">
+							<i class="fas fa-envelope"></i>
+						</a>
+					</li>
 					<li><a href="index.html"><span class="fab fa-instagram"></span></a></li>
-					<li><a href="index.html"><span class="fab fa-youtube"></span></a></li>
+					 
 				</ul>
 			</div>
 		</nav>
@@ -306,7 +317,17 @@
 
 								<ul class="footer-social  clearfix text-center mt-4">
 									@* <li><a href="index.html"><i class="fab fa-twitter"></i></a></li>*@
-									<li><a href="https://www.facebook.com/profile.php?id=100093957633014"><i class="fab fa-facebook-square"></i></a></li>
+									<li>
+										<a href="#" id="whatsappLink_alt" target="_blank">
+											<img src="https://cdn-icons-png.flaticon.com/24/733/733585.png" alt="cehpe modelleme" style="vertical-align: middle; margin-right: 5px;">
+										</a>
+									</li>
+									<li>
+										<a href="mailto:ornek@mail.com" id="email_alt">
+											<i class="fas fa-envelope"></i>
+										</a>
+									</li>
+
 									<li><a href="https://www.instagram.com/rcvvalvesunteknik/"><i class="fab fa-instagram"></i></a></li>
 									@* <li><a href="index.html"><i class="fab fa-youtube"></i></a></li>*@
 								</ul>
@@ -346,6 +367,8 @@
 				$('#email').text(result.email);
 				$('#adres').text(result.adres);
 				$('#emails').text(result.email);
+				$('#email_alt').text(result.email);
+				$('#email_üst').text(result.email);
 				$('#adress').text(result.adres);
 
 				const phoneNumber = result.phoneNumber;
@@ -354,6 +377,8 @@
 				// Tekil ID’ler
 				document.getElementById("whatsappLink").href = link;
 				document.getElementById("whatsappLinks").href = link;
+				document.getElementById("whatsappLink_alt").href = link;
+				document.getElementById("whatsappLink_üst").href = link;
 
 				// Çoklu class ile link güncelleme
 				const whatsappLinks = document.getElementsByClassName("whatsappLinks");
@@ -362,7 +387,7 @@
 				}
 
 				document.getElementById("phoneNumberText").innerText = `+${phoneNumber}`;
-				document.getElementById("phoneNumberTexts").innerText = `+${phoneNumber}`;
+ 				document.getElementById("phoneNumberTexts").innerText = `+${phoneNumber}`;
 			},
 			error: function (error) {
 				console.log(error);
@@ -400,7 +425,7 @@
 
 							// Resim öğesini oluşturun ve bağlantıya ekleyin
 							var image = new Image();
-							image.src = "data: " + result.imageContentType + "; base64, " + result.imageData;
+							image.src = result.imagePath;
 							image.width = 50;
 							image.height = 50;
 							link.append(image);

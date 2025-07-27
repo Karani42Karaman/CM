@@ -38,7 +38,7 @@ namespace RVC.Web.Controllers
         public IActionResult ProductDetail(Guid Id)
         {
             var dto = new ProductDetailDto();
-            var urün = _urünServices.GetUrünId(Id);
+            var urün = _urünServices.UrünKategoriGetIncludeUrün(Id)?.UrünlerModel?.FirstOrDefault();
             var kategoris = _urünServices.UrünKategoriGetAllAsync().Result;
             dto.UrünlerModel = urün;
             dto.UrünKategoris = kategoris?.ToList();

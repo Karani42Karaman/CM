@@ -67,7 +67,7 @@
             <div class="col-lg-8 col-md-12 col-sm-12 content-side">
                 <div class="service-details-content">
                     <div class="inner-box">
-                        <figure class="image-box"><img src="data:@Model?.UrünlerModel?.ImageContentType;base64,@Convert.ToBase64String(Model?.UrünlerModel?.ImageData)" alt="@Model?.UrünlerModel?.ImageName" /></figure>
+                        <figure class="image-box"><img src="@Model?.UrünlerModel?.ImagePath" alt="@Model?.UrünlerModel?.ImageName" /></figure>
                         <div class="text">
                             <h2>
                                 @{
