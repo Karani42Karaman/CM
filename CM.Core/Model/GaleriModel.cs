@@ -8,8 +8,7 @@ namespace CM.Core.Model
     public class GaleriModel: ImageModel
     {
         public Guid GaleriId { get; set; }
-        public string Link { get; set; }
-        public string Başlık { get; set; }
+         public string Başlık { get; set; }
         public string BaşlıkEn { get; set; }
 
         public bool Durum { get; set; }

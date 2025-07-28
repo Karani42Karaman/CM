@@ -5,10 +5,10 @@ using CM.Core.Service;
 
 namespace RVC.Web.Controllers
 {
-    public class UrünController : Controller
+    public class ServiceController : Controller
     {
         private readonly IUrünServices _urünServices;
-        public UrünController(IUrünServices urünServices)
+        public ServiceController(IUrünServices urünServices)
         {
             _urünServices = urünServices;
         }
