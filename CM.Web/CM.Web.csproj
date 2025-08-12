@@ -8,12 +8,7 @@
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="wwwroot\userFiles\katalogs\**" />
-    <Content Remove="wwwroot\userFiles\katalogs\**" />
-    <EmbeddedResource Remove="wwwroot\userFiles\katalogs\**" />
-    <None Remove="wwwroot\userFiles\katalogs\**" />
-  </ItemGroup>
+ 
 
   <ItemGroup>
     <EmbeddedResource Remove="Resources\Home.Index.en-US.resx" />
