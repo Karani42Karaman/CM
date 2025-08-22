@@ -1,0 +1,27 @@
+{
+  "name": "Cephe Modelleme",
+  "short_name": "Cephe Modelleme",
+  "description": "3D ve 2D mimari modelleme, render alma, dış cephe tasarımı ve görselleştirme hizmetleri",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/assets/images/logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/images/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "productivity"],
+  "lang": "tr",
+  "dir": "ltr"
+}

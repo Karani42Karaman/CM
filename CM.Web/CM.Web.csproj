@@ -8,6 +8,13 @@
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="wwwroot\userFiles\**" />
+    <Content Remove="wwwroot\userFiles\**" />
+    <EmbeddedResource Remove="wwwroot\userFiles\**" />
+    <None Remove="wwwroot\userFiles\**" />
+  </ItemGroup>
+
  
 
   <ItemGroup>
@@ -109,7 +116,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\assets\" />
-    <Folder Include="wwwroot\userFiles\upload\" />
+    <Folder Include="wwwroot\keys\" />
   </ItemGroup>
 
   <ItemGroup>

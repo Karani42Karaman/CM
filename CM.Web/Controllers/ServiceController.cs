@@ -14,6 +14,32 @@ namespace RVC.Web.Controllers
         }
         public IActionResult ProductCategorys()
         {
+            // SEO Meta Tags
+            ViewBag.SeoModel = new CM.Web.Models.SeoModel
+            {
+                Title = "Hizmetlerimiz | Cephe Modelleme - 3D 2D Mimari Modelleme",
+                Description = "Cephe Modelleme hizmetlerimiz: 3D modelleme, 2D modelleme, render alma, mimari görselleştirme, dış cephe tasarımı ve animasyon hizmetleri.",
+                Keywords = "hizmetler, 3d modelleme hizmetleri, 2d modelleme, render hizmetleri, mimari görselleştirme, cephe tasarımı",
+                CanonicalUrl = "https://www.cephemodelleme.com/Service",
+                OgTitle = "Hizmetlerimiz | Cephe Modelleme - 3D 2D Mimari Modelleme",
+                OgDescription = "Cephe Modelleme hizmetlerimiz: 3D modelleme, 2D modelleme, render alma, mimari görselleştirme, dış cephe tasarımı ve animasyon hizmetleri.",
+                OgImage = "https://www.cephemodelleme.com/assets/images/logo.png",
+                TwitterTitle = "Hizmetlerimiz | Cephe Modelleme - 3D 2D Mimari Modelleme",
+                TwitterDescription = "Cephe Modelleme hizmetlerimiz: 3D modelleme, 2D modelleme, render alma, mimari görselleştirme, dış cephe tasarımı ve animasyon hizmetleri.",
+                TwitterImage = "https://www.cephemodelleme.com/assets/images/logo.png",
+                StructuredData = @"{
+                    ""@context"": ""https://schema.org"",
+                    ""@type"": ""Service"",
+                    ""name"": ""Mimari Modelleme ve Görselleştirme Hizmetleri"",
+                    ""description"": ""3D ve 2D mimari modelleme, render alma, dış cephe tasarımı ve görselleştirme hizmetleri"",
+                    ""provider"": {
+                        ""@type"": ""Organization"",
+                        ""name"": ""Cephe Modelleme""
+                    },
+                    ""serviceType"": ""Mimari Modelleme ve Görselleştirme""
+                }"
+            };
+
             var models = _urünServices.UrünKategoriGetAllAsync().Result;
             return View(models);
         }

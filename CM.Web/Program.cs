@@ -16,19 +16,19 @@ builder.Services.AddRazorPages();
 
 builder.Services.ConfigureDbContext(builder.Configuration);
 builder.Services.ConfigureIdentity();
-builder.Services.ConfigureSession();
+builder.Services.ConfigureSession(builder.Environment );
 builder.Services.ConfigureRouting();
 builder.Services.ConfigureApplicationCookie();
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 builder.Services.AddTransient<IFirmaServices, FirmaServices>();
 builder.Services.AddTransient<IBelgelerServices, BelgelerService>();
 builder.Services.AddTransient<IGaleriServices, GaleriServices>();
-builder.Services.AddTransient<IIletiþimServices, IletiþimServices>();
+builder.Services.AddTransient<IIletiÅŸimServices, IletiÅŸimServices>();
 builder.Services.AddTransient<IRakamServices, RakamServices>();
 builder.Services.AddTransient<ISliderServices, SliderServices>();
 builder.Services.AddTransient<IVisionService, VisionService>();
 builder.Services.AddTransient<IMissionService, MissionService>();
-builder.Services.AddTransient<IUrünServices, UrünKategoriServices>();
+builder.Services.AddTransient<IUrÃ¼nServices,UrÃ¼nKategoriServices>();
 builder.Services.AddTransient<IPriceService, PriceService>();
 
 
@@ -75,10 +75,13 @@ builder.Services.AddAuthorization(options =>
 var app = builder.Build();
 
 app.UseStaticFiles();
-app.UseSession();
 
 app.UseHttpsRedirection();
 app.UseRouting();
+app.UseSession();
+
+// SEO Middleware
+app.UseMiddleware<CM.Web.Infrastructure.Middleware.SeoMiddleware>();
 
 app.UseAuthentication();
 app.UseAuthorization();

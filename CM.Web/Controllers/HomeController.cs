@@ -55,6 +55,32 @@ namespace RVC.Web.Controllers
         {
             try
             {
+                // SEO Meta Tags
+                ViewBag.SeoModel = new CM.Web.Models.SeoModel
+                {
+                    Title = "Cephe Modelleme | 3D 2D Mimari Modelleme, Render ve Görselleştirme",
+                    Description = "Cephe Modelleme: 3D ve 2D mimari modelleme, render alma, dış cephe tasarımı ve görselleştirme hizmetleri. Profesyonel mimari animasyon, proje sunumu ve dijital reklam çözümleri.",
+                    Keywords = "cephe modelleme, 3d modelleme, 2d modelleme, render, mimari görselleştirme, dış cephe tasarımı, mimari animasyon, proje sunumu, dijital reklam, architectural visualization, facade modeling, architectural rendering",
+                    CanonicalUrl = "https://www.cephemodelleme.com/",
+                    OgTitle = "Cephe Modelleme | 3D 2D Mimari Modelleme, Render ve Görselleştirme",
+                    OgDescription = "Cephe Modelleme: 3D ve 2D mimari modelleme, render alma, dış cephe tasarımı ve görselleştirme hizmetleri.",
+                    OgImage = "https://www.cephemodelleme.com/assets/images/logo.png",
+                    TwitterTitle = "Cephe Modelleme | 3D 2D Mimari Modelleme, Render ve Görselleştirme",
+                    TwitterDescription = "Cephe Modelleme: 3D ve 2D mimari modelleme, render alma, dış cephe tasarımı ve görselleştirme hizmetleri.",
+                    TwitterImage = "https://www.cephemodelleme.com/assets/images/logo.png",
+                    StructuredData = @"{
+                        ""@context"": ""https://schema.org"",
+                        ""@type"": ""WebSite"",
+                        ""name"": ""Cephe Modelleme"",
+                        ""url"": ""https://www.cephemodelleme.com/"",
+                        ""description"": ""3D ve 2D mimari modelleme, render alma, dış cephe tasarımı ve görselleştirme hizmetleri."",
+                        ""potentialAction"": {
+                            ""@type"": ""SearchAction"",
+                            ""target"": ""https://www.cephemodelleme.com/search?q={search_term_string}"",
+                            ""query-input"": ""required name=search_term_string""
+                        }
+                    }"
+                };
                 #region Firma
                 var firmaModel = _firmaServices.GetAllAsync().Result.FirstOrDefault();
                 FirmaDto firma = null;

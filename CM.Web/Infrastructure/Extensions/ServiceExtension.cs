@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using CM.Data;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using CM.Data;
 
 namespace RVC.Web.Infrastructure.Extensions
 {
@@ -33,14 +34,20 @@ namespace RVC.Web.Infrastructure.Extensions
             .AddEntityFrameworkStores<RCVDBContext>();
         }
 
-        public static void ConfigureSession(this IServiceCollection services)
+        public static void ConfigureSession(this IServiceCollection services,  IWebHostEnvironment env)
         {
             services.AddDistributedMemoryCache();
             services.AddSession(options =>
             {
                 options.Cookie.Name = "CM.Session";
-                options.IdleTimeout = TimeSpan.FromMinutes(10);
+                options.IdleTimeout = TimeSpan.FromDays(2);
             });
+
+            var keysPath = Path.Combine(env.ContentRootPath, "keys");
+
+            services.AddDataProtection()
+                .PersistKeysToFileSystem(new DirectoryInfo(keysPath))
+                .SetApplicationName("CMApp"); 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
@@ -50,9 +57,10 @@ namespace RVC.Web.Infrastructure.Extensions
         {
             services.ConfigureApplicationCookie(options =>
             {
-                options.LoginPath = new PathString("/Account/Login");
+                options.LoginPath = new PathString("/admin");
                 options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
+                options.ExpireTimeSpan = TimeSpan.FromDays(2);
+                options.SlidingExpiration = true; // Her istekte süreyi uzat
                 options.AccessDeniedPath = new PathString("/Account/AccessDenied");
             });
         }

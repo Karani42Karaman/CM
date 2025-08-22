@@ -3,73 +3,111 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-	<link rel="icon" href="assets/images/logo.png" type="image/x-icon">
-	<link rel="shortcut icon" href="assets/images/logo.png" type="image/x-icon">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="icon" href="assets/images/logo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="assets/images/logo.png" type="image/x-icon">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#000000">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Cephe Modelleme">
 
-	<title>Cephe Modelleme | 3D 2D Mimari Modelleme, Render ve Görselleştirme</title>
-	<meta name="description" content="Cephe Modelleme: 3D ve 2D mimari modelleme, render alma, dış cephe tasarımı ve görselleştirme hizmetleri. Profesyonel mimari animasyon, proje sunumu ve dijital reklam çözümleri.">
-	<meta name="keywords" content="cephe modelleme, 3d modelleme, 2d modelleme, render, mimari görselleştirme, dış cephe tasarımı, mimari animasyon, proje sunumu, dijital reklam, architectural visualization, facade modeling, architectural rendering">
-	<meta name="author" content="Cephe Modelleme">
-	<meta name="robots" content="index, follow">
-	<link rel="canonical" href="https://www.cephemodelleme.com/" />
+    @if (ViewBag.SeoModel != null)
+    {
+        @await Html.PartialAsync("_SeoMetaTags", (object)ViewBag.SeoModel)
+    }
+    else
+    {
+        <title>Cephe Modelleme | 3D 2D Mimari Modelleme, Render ve Görselleştirme</title>
+        <meta name="description" content="Cephe Modelleme: 3D ve 2D mimari modelleme, render alma, dış cephe tasarımı ve görselleştirme hizmetleri. Profesyonel mimari animasyon, proje sunumu ve dijital reklam çözümleri.">
+        <meta name="keywords" content="cephe modelleme, 3d modelleme, 2d modelleme, render, mimari görselleştirme, dış cephe tasarımı, mimari animasyon, proje sunumu, dijital reklam, architectural visualization, facade modeling, architectural rendering">
+        <meta name="author" content="Cephe Modelleme">
+        <meta name="robots" content="index, follow">
+        <link rel="canonical" href="https://www.cephemodelleme.com/" />
 
-	<!-- Open Graph / Facebook -->
-	<meta property="og:type" content="website">
-	<meta property="og:title" content="Cephe Modelleme | 3D 2D Mimari Modelleme, Render ve Görselleştirme">
-	<meta property="og:description" content="Cephe Modelleme: 3D ve 2D mimari modelleme, render alma, dış cephe tasarımı ve görselleştirme hizmetleri.">
-	<meta property="og:url" content="https://www.cephemodelleme.com/">
-	<meta property="og:image" content="https://www.cephemodelleme.com/assets/images/logo.png">
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="website">
+        <meta property="og:title" content="Cephe Modelleme | 3D 2D Mimari Modelleme, Render ve Görselleştirme">
+        <meta property="og:description" content="Cephe Modelleme: 3D ve 2D mimari modelleme, render alma, dış cephe tasarımı ve görselleştirme hizmetleri.">
+        <meta property="og:url" content="https://www.cephemodelleme.com/">
+        <meta property="og:image" content="https://www.cephemodelleme.com/assets/images/logo.png">
 
-	<!-- Twitter -->
-	<meta name="twitter:card" content="summary_large_image">
-	<meta name="twitter:title" content="Cephe Modelleme | 3D 2D Mimari Modelleme, Render ve Görselleştirme">
-	<meta name="twitter:description" content="Cephe Modelleme: 3D ve 2D mimari modelleme, render alma, dış cephe tasarımı ve görselleştirme hizmetleri.">
-	<meta name="twitter:image" content="https://www.cephemodelleme.com/assets/images/logo.png">
+        <!-- Twitter -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Cephe Modelleme | 3D 2D Mimari Modelleme, Render ve Görselleştirme">
+        <meta name="twitter:description" content="Cephe Modelleme: 3D ve 2D mimari modelleme, render alma, dış cephe tasarımı ve görselleştirme hizmetleri.">
+        <meta name="twitter:image" content="https://www.cephemodelleme.com/assets/images/logo.png">
+    }
 
-	<!-- Structured Data (JSON-LD) -->
-	<script type="application/ld+json">
-	{
-	  "context": "https://schema.org",
-	  "type": "Organization",
-	  "name": "Cephe Modelleme",
-	  "url": "https://www.cephemodelleme.com/",
-	  "logo": "https://www.cephemodelleme.com/assets/images/logo.png",
-	  "description": "3D ve 2D mimari modelleme, render alma, dış cephe tasarımı ve görselleştirme hizmetleri.",
-	  "contactPoint": {
-	    "type": "ContactPoint",
-	    "telephone": "+90-555-555-5555",
-	    "contactType": "customer service"
-	  }
-	}
-	</script>
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+        {
+          "context": "https://schema.org",
+          "type": "Organization",
+          "name": "Cephe Modelleme",
+          "url": "https://www.cephemodelleme.com/",
+          "logo": "https://www.cephemodelleme.com/assets/images/logo.png",
+          "description": "3D ve 2D mimari modelleme, render alma, dış cephe tasarımı ve görselleştirme hizmetleri.",
+          "foundingDate": "2020",
+          "areaServed": "Türkiye",
+          "serviceType": "Mimari Modelleme ve Görselleştirme",
+          "contactPoint": {
+            "type": "ContactPoint",
+            "telephone": "+90-555-555-5555",
+            "contactType": "customer service",
+            "availableLanguage": ["Turkish", "English"]
+          },
+          "sameAs": [
+            "https://www.facebook.com/cephemodelleme",
+            "https://www.instagram.com/cephemodelleme",
+            "https://www.linkedin.com/company/cephemodelleme"
+          ],
+          "address": {
+            "type": "PostalAddress",
+            "addressCountry": "TR",
+            "addressLocality": "İstanbul"
+          }
+        }
+    </script>
 
-	<!-- Fav Icon -->
-	<link rel="icon" href="assets/images/logo.png" type="image/x-icon">
-	<!-- Google Fonts -->
-	<link href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap"
-		  rel="stylesheet">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Moon+Dance">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Additional SEO Meta Tags -->
+    <meta name="language" content="tr">
+    <meta name="geo.region" content="TR">
+    <meta name="geo.placename" content="İstanbul">
+    <meta name="geo.position" content="41.0082;28.9784">
+    <meta name="ICBM" content="41.0082, 28.9784">
+    <meta name="distribution" content="global">
+    <meta name="rating" content="general">
+    <meta name="revisit-after" content="7 days">
+    <meta name="google-site-verification" content="your-google-verification-code">
+    <meta name="msvalidate.01" content="your-bing-verification-code">
 
-	<!-- Stylesheets -->
-	<link href="~/assets/css/style.css" rel="stylesheet">
-	<link href="~/assets/css/plugins.css" rel="stylesheet">
-	
+    <!-- Fav Icon -->
+    <link rel="icon" href="assets/images/logo.png" type="image/x-icon">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Moon+Dance">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-	<link href="~/assets/css/responsive.css" rel="stylesheet">
-	<style>
-		.icon-bg {
-			width: 32px;
-			height: 32px;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-		}
+    <!-- Stylesheets -->
+    <link href="~/assets/css/style.css" rel="stylesheet">
+    <link href="~/assets/css/plugins.css" rel="stylesheet">
 
-	</style>
+
+    <link href="~/assets/css/responsive.css" rel="stylesheet">
+    <style>
+        .icon-bg {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+    </style>
 </head>
 
 
@@ -79,406 +117,406 @@
 
 
 
-	<!-- preloader -->
-	<div class="loader-wrap">
-		<div class="preloader">
-			<div id="handle-preloader" class="handle-preloader">
-				@*                 <div class="preloader-logo"><img src="assets/images/header.jpg" alt=""></div>
+    <!-- preloader -->
+    <div class="loader-wrap">
+        <div class="preloader">
+            <div id="handle-preloader" class="handle-preloader">
+                @*                 <div class="preloader-logo"><img src="assets/images/header.jpg" alt=""></div>
                 *@                <div class="animation-preloader">
-					<div class="spinner"></div>
-					<div class="txt-loading">
-						<span data-text-preloader="C" class="letters-loading">
-							C
-						</span>
-						<span data-text-preloader="E" class="letters-loading">
-							E
-						</span>
-						<span data-text-preloader="p" class="letters-loading">
-							P
-						</span>
-						<span data-text-preloader="H" class="letters-loading">
-							H
-						</span>
-						<span data-text-preloader="E" class="letters-loading">
-							E
-						</span>
-						<span data-text-preloader=" " class="letters-loading">
+                    <div class="spinner"></div>
+                    <div class="txt-loading">
+                        <span data-text-preloader="C" class="letters-loading">
+                            C
+                        </span>
+                        <span data-text-preloader="E" class="letters-loading">
+                            E
+                        </span>
+                        <span data-text-preloader="p" class="letters-loading">
+                            P
+                        </span>
+                        <span data-text-preloader="H" class="letters-loading">
+                            H
+                        </span>
+                        <span data-text-preloader="E" class="letters-loading">
+                            E
+                        </span>
+                        <span data-text-preloader=" " class="letters-loading">
 
-						</span>
-						<span data-text-preloader="M" class="letters-loading">
-							M
-						</span>
-						<span data-text-preloader="O" class="letters-loading">
-							O
-						</span>
-						<span data-text-preloader="D" class="letters-loading">
-							D
-						</span>
-						<span data-text-preloader="E" class="letters-loading">
-							E
-						</span>
-						<span data-text-preloader="L" class="letters-loading">
-							L
-						</span>
-						<span data-text-preloader="L" class="letters-loading">
-							L
-						</span>
-						<span data-text-preloader="E" class="letters-loading">
-							E
-						</span>
-						<span data-text-preloader="M" class="letters-loading">
-							M
-						</span>
-						<span data-text-preloader="E" class="letters-loading">
-							E
-						</span>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- preloader end -->
-	<!-- main header -->
-	<header class="main-header">
-		<div class="header-top">
-			<!-- header-top -->
-			<div class="auto-container">
-				<div class="top-inner clearfix">
+                        </span>
+                        <span data-text-preloader="M" class="letters-loading">
+                            M
+                        </span>
+                        <span data-text-preloader="O" class="letters-loading">
+                            O
+                        </span>
+                        <span data-text-preloader="D" class="letters-loading">
+                            D
+                        </span>
+                        <span data-text-preloader="E" class="letters-loading">
+                            E
+                        </span>
+                        <span data-text-preloader="L" class="letters-loading">
+                            L
+                        </span>
+                        <span data-text-preloader="L" class="letters-loading">
+                            L
+                        </span>
+                        <span data-text-preloader="E" class="letters-loading">
+                            E
+                        </span>
+                        <span data-text-preloader="M" class="letters-loading">
+                            M
+                        </span>
+                        <span data-text-preloader="E" class="letters-loading">
+                            E
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- preloader end -->
+    <!-- main header -->
+    <header class="main-header">
+        <div class="header-top">
+            <!-- header-top -->
+            <div class="auto-container">
+                <div class="top-inner clearfix">
 
-					<div class="text pull-left mobil-left">
-						<ul class="dil">
-							<li><a href="~/SetLanguage?culture=tr-TR" class="tr"></a></li>
-						</ul>
-					</div>
+                    <div class="text pull-left mobil-left">
+                        <ul class="dil">
+                            <li><a href="~/SetLanguage?culture=tr-TR" class="tr"></a></li>
+                        </ul>
+                    </div>
 
-					<div class="text pull-left mobil-left">
-						<ul class="dil">
-							<li><a href="~/SetLanguage?culture=en-US" class="en"></a></li>
-						</ul>
-					</div>
-
-
-					<div class="top-right pull-right mobil-right">
-						<ul class="social-links clearfix">
-							<li><a href="https://www.facebook.com/profile.php?id=100093957633014"><i class="fab fa-facebook-square"></i></a></li>
-							<li><a href="https://www.instagram.com/rcvvalvesunteknik/"><i class="fab fa-instagram"></i></a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- header-lower -->
-		<div class="header-lower">
-			<div class="auto-container">
-				<div class="outer-box clearfix">
-					<div class="logo-box pull-left">
-						<figure class="logo"><a asp-controller="Home" asp-action="Index"><img src="~/assets/images/logo.png" alt=""></a></figure>
-					</div>
-					<div class="menu-area pull-left">
-						<!--Mobile Navigation Toggler-->
-						<div class="mobile-nav-toggler">
-							<i class="icon-bar"></i>
-							<i class="icon-bar"></i>
-							<i class="icon-bar"></i>
-						</div>
-						<nav class="main-menu navbar-expand-md navbar-light" style="margin-top=150px">
-							<div class="collapse navbar-collapse show clearfix" id="navbarSupportedContent">
-								<ul class="navigation clearfix">
-									<li class="current">
-										<a asp-controller="Home" asp-action="Index">@Localizer["Anasayfa"]</a>
-									</li>
-									<li class="dropdown ">
-										<a class="dropdown-toggle"
-										   href="javascript:void(0)">@Localizer["Kurumsal"]</a>
-										<ul>
-											@*  <li><a asp-controller="Corporate" asp-action="AboutUs">Hakkımızda</a></li> *@
-											<li><a asp-controller="Corporate" asp-action="Vision">@Localizer["Vizyon"]</a></li>
-											<li><a asp-controller="Corporate" asp-action="Mission">@Localizer["Misyon"]</a></li>
-										</ul>
-									</li>
-									<li class=""><a asp-controller="Service" asp-action="ProductCategorys">@Localizer["Hizmetler"]</a></li>
+                    <div class="text pull-left mobil-left">
+                        <ul class="dil">
+                            <li><a href="~/SetLanguage?culture=en-US" class="en"></a></li>
+                        </ul>
+                    </div>
 
 
-									<li class=""><a asp-controller="Iletişim" asp-action="Index">@Localizer["İletişim"]</a></li>
+                    <div class="top-right pull-right mobil-right">
+                        <ul class="social-links clearfix">
+                            <li><a href="#"><i class="fab fa-facebook-square"></i></a></li>
+                            <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-									<li class=""><a asp-controller="Price" asp-action="Index">@Localizer["Fiyat"]</a></li>
-								</ul>
-							</div>
-						</nav>
-					</div>
-
-				</div>
-			</div>
-		</div>
-
-		<!--sticky Header-->
-
-	</header>
-	<!-- main-header end -->
-	<!-- Mobile Menu  -->
-	<div class="mobile-menu">
-		<div class="menu-backdrop"></div>
-		<div class="close-btn"><i class="fas fa-times"></i></div>
-
-		<nav class="menu-box">
-			<div class="nav-logo"><a href="index.html"><img src="~/assets/images/logo.png" alt="cephe modelleme" title="cephe modelleme"></a></div>
-			<div class="menu-outer">
-				<!--Here Menu Will Come Automatically Via Javascript / Same Menu as in Header-->
-			</div>
-			<div class="contact-info">
-				<h4>@Localizer["İletişim Bilgileri"]</h4>
-				<ul>
-					<li id="adres"></li>
-					<li>
-						<a href="#" id="whatsappLink" target="_blank">
-							<img src="https://cdn-icons-png.flaticon.com/24/733/733585.png" alt="cehpe modelleme" style="vertical-align: middle; margin-right: 5px;">
-							<span id="phoneNumberText">WhatsApp ile iletişime geç</span>
-						</a>
-					</li>
-					<li><a id="email"></a></li>
-				</ul>
-			</div>
-			<div class="social-links">
-				<ul class="clearfix">
-					<li>
-						<a href="#" id="whatsappLink_üst" target="_blank">
-							<img src="https://cdn-icons-png.flaticon.com/24/733/733585.png" alt="cehpe modelleme" style="vertical-align: middle; margin-right: 5px;">
-							 
-						</a>
-					</li>
-					<li>
-						<a href="mailto:ornek@mail.com">
-							<i class="fas fa-envelope"></i>
-						</a>
-					</li>
-					<li><a href="index.html"><span class="fab fa-instagram"></span></a></li>
-					 
-				</ul>
-			</div>
-		</nav>
-	</div><!-- End Mobile Menu -->
-	@RenderBody()
+        <!-- header-lower -->
+        <div class="header-lower">
+            <div class="auto-container">
+                <div class="outer-box clearfix">
+                    <div class="logo-box pull-left">
+                        <figure class="logo"><a asp-controller="Home" asp-action="Index"><img src="~/assets/images/logo.png" alt=""></a></figure>
+                    </div>
+                    <div class="menu-area pull-left">
+                        <!--Mobile Navigation Toggler-->
+                        <div class="mobile-nav-toggler">
+                            <i class="icon-bar"></i>
+                            <i class="icon-bar"></i>
+                            <i class="icon-bar"></i>
+                        </div>
+                        <nav class="main-menu navbar-expand-md navbar-light" style="margin-top=150px">
+                            <div class="collapse navbar-collapse show clearfix" id="navbarSupportedContent">
+                                <ul class="navigation clearfix">
+                                    <li class="current">
+                                        <a asp-controller="Home" asp-action="Index">@Localizer["Anasayfa"]</a>
+                                    </li>
+                                    <li class="dropdown ">
+                                        <a class="dropdown-toggle"
+                                           href="javascript:void(0)">@Localizer["Kurumsal"]</a>
+                                        <ul>
+                                            @*  <li><a asp-controller="Corporate" asp-action="AboutUs">Hakkımızda</a></li> *@
+                                            <li><a asp-controller="Corporate" asp-action="Vision">@Localizer["Vizyon"]</a></li>
+                                            <li><a asp-controller="Corporate" asp-action="Mission">@Localizer["Misyon"]</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class=""><a asp-controller="Service" asp-action="ProductCategorys">@Localizer["Hizmetler"]</a></li>
 
 
+                                    <li class=""><a asp-controller="Iletişim" asp-action="Index">@Localizer["İletişim"]</a></li>
+
+                                    <li class=""><a asp-controller="Price" asp-action="Index">@Localizer["Fiyat"]</a></li>
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!--sticky Header-->
+
+    </header>
+    <!-- main-header end -->
+    <!-- Mobile Menu  -->
+    <div class="mobile-menu">
+        <div class="menu-backdrop"></div>
+        <div class="close-btn"><i class="fas fa-times"></i></div>
+
+        <nav class="menu-box">
+            <div class="nav-logo"><a href="index.html"><img src="~/assets/images/logo.png" alt="cephe modelleme" title="cephe modelleme"></a></div>
+            <div class="menu-outer">
+                <!--Here Menu Will Come Automatically Via Javascript / Same Menu as in Header-->
+            </div>
+            <div class="contact-info">
+                <h4>@Localizer["İletişim Bilgileri"]</h4>
+                <ul>
+                    <li id="adres"></li>
+                    <li>
+                        <a href="#" id="whatsappLink" target="_blank">
+                            <img src="https://cdn-icons-png.flaticon.com/24/733/733585.png" alt="cehpe modelleme" style="vertical-align: middle; margin-right: 5px;">
+                            <span id="phoneNumberText">WhatsApp ile iletişime geç</span>
+                        </a>
+                    </li>
+                    <li><a id="email"></a></li>
+                </ul>
+            </div>
+            <div class="social-links">
+                <ul class="clearfix">
+                    <li>
+                        <a href="#" id="whatsappLink_üst" target="_blank">
+                            <img src="https://cdn-icons-png.flaticon.com/24/733/733585.png" alt="cehpe modelleme" style="vertical-align: middle; margin-right: 5px;">
+
+                        </a>
+                    </li>
+                    <li>
+                        <a href="mailto:ornek@mail.com">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </li>
+                    <li><a href="index.html"><span class="fab fa-instagram"></span></a></li>
+
+                </ul>
+            </div>
+        </nav>
+    </div><!-- End Mobile Menu -->
+    @RenderBody()
 
 
-	<!-- main-footer -->
-	<footer class="main-footer">
-		<div class="footer-top-bg"></div>
-		<figure class="footer-logo">
-			<a href="./">
-				<img class="img-fluid" src="~/assets/images/logo-beyaz.png"
-					 alt="Rcv Valve">
-			</a>
-		</figure>
-		<div class="footer-top">
-			<div class="auto-container">
-				<div class="widget-section">
-					<div class="row clearfix">
-						<div class="col-lg-4 col-md-6 col-sm-12 footer-column">
-							<div class="footer-widget links-widget">
-								<div class="widget-title">
-									<h4>@Localizer["İç Bağlantılar"]</h4>
-								</div>
-								<div class="widget-content">
-									<ul class="links-list clearfix">
-										<li><a asp-controller="Home" asp-action="Index">@Localizer["Anasayfa"]</a></li>
-										<li><a asp-controller="Corporate" asp-action="Mission">@Localizer["Misyon"]</a></li>
-										<li><a asp-controller="Corporate" asp-action="Vizyon">@Localizer["Vizyon"]</a></li>
-										<li><a asp-controller="Service" asp-action="ProductCategorys">@Localizer["Hizmetler"]</a></li>
 
-										<li><a asp-controller="Iletişim" asp-action="Index">@Localizer["İletişim"]</a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4 col-md-6 col-sm-12 footer-column">
-							<div class="footer-widget links-widget">
-								<div class="widget-title">
-									@* <h4>Ürünler</h4>*@
-								</div>
-								<div class="widget-content">
-									@* <ul class="links-list clearfix">
+
+    <!-- main-footer -->
+    <footer class="main-footer">
+        <div class="footer-top-bg"></div>
+        <figure class="footer-logo">
+            <a href="./">
+                <img class="img-fluid" src="~/assets/images/logo-beyaz.png"
+                     alt="Cephe Modelleme">
+            </a>
+        </figure>
+        <div class="footer-top">
+            <div class="auto-container">
+                <div class="widget-section">
+                    <div class="row clearfix">
+                        <div class="col-lg-4 col-md-6 col-sm-12 footer-column">
+                            <div class="footer-widget links-widget">
+                                <div class="widget-title">
+                                    <h4>@Localizer["İç Bağlantılar"]</h4>
+                                </div>
+                                <div class="widget-content">
+                                    <ul class="links-list clearfix">
+                                        <li><a asp-controller="Home" asp-action="Index">@Localizer["Anasayfa"]</a></li>
+                                        <li><a asp-controller="Corporate" asp-action="Mission">@Localizer["Misyon"]</a></li>
+                                        <li><a asp-controller="Corporate" asp-action="Vizyon">@Localizer["Vizyon"]</a></li>
+                                        <li><a asp-controller="Service" asp-action="ProductCategorys">@Localizer["Hizmetler"]</a></li>
+
+                                        <li><a asp-controller="Iletişim" asp-action="Index">@Localizer["İletişim"]</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-12 footer-column">
+                            <div class="footer-widget links-widget">
+                                <div class="widget-title">
+                                    @* <h4>Ürünler</h4>*@
+                                </div>
+                                <div class="widget-content">
+                                    @* <ul class="links-list clearfix">
                                     <li><a href="urun-detay.html">urunler 1</a></li>
                                     <li><a href="urun-detay.html">urunler 3</a></li>
                                     <li><a href="urun-detay.html">urunler 4</a></li>
                                     <li><a href="urun-detay.html">urunler 5</a></li>
                                     <li><a href="urun-detay.html">urunler 2</a></li>
                                     </ul>*@
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4 col-md-6 col-sm-12 footer-column">
-							<div class="footer-widget links-contact">
-								<div class="widget-title">
-									<h4>@Localizer["İletişim Bilgileri"]</h4>
-								</div>
-								<div class="widget-content">
-									<div class="row mb-3 align-items-center">
-										<div class="col-auto">
-											<div class="">
-												<img src="https://cdn-icons-png.flaticon.com/24/733/733585.png" alt="WhatsApp Icon">
-											</div>
-										</div>
-										<div class="col">
-											<a href="#" id="whatsappLinks" target="_blank" style="text-decoration: none; color: inherit;">
-												<span id="phoneNumberTexts">WhatsApp ile iletişime geç</span>
-											</a>
-										</div>
-									</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-12 footer-column">
+                            <div class="footer-widget links-contact">
+                                <div class="widget-title">
+                                    <h4>@Localizer["İletişim Bilgileri"]</h4>
+                                </div>
+                                <div class="widget-content">
+                                    <div class="row mb-3 align-items-center">
+                                        <div class="col-auto">
+                                            <div class="">
+                                                <img src="https://cdn-icons-png.flaticon.com/24/733/733585.png" alt="WhatsApp Icon">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <a href="#" id="whatsappLinks" target="_blank" style="text-decoration: none; color: inherit;">
+                                                <span id="phoneNumberTexts">WhatsApp ile iletişime geç</span>
+                                            </a>
+                                        </div>
+                                    </div>
 
-									<div class="row mb-3 align-items-center">
-										<div class="col-auto">
-											<div class="icon-bg">
-												<i class="flaticon-email"></i>
-											</div>
-										</div>
-										<div class="col">
-											<a id="emails"></a>
-										</div>
-									</div>
+                                    <div class="row mb-3 align-items-center">
+                                        <div class="col-auto">
+                                            <div class="icon-bg">
+                                                <i class="flaticon-email"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <a id="emails"></a>
+                                        </div>
+                                    </div>
 
-									<div class="row align-items-center">
-										<div class="col-auto">
-											<div class="icon-bg">
-												<i class="flaticon-pin"></i>
-											</div>
-										</div>
-										<div class="col" id="adress">
-										</div>
-									</div>
-								</div>
+                                    <div class="row align-items-center">
+                                        <div class="col-auto">
+                                            <div class="icon-bg">
+                                                <i class="flaticon-pin"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col" id="adress">
+                                        </div>
+                                    </div>
+                                </div>
 
-								<ul class="footer-social  clearfix text-center mt-4">
-									 
-									<li>
-										<a href="#" id="whatsappLink_alt" target="_blank">
-											<img src="https://cdn-icons-png.flaticon.com/24/733/733585.png" alt="cehpe modelleme" style="vertical-align: middle; margin-right: 5px;">
-										</a>
-									</li>
-									<li>
-										<a href="mailto:ornek@mail.com" id="email_alt">
-											<i class="fas fa-envelope"></i>
-										</a>
-									</li>
+                                <ul class="footer-social  clearfix text-center mt-4">
 
-									<li><a href="https://www.instagram.com/rcvvalvesunteknik/"><i class="fab fa-instagram"></i></a></li>
-									 
-								</ul>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</footer>
-	<!-- main-footer end -->
-	<!--Scroll to top-->
-	<button class="scroll-top scroll-to-target" data-target="html">
-		<span class="fa fa-arrow-up"></span>
-	</button>
+                                    <li>
+                                        <a href="#" id="whatsappLink_alt" target="_blank">
+                                            <img src="https://cdn-icons-png.flaticon.com/24/733/733585.png" alt="cehpe modelleme" style="vertical-align: middle; margin-right: 5px;">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="mailto:ornek@mail.com" id="email_alt">
+                                            <i class="fas fa-envelope"></i>
+                                        </a>
+                                    </li>
 
+                                    <li><a href="https://www.instagram.com/rcvvalvesunteknik/"><i class="fab fa-instagram"></i></a></li>
 
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- main-footer end -->
+    <!--Scroll to top-->
+    <button class="scroll-top scroll-to-target" data-target="html">
+        <span class="fa fa-arrow-up"></span>
+    </button>
 
 
-	<script src="~/assets/js/plugins.js"></script>
-	<script src="~/assets/js/cookie.js"></script>
-	<script src="~/assets/js/script.js"></script>
-	@await RenderSectionAsync("Scripts", required: false)
+
+
+    <script src="~/assets/js/plugins.js"></script>
+    <script src="~/assets/js/cookie.js"></script>
+    <script src="~/assets/js/script.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
 
 
 
 </body>
 
 <script>
-		 window.onload = function () {
-		$.ajax({
-			url: '/Home/Firma',
-			type: 'GET',
-			dataType: 'json',
-			success: function (result) {
-				$('#phoneNumber').text(result.phoneNumber);
-				$('#email').text(result.email);
-				$('#adres').text(result.adres);
-				$('#emails').text(result.email);
-				$('#email_alt').attr('href', 'mailto:' + result.email);
-				$('#email_üst').text(result.email);
-				$('#adress').text(result.adres);
- 
-				const phoneNumber = result.phoneNumber;
-				const link = `https://wa.me/${phoneNumber}`;
+         window.onload = function () {
+        $.ajax({
+            url: '/Home/Firma',
+            type: 'GET',
+            dataType: 'json',
+            success: function (result) {
+                $('#phoneNumber').text(result.phoneNumber);
+                $('#email').text(result.email);
+                $('#adres').text(result.adres);
+                $('#emails').text(result.email);
+                $('#email_alt').attr('href', 'mailto:' + result.email);
+                $('#email_üst').text(result.email);
+                $('#adress').text(result.adres);
 
-				// Tekil ID’ler
-				document.getElementById("whatsappLink").href = link;
-				document.getElementById("whatsappLinks").href = link;
-				document.getElementById("whatsappLink_alt").href = link;
-				document.getElementById("whatsappLink_üst").href = link;
+                const phoneNumber = result.phoneNumber;
+                const link = `https://wa.me/${phoneNumber}`;
 
-				// Çoklu class ile link güncelleme
-				const whatsappLinks = document.getElementsByClassName("whatsappLinks");
-				for (let i = 0; i < whatsappLinks.length; i++) {
-					whatsappLinks[i].href = link;
-				}
+                // Tekil ID’ler
+                document.getElementById("whatsappLink").href = link;
+                document.getElementById("whatsappLinks").href = link;
+                document.getElementById("whatsappLink_alt").href = link;
+                document.getElementById("whatsappLink_üst").href = link;
 
-				document.getElementById("phoneNumberText").innerText = `+${phoneNumber}`;
- 				document.getElementById("phoneNumberTexts").innerText = `+${phoneNumber}`;
-			},
-			error: function (error) {
-				console.log(error);
-			}
-		});
-	};
+                // Çoklu class ile link güncelleme
+                const whatsappLinks = document.getElementsByClassName("whatsappLinks");
+                for (let i = 0; i < whatsappLinks.length; i++) {
+                    whatsappLinks[i].href = link;
+                }
+
+                document.getElementById("phoneNumberText").innerText = `+${phoneNumber}`;
+                document.getElementById("phoneNumberTexts").innerText = `+${phoneNumber}`;
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    };
 
 
 
-	$(document).ready(function () {
-		$(".input-search").on("input", function () {
-			var searchTerm = $(this).val();
-			var searchResults = $(".search-results");
-			if (!searchTerm) {
-				searchResults.empty();
-				$(".my-input").val("");
-				searchResults.val("");
-			} else {
-				$.ajax({
-					url: "/Urün/UrünGetWord", // Backend'teki arama işlemi için uygun URL'yi kullanın
-					data: { word: searchTerm },
-					type: "GET",
-					success: function (data) {
-						var searchResults = $(".search-results");
+    $(document).ready(function () {
+        $(".input-search").on("input", function () {
+            var searchTerm = $(this).val();
+            var searchResults = $(".search-results");
+            if (!searchTerm) {
+                searchResults.empty();
+                $(".my-input").val("");
+                searchResults.val("");
+            } else {
+                $.ajax({
+                    url: "/Urün/UrünGetWord", // Backend'teki arama işlemi için uygun URL'yi kullanın
+                    data: { word: searchTerm },
+                    type: "GET",
+                    success: function (data) {
+                        var searchResults = $(".search-results");
 
-						// Sonuçları temizle (eski sonuçları kaldır)
-						searchResults.empty();
+                        // Sonuçları temizle (eski sonuçları kaldır)
+                        searchResults.empty();
 
-						// Yeni sonuçları ekley
-						data.forEach(function (result) {
-							var resultItem = $("<div class='result-item'></div>");
+                        // Yeni sonuçları ekley
+                        data.forEach(function (result) {
+                            var resultItem = $("<div class='result-item'></div>");
 
-							// Resme tıklanabilir bir bağlantı eklemek için <a> elementini oluşturun
-							var link = $("<a>").attr("href", "/Urün/ProductDetail?Id=" + result.urünKategoriModelUrünKategorId);
+                            // Resme tıklanabilir bir bağlantı eklemek için <a> elementini oluşturun
+                            var link = $("<a>").attr("href", "/Urün/ProductDetail?Id=" + result.urünKategoriModelUrünKategorId);
 
-							// Resim öğesini oluşturun ve bağlantıya ekleyin
-							var image = new Image();
-							image.src = result.imagePath;
-							image.width = 50;
-							image.height = 50;
-							link.append(image);
+                            // Resim öğesini oluşturun ve bağlantıya ekleyin
+                            var image = new Image();
+                            image.src = result.imagePath;
+                            image.width = 50;
+                            image.height = 50;
+                            link.append(image);
 
-							// Bağlantıyı sonuç öğesine ekleyin
-							resultItem.append(link);
+                            // Bağlantıyı sonuç öğesine ekleyin
+                            resultItem.append(link);
 
-							// Başlık metnini ekleyin
-							var resultText = $("<span>").text(result.baslik);
-							resultItem.append(resultText);
+                            // Başlık metnini ekleyin
+                            var resultText = $("<span>").text(result.baslik);
+                            resultItem.append(resultText);
 
-							searchResults.append(resultItem);
-						});
-					}
-				});
-			}
-		});
-	});
+                            searchResults.append(resultItem);
+                        });
+                    }
+                });
+            }
+        });
+    });
 
 
 

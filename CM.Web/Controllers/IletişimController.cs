@@ -16,6 +16,38 @@ namespace RVC.Web.Controllers
         }
         public IActionResult Index()
         {
+            // SEO Meta Tags
+            ViewBag.SeoModel = new CM.Web.Models.SeoModel
+            {
+                Title = "İletişim | Cephe Modelleme - Bize Ulaşın",
+                Description = "Cephe Modelleme ile iletişime geçin. 3D 2D mimari modelleme, render ve görselleştirme hizmetleri için bizimle iletişime geçin.",
+                Keywords = "iletişim, cephe modelleme iletişim, 3d modelleme iletişim, mimari görselleştirme iletişim",
+                CanonicalUrl = "https://www.cephemodelleme.com/Iletişim",
+                OgTitle = "İletişim | Cephe Modelleme - Bize Ulaşın",
+                OgDescription = "Cephe Modelleme ile iletişime geçin. 3D 2D mimari modelleme, render ve görselleştirme hizmetleri için bizimle iletişime geçin.",
+                OgImage = "https://www.cephemodelleme.com/assets/images/logo.png",
+                TwitterTitle = "İletişim | Cephe Modelleme - Bize Ulaşın",
+                TwitterDescription = "Cephe Modelleme ile iletişime geçin. 3D 2D mimari modelleme, render ve görselleştirme hizmetleri için bizimle iletişime geçin.",
+                TwitterImage = "https://www.cephemodelleme.com/assets/images/logo.png",
+                StructuredData = @"{
+                    ""@context"": ""https://schema.org"",
+                    ""@type"": ""ContactPage"",
+                    ""name"": ""İletişim"",
+                    ""description"": ""Cephe Modelleme ile iletişime geçin"",
+                    ""url"": ""https://www.cephemodelleme.com/Iletişim"",
+                    ""mainEntity"": {
+                        ""@type"": ""Organization"",
+                        ""name"": ""Cephe Modelleme"",
+                        ""contactPoint"": {
+                            ""@type"": ""ContactPoint"",
+                            ""telephone"": ""+90-555-555-5555"",
+                            ""contactType"": ""customer service"",
+                            ""availableLanguage"": [""Turkish"", ""English""]
+                        }
+                    }
+                }"
+            };
+
             IletişimDto ıletişimDto = new IletişimDto();
             #region Firma
             var firmaModel = _firmaServices.GetAllAsync().Result.FirstOrDefault();

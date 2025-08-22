@@ -1,0 +1,32 @@
+@model CM.Web.Models.SeoModel
+
+@if (Model != null)
+{
+    <title>@Model.Title</title>
+    <meta name="description" content="@Model.Description">
+    <meta name="keywords" content="@Model.Keywords">
+    <link rel="canonical" href="@Model.CanonicalUrl" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="@Model.OgType">
+    <meta property="og:title" content="@Model.OgTitle">
+    <meta property="og:description" content="@Model.OgDescription">
+    <meta property="og:url" content="@Model.CanonicalUrl">
+    <meta property="og:image" content="@Model.OgImage">
+    <meta property="og:site_name" content="Cephe Modelleme">
+    <meta property="og:locale" content="tr_TR">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="@Model.TwitterCard">
+    <meta name="twitter:title" content="@Model.TwitterTitle">
+    <meta name="twitter:description" content="@Model.TwitterDescription">
+    <meta name="twitter:image" content="@Model.TwitterImage">
+    <meta name="twitter:site" content="@("@cephemodelleme")">
+
+    @if (!string.IsNullOrEmpty(Model.StructuredData))
+    {
+        <script type="application/ld+json">
+            @Html.Raw(Model.StructuredData)
+        </script>
+    }
+}
