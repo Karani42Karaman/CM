@@ -1,4 +1,5 @@
 ﻿@model CM.Core.Dto.HomePageDto
+@using CM.Web.Infrastructure.Extensions
 @inject IViewLocalizer Localizer
 @{
 
@@ -132,7 +133,7 @@
                             <div class="overlay-content">
                                 <div class="inner">
                                     <h3>
-                                        <a href="service-details.html">
+                                        <a href="service/ProductDetail/@item.Baslık.ToSlug()">
                                             @{
                                                 if (currentCulture.Equals("tr-TR"))
                                                 {
@@ -146,7 +147,7 @@
                                         </a>
                                     </h3>
                                     @*   <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p> *@
-                                    <div class="link"><a asp-controller="Service" asp-action="ProductDetail" asp-route-Id="@item.UrünKategorId">@Localizer["İncele"]</a></div>
+                                    <div class="link"><a asp-controller="Service" asp-action="ProductDetail" asp-route-data="@item.Baslık.ToString().ToSlug()">@Localizer["İncele"]</a></div>
                                 </div>
                             </div>
                         </div>

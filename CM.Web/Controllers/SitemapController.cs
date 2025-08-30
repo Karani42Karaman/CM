@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Xml.Linq;
 using CM.Core.Service;
 using CM.Core;
+using CM.Web.Infrastructure.Extensions;
 
 namespace CM.Web.Controllers
 {
@@ -71,7 +72,20 @@ namespace CM.Web.Controllers
                 {
                     sitemap.Root.Add(
                         new XElement(ns + "url",
-                            new XElement(ns + "loc", $"{baseUrl}/Service/GetProducts/{kategori.UrünKategorId}"),
+                            new XElement(ns + "loc", $"{baseUrl}/Service/productdetail/{kategori.Baslık.ToSlug()}"),
+                            new XElement(ns + "lastmod", DateTime.UtcNow.ToString("yyyy-MM-dd")),
+                            new XElement(ns + "changefreq", "weekly"),
+                            new XElement(ns + "priority", "0.6")
+                        )
+                    );
+                }
+
+
+                foreach (var kategori in urunKategorileri)
+                {
+                    sitemap.Root.Add(
+                        new XElement(ns + "url",
+                            new XElement(ns + "loc", $"{baseUrl}/Service/productdetail/{kategori.BaslıkEn.ToSlug()}"),
                             new XElement(ns + "lastmod", DateTime.UtcNow.ToString("yyyy-MM-dd")),
                             new XElement(ns + "changefreq", "weekly"),
                             new XElement(ns + "priority", "0.6")

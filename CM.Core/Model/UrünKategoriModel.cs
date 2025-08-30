@@ -5,7 +5,7 @@ namespace CM.Core.Model
     public class UrünKategoriModel: ImageModel
     {
         public Guid UrünKategorId { get; set; }
-        public string? Baslık { get; set; }
+        public string Baslık { get; set; }
         public string? BaslıkEn { get; set; }
 
         public DateTime CreateDate { get; set; }

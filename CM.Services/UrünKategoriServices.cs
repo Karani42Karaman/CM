@@ -3,11 +3,7 @@ using CM.Core;
 using CM.Core.Model;
 using CM.Core.Service;
 using CM.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace CM.Services
 {
@@ -82,9 +78,16 @@ namespace CM.Services
         }
 
 
-        public UrünKategoriModel? UrünKategoriGetIncludeUrün(Guid id)
+        public UrünKategoriModel? UrünKategoriGetIncludeUrün(string name)
         {
-            return _context.UrünKategoriModels.Include(x => x.UrünlerModel).FirstOrDefaultAsync(x => x.UrünKategorId == id).Result;
+            UrünKategoriModel model = new UrünKategoriModel();
+            model = _context.UrünKategoriModels.Include(x => x.UrünlerModel).AsEnumerable().FirstOrDefault(x => x.Baslık.ToSlug().Equals(name));
+            if (model == null)
+            {
+                model = _context.UrünKategoriModels.Include(x => x.UrünlerModel).FirstOrDefaultAsync(x => x.BaslıkEn.Equals(name)).Result;
+            }
+
+            return model;
         }
 
         public List<UrünlerModel> UrünGetWord(string word)
@@ -120,7 +123,30 @@ namespace CM.Services
 
         public UrünlerModel? GetUrünId(Guid id)
         {
-            return _context.UrünlerModels.FirstOrDefault(x => x.UrünId == id);            
+            return _context.UrünlerModels.FirstOrDefault(x => x.UrünId == id);
+        }
+    }
+    // Add this extension method to your project, for example in a new file called StringExtensions.cs
+    public static class StringExtensions
+    {
+        public static string ToSlug(this string value)
+        {
+            if (string.IsNullOrEmpty(value))
+                return string.Empty;
+
+            // Convert to lower case
+            value = value.ToLowerInvariant();
+
+            // Remove invalid chars
+            value = System.Text.RegularExpressions.Regex.Replace(value, @"[^a-z0-9\s-]", "");
+
+            // Convert multiple spaces into one space
+            value = System.Text.RegularExpressions.Regex.Replace(value, @"\s+", " ").Trim();
+
+            // Replace spaces with hyphens
+            value = value.Replace(" ", "-");
+
+            return value;
         }
     }
 }

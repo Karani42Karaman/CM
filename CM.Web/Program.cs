@@ -70,9 +70,20 @@ builder.Services.AddAuthorization(options =>
         policy.RequireRole("Admin"));
 });
 
+// Add response compression
+builder.Services.AddResponseCompression(options =>
+{
+    options.EnableForHttps = true;
+    options.Providers.Add<Microsoft.AspNetCore.ResponseCompression.BrotliCompressionProvider>();
+    options.Providers.Add<Microsoft.AspNetCore.ResponseCompression.GzipCompressionProvider>();
+});
+
 
 
 var app = builder.Build();
+
+// Add compression middleware
+app.UseResponseCompression();
 
 app.UseStaticFiles();
 

@@ -742,9 +742,9 @@ namespace RVC.Web.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult UpdateUrünKategori(Guid Id)
+        public IActionResult UpdateUrünKategori(string name)
         {
-            var model = _urünServices.UrünKategoriGetIncludeUrün(Id);
+            var model = _urünServices.UrünKategoriGetIncludeUrün(name);
             //string resxFilePathEn = Path.Combine(_webHostEnvironment.ContentRootPath, "Resources/Views/Urün.ProductCategorys.en-US.resx");
             //LanguageCrud languageCrud = new LanguageCrud();
 
@@ -768,7 +768,7 @@ namespace RVC.Web.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateUrünKategori(IFormFile imageFile, UrünKategoriDto urünKategoriDto)
         {
-            var model = _urünServices.UrünKategoriGetIncludeUrün(urünKategoriDto.UrünKategorId);
+            var model = _urünServices.UrünKategoriGetIncludeUrün(urünKategoriDto.Baslık);
             model.Baslık = urünKategoriDto.Baslık;
             model.BaslıkEn = urünKategoriDto.BaslıkEn;
             model.UpdateDate = DateTime.Now;

@@ -5,7 +5,7 @@
 }
 
 
-
+@using CM.Web.Infrastructure.Extensions
 
 @inject IViewLocalizer Localizer
 @model List<CM.Core.Model.UrünlerModel>
@@ -60,7 +60,7 @@
                             <div class="overlay-content">
                                 <div class="inner">
                                     <h3>
-                                        <a href="service-details.html">
+                                        <a href="service/ProductDetail/@item.Baslik.ToSlug()">
                                             @{
                                                 if (currentCulture.Equals("tr-TR"))
                                                 {
@@ -74,7 +74,7 @@
                                         </a>
                                     </h3>
                                     <p></p>
-                                    <div class="link"><a asp-action="ProductDetail" asp-route-id="@item.UrünId">@Localizer["İncele"]</a></div>
+                                    <div class="link"><a asp-action="ProductDetail" asp-route-data="@item.Baslik.ToString().ToSlug()">@Localizer["İncele"]</a></div>
                                 </div>
                             </div>
                         </div>

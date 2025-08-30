@@ -15,7 +15,7 @@ namespace CM.Core.Service
         List<UrünlerModel> UrünGetKategoriId(Guid id);
 
 
-        UrünKategoriModel? UrünKategoriGetIncludeUrün(Guid id);
+        UrünKategoriModel? UrünKategoriGetIncludeUrün(string name);
 
         void UrünKategoriCreate(UrünKategoriModel model);
         bool UrünKategoriUpdate(UrünKategoriModel model);

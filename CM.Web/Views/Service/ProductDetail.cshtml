@@ -1,5 +1,6 @@
 ﻿@model CM.Core.Dto.ProductDetailDto
 @inject IViewLocalizer Localizer
+@using CM.Web.Infrastructure.Extensions
 @{
 
     var currentCulture = Thread.CurrentThread.CurrentUICulture.Name;
@@ -37,7 +38,7 @@
                             <div class="widget-content">
                                 <ul class="categori-list clearfix">
                                     <li>
-                                        <a asp-action="ProductDetail" asp-route-Id="@item.UrünKategorId">
+                                        <a asp-action="ProductDetail" asp-route-data="@item.Baslık.ToString().ToSlug()">
                                             @{
                                                 if (currentCulture.Equals("tr-TR"))
                                                 {

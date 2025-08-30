@@ -21,17 +21,34 @@ namespace CM.Web.Infrastructure.Middleware
             context.Response.Headers.Add("Referrer-Policy", "strict-origin-when-cross-origin");
             context.Response.Headers.Add("Permissions-Policy", "geolocation=(), microphone=(), camera=()");
 
-            // Cache control headers
-            if (context.Request.Path.StartsWithSegments("/assets") || 
-                context.Request.Path.StartsWithSegments("/css") || 
-                context.Request.Path.StartsWithSegments("/js") ||
-                context.Request.Path.StartsWithSegments("/images"))
+            // Cache control headers for static assets
+            if (context.Request.Path.StartsWithSegments("/assets"))
             {
-                context.Response.Headers.Add("Cache-Control", "public, max-age=31536000");
+                // CSS, JS, Images - 1 year cache
+                context.Response.Headers.Add("Cache-Control", "public, max-age=31536000, immutable");
+                context.Response.Headers.Add("Expires", DateTime.UtcNow.AddYears(1).ToString("R"));
+            }
+            else if (context.Request.Path.StartsWithSegments("/css") || 
+                     context.Request.Path.StartsWithSegments("/js") ||
+                     context.Request.Path.StartsWithSegments("/images"))
+            {
+                context.Response.Headers.Add("Cache-Control", "public, max-age=31536000, immutable");
+                context.Response.Headers.Add("Expires", DateTime.UtcNow.AddYears(1).ToString("R"));
             }
             else if (context.Request.Path.StartsWithSegments("/sitemap.xml"))
             {
                 context.Response.Headers.Add("Cache-Control", "public, max-age=86400");
+            }
+            else if (context.Request.Path.StartsWithSegments("/robots.txt"))
+            {
+                context.Response.Headers.Add("Cache-Control", "public, max-age=86400");
+            }
+            else
+            {
+                // HTML pages - no cache for dynamic content
+                context.Response.Headers.Add("Cache-Control", "no-cache, no-store, must-revalidate");
+                context.Response.Headers.Add("Pragma", "no-cache");
+                context.Response.Headers.Add("Expires", "0");
             }
 
             await _next(context);

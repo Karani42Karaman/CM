@@ -60,11 +60,11 @@ namespace RVC.Web.Controllers
             var list = _urünServices.UrünGetWord(word);
             return list;
         }
-
-        public IActionResult ProductDetail(Guid Id)
+        [Route("service/productdetail/{data}")]
+        public IActionResult ProductDetail(string data)
         {
             var dto = new ProductDetailDto();
-            var urün = _urünServices.UrünKategoriGetIncludeUrün(Id)?.UrünlerModel?.FirstOrDefault();
+            var urün = _urünServices.UrünKategoriGetIncludeUrün(data)?.UrünlerModel?.FirstOrDefault();
             var kategoris = _urünServices.UrünKategoriGetAllAsync().Result;
             dto.UrünlerModel = urün;
             dto.UrünKategoris = kategoris?.ToList();
