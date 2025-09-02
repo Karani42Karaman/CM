@@ -113,16 +113,15 @@
     <ProjectReference Include="..\CM.Data\CM.Data.csproj" />
     <ProjectReference Include="..\CM.Services\CM.Services.csproj" />
     </ItemGroup>
+	
+	<PropertyGroup>
+		<SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+	</PropertyGroup>
 
-  <ItemGroup>
+	<ItemGroup>
     <Folder Include="wwwroot\assets\" />
     <Folder Include="wwwroot\keys\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Content Include="Resources\Views\Belgeler.Index.en-US.resx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
+  
 </Project>

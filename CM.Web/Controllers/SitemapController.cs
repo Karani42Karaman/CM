@@ -19,7 +19,7 @@ namespace CM.Web.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        [HttpGet]
+        [HttpGet, HttpHead]
         [Route("sitemap.xml")]
         public IActionResult Index()
         {

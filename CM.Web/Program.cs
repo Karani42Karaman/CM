@@ -36,7 +36,7 @@ builder.Services.AddLocalization(options => options.ResourcesPath = "Resources")
 
 builder.Services.AddMvc()
 
-   .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+   .AddViewLocalization(LanguageViewLocationExpanderFormat.SubFolder)
 
    .AddDataAnnotationsLocalization();
 
@@ -115,6 +115,18 @@ app.UseEndpoints(endpoints =>
     endpoints.MapRazorPages();
 
     endpoints.MapControllers();
+});
+
+
+app.Use(async (context, next) =>
+{
+    if (context.Request.Path.StartsWithSegments("/sitemap.xml") && context.Request.Method == "HEAD")
+    {
+        context.Response.StatusCode = 200;
+        context.Response.ContentType = "application/xml";
+        return;
+    }
+    await next();
 });
 
 
