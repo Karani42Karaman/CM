@@ -120,15 +120,14 @@ app.UseEndpoints(endpoints =>
 
 app.Use(async (context, next) =>
 {
-    if (context.Request.Path.StartsWithSegments("/sitemap.xml") && context.Request.Method == "HEAD")
+    if (context.Request.Path.StartsWithSegments("/sitemap.xml"))
     {
-        context.Response.StatusCode = 200;
-        context.Response.ContentType = "application/xml";
-        return;
+        // Sitemap için özel header'lar
+        context.Response.Headers.Add("Cache-Control", "public, max-age=86400");
+        context.Response.ContentType = "application/xml; charset=utf-8";
     }
     await next();
 });
-
 
 
 app.ConfigureAndCheckMigration();
